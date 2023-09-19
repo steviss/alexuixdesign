@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18.18.0-alpine
 
 
 COPY package.json /tmp/package.json

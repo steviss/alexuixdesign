@@ -5,8 +5,8 @@
   "license": "Copyrighted",
   "private": true,
   "scripts": {
-    "sanity": "docker compose up",
-    "sanity:down": "docker compose down",
+    "sanity": "docker-compose up",
+    "sanity:down": "docker-compose down",
     "dev": "astro dev",
     "dev:mobile": "astro dev --host 0.0.0.0",
     "start": "astro dev",
