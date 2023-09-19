@@ -3,7 +3,7 @@ import { useSanityClient } from '@sanity/astro'
 import { convertSanityPostToPost, sanityPostsGroqQuery } from 'src/clients/sanity'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config'
 
-export async function get(context) {
+export async function GET(context) {
   const posts = await useSanityClient().fetch(sanityPostsGroqQuery)
   const postsTyped = convertSanityPostToPost(posts)
   return rss({
