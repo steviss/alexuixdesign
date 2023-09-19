@@ -4,6 +4,7 @@ name: Release Production
 #    branches: ['production']
 'on':
   workflow_dispatch:
+    branches: ['production']
 
 env:
   FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
