@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+#ssh
+.ssh
+
 # dependencies
 node_modules/
 
@@ -19,3 +22,15 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# npmrc
+.npmrc
+
+# Yarn v3 Cache
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
