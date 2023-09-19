@@ -1,0 +1,9 @@
+
+/.yarn
+/dist
+/node_modules
+/build
+/.ps
+/.ssh
+/.vscode
+/.astro
