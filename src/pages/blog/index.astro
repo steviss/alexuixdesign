@@ -1,109 +1,72 @@
 ---
-import BaseHead from '../../components/BaseHead.astro'
-import Header from '../../components/Header.astro'
-import Footer from '../../components/Footer.astro'
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts'
-import { getCollection } from 'astro:content'
-import FormattedDate from '../../components/FormattedDate.astro'
+import { FormattedDate } from 'src/components/react'
+import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
+import { useSanityClient } from '@sanity/astro'
+import {
+  type SanityPostsGroqQueryType,
+  type SanityTagsGroqQueryType,
+  convertSanityPostToPost,
+  convertSanityTagToTag,
+  sanityPostsGroqQuery,
+  sanityTagsGroqQuery,
+} from 'src/clients/sanity'
+import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
+import Layout from 'src/layouts/Layout.astro'
 
-const posts = (await getCollection('blog')).sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
+export async function getBlogPosts() {
+  const posts = await useSanityClient().fetch<SanityPostsGroqQueryType[]>(sanityPostsGroqQuery)
+  return convertSanityPostToPost(posts)
+}
+
+export async function getBlogTags() {
+  const tags = await useSanityClient().fetch<SanityTagsGroqQueryType[]>(sanityTagsGroqQuery)
+  return convertSanityTagToTag(tags)
+}
+
+const posts = await getBlogPosts()
+
+const tags = await getBlogTags()
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <style>
-      main {
-        width: 960px;
-      }
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 2rem;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      ul li {
-        width: calc(50% - 1rem);
-      }
-      ul li * {
-        text-decoration: none;
-        transition: 0.2s ease;
-      }
-      ul li:first-child {
-        width: 100%;
-        margin-bottom: 1rem;
-        text-align: center;
-      }
-      ul li:first-child img {
-        width: 100%;
-      }
-      ul li:first-child .title {
-        font-size: 2.369rem;
-      }
-      ul li img {
-        margin-bottom: 0.5rem;
-        border-radius: 12px;
-      }
-      ul li a {
-        display: block;
-      }
-      .title {
-        margin: 0;
-        color: rgb(var(--black));
-        line-height: 1;
-      }
-      .date {
-        margin: 0;
-        color: rgb(var(--gray));
-      }
-      ul li a:hover h4,
-      ul li a:hover .date {
-        color: rgb(var(--accent));
-      }
-      ul a:hover img {
-        box-shadow: var(--box-shadow);
-      }
-      @media (max-width: 720px) {
-        ul {
-          gap: 0.5em;
-        }
-        ul li {
-          width: 100%;
-          text-align: center;
-        }
-        ul li:first-child {
-          margin-bottom: 0;
-        }
-        ul li:first-child .title {
-          font-size: 1.563em;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <Header />
-    <main>
-      <section>
-        <ul>
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <section class="flex flex-col">
+    <h1>Blog</h1>
+    <div class="flex flex-col">
+      <div>
+        <input type="text" placeholder="Search blog" />
+      </div>
+      <div>
+        <ul class="flex">
           {
-            posts.map((post) => (
-              <li>
-                <a href={`/blog/${post.slug}/`}>
-                  <img width={720} height={360} src={post.data.heroImage} alt="" />
-                  <h4 class="title">{post.data.title}</h4>
-                  <p class="date">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
-                </a>
+            tags.map(({ slug, title }) => (
+              <li class="p-2">
+                <a href={slug}>#{title}</a>
               </li>
             ))
           }
         </ul>
-      </section>
-    </main>
-    <Footer />
-  </body>
-</html>
+      </div>
+    </div>
+  </section>
+  <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 grid-flow-row gap-4 md:gap-8 py-24">
+    {
+      posts.map(({ heroImage, title, createdAt, slug, estimatedReadingTime }) => (
+        <div class="flex flex-col">
+          <div class="relative rounded-md overflow-hidden h-[208px]">
+            {heroImage && <FeaturedImage class="max-h-52" width={360} height={240} asset={heroImage} alt={title} />}
+          </div>
+          <div class="flex flex-col md:flex-row text-primary mt-6">
+            <div class="flex flex-col md:flex-row">
+              <FormattedDate date={createdAt} />
+              <span class="px-2">•</span>
+              <h4>Reading time: {estimatedReadingTime} min</h4>
+            </div>
+          </div>
+          <h3 class="text-3xl lg:text-4xl font-nunito font-semibold text-white py-8">
+            <a href={slug}>{title}</a>
+          </h3>
+        </div>
+      ))
+    }
+  </section>
+</Layout>
