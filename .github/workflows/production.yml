@@ -4,6 +4,7 @@ name: Release Production
 #    branches: ['production']
 'on':
   workflow_dispatch:
+    branches: ['production']
 
 env:
   FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
@@ -50,9 +51,7 @@ jobs:
           script_stop: true
           script: |
             mkdir -p ~/temp-backup
-            mv ~/$DEPLOY_PATH/.well-known ~/temp-backup/.well-known
             rm -rf ~/$DEPLOY_PATH/*
-            mv ~/temp-backup/.well-known ~/$DEPLOY_PATH/.well-known
             rm -rf ~/temp-backup
       - name: Deploy build to Alpha LionDev Cloud
         uses: appleboy/scp-action@v0.1.4
