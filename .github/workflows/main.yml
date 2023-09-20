@@ -24,6 +24,8 @@ jobs:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
           payload: |
             {
+              "unfurl_links": false,
+              "unfurl_media": false,
               "blocks": [
                 {
                   "type": "header",
@@ -138,6 +140,8 @@ jobs:
           update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
+              "unfurl_links": false,
+              "unfurl_media": false,
               "blocks": [
                 {
                   "type": "header",
@@ -166,7 +170,7 @@ jobs:
                       "type": "mrkdwn",
                       "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
                     },
-                    {DEPLOY_SSH_PASSPHRASE
+                    {
                       "type": "mrkdwn",
                       "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
                     }
@@ -200,6 +204,8 @@ jobs:
           update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
+              "unfurl_links": false,
+              "unfurl_media": false,
               "blocks": [
                 {
                   "type": "header",
