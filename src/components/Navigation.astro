@@ -1,10 +1,10 @@
 ---
 import NavigationLink from './NavigationLink.astro'
-import { faCode, faFloppyDiskPen, faWrench } from '@fortawesome/sharp-solid-svg-icons'
 ---
 
-<>
-  <NavigationLink label="Blog" href="/blog" icon={faFloppyDiskPen} />
-  <NavigationLink label="Snippets" href="/snippets" icon={faCode} />
-  <NavigationLink label="Projects" href="/projects" icon={faWrench} />
-</>
+<section class="flex items-center py-6">
+  <NavigationLink label="About" href="/about" />
+  <NavigationLink label="Work" href="/work" />
+  <NavigationLink label="Blog" href="/blog" />
+  <button class="py-1 px-4 border border-black rounded-full text-black bg-secondary hover:text-secondary hover:bg-black">Say Hello</button>
+</section>
