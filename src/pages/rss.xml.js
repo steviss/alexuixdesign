@@ -3,7 +3,7 @@ import { getPosts } from 'src/clients/sanity'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config'
 
 export async function GET(context) {
-  const posts = getPosts()
+  const posts = await getPosts()
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
