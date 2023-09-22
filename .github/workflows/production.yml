@@ -5,9 +5,6 @@ name: Deploy Production
 'on':
   workflow_dispatch:
 
-env:
-  FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
-
 jobs:
   deploy:
     environment: production
@@ -87,6 +84,8 @@ jobs:
           envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
           file_name: .env
       - name: Yarn FontAwesome Setup
+        env:
+          FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
         run: |
           yarn config set initScope npmScopes
           yarn config set npmScopes.fortawesome.npmRegistryServer "https://npm.fontawesome.com"
