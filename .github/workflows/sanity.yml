@@ -116,7 +116,7 @@ jobs:
           passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
           port: ${{ secrets.DEPLOY_SSH_PORT }}
           source: 'sanity/dist/**,.env'
-          target: ${{ vars.DEPLOY_PATH }}
+          target: ${{ vars.SANITY_DEPLOY_PATH }}
           overwrite: true
       - name: Cleanup deployment to Alpha LionDev Cloud
         id: cleanup
@@ -133,8 +133,8 @@ jobs:
           script_stop: true
           script: |
             cd ~/$DEPLOY_PATH
-            mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH
-            rm -rf ~/$DEPLOY_PATH/dist
+            mv ~/$DEPLOY_PATH/sanity/dist/* ~/$DEPLOY_PATH
+            rm -rf ~/$DEPLOY_PATH/sanity
             rm -rf ~/temp-backup
       - name: Update Slack Message - Success
         uses: slackapi/slack-github-action@v1.24.0
