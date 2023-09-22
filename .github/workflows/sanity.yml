@@ -1,13 +1,8 @@
-name: Release Production
-#'on':
-#  push:
-#    branches: ['production']
+name: Release Sanity Studio
+
 'on':
   workflow_dispatch:
-    branches: ['production']
-
-env:
-  FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
+    branches: ['main', 'production']
 
 jobs:
   deploy:
@@ -39,12 +34,12 @@ jobs:
                   "elements": [
                     {
                       "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro"
+                      "text": "Deploying Sanity"
                     }
                   ]
                 },
@@ -86,13 +81,8 @@ jobs:
         with:
           envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
           envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+          envkey_SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
           file_name: .env
-      - name: Yarn FontAwesome Setup
-        run: |
-          yarn config set initScope npmScopes
-          yarn config set npmScopes.fortawesome.npmRegistryServer "https://npm.fontawesome.com"
-          yarn config set npmScopes.fortawesome.npmAlwaysAuth true
-          yarn config set npmScopes.fortawesome.npmAuthToken $FONTAWESOME_NPM_AUTH_TOKEN
       - name: Yarn Install
         run: yarn install --immutable
       - name: Build for deploy
@@ -101,7 +91,7 @@ jobs:
         id: backup-and-delete
         uses: appleboy/ssh-action@v1.0.0
         env:
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -130,7 +120,7 @@ jobs:
         id: cleanup
         uses: appleboy/ssh-action@v1.0.0
         env:
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -169,12 +159,12 @@ jobs:
                   "elements": [
                     {
                       "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro"
+                      "text": "Deploying Sanity"
                     }
                   ]
                 },
@@ -210,7 +200,7 @@ jobs:
         if: steps.deploy.outcome == 'failure' || steps.cleanup.outcome == 'failure' || steps.backup-and-delete.outcome == 'failure'
         uses: appleboy/ssh-action@v1.0.0
         env:
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -247,12 +237,12 @@ jobs:
                   "elements": [
                     {
                       "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro"
+                      "text": "Deploying Sanity"
                     }
                   ]
                 },

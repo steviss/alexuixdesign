@@ -35,6 +35,20 @@ jobs:
                   }
                 },
                 {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "image",
+                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
+                      "alt_text": "Astro Logo"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "Deploying Astro"
+                    }
+                  ]
+                },
+                {
                   "type": "section",
                   "fields": [
                     {
@@ -151,6 +165,20 @@ jobs:
                   }
                 },
                 {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "image",
+                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
+                      "alt_text": "Astro Logo"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "Deploying Astro"
+                    }
+                  ]
+                },
+                {
                   "type": "section",
                   "fields": [
                     {
@@ -213,6 +241,20 @@ jobs:
                     "type": "plain_text",
                     "text": "${{ github.workflow }} - Run: ${{ github.run_id }}"
                   }
+                },
+                {
+                  "type": "context",
+                  "elements": [
+                    {
+                      "type": "image",
+                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
+                      "alt_text": "Astro Logo"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "Deploying Astro"
+                    }
+                  ]
                 },
                 {
                   "type": "section",
