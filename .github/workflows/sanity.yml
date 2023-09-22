@@ -67,7 +67,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
+                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
                     }
                   ]
                 }
@@ -189,7 +189,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
+                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
                     }
                   ]
                 }
@@ -267,7 +267,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
+                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
                     }
                   ]
                 }
