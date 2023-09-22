@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./sanity
+        working-directory: sanity
     steps:
       - name: Initial Slack Message
         id: slack
@@ -75,6 +75,7 @@ jobs:
               ]
             }
       - name: Configure SSH
+        working-directory:
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_KEY" > ~/.ssh/id_ed25519
