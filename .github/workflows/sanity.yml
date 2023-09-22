@@ -2,7 +2,6 @@ name: Release Sanity Studio
 
 'on':
   workflow_dispatch:
-    branches: ['main', 'production']
 
 jobs:
   deploy:
@@ -104,7 +103,7 @@ jobs:
           envs: DEPLOY_PATH
           script_stop: true
           script: |
-            if [ "$(ls -A ~/$DEPLOY_PATH)" ]; then
+            if [ ! "$(ls -A ~/$DEPLOY_PATH)" ]; then
             mkdir -p ~/temp-backup
             mv ~/$DEPLOY_PATH/* ~/temp-backup
             rm -rf ~/$DEPLOY_PATH
@@ -221,9 +220,9 @@ jobs:
         uses: slackapi/slack-github-action@v1.24.0
         if: failure()
         env:
-          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN}}'
+          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
         with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
