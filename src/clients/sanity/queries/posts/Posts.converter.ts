@@ -1,10 +1,9 @@
-import { DEFAULT_PREFIX, RETRIEVE_FIELDS_DEFAULTS } from './convertSanityPostToPost.consts'
-import type { ConvertSanityPostToPostFunction } from './convertSanityPostToPost.interface'
-import type { PostType } from 'src/types'
+import { DEFAULT_PREFIX, RETRIEVE_FIELDS_DEFAULTS } from './Posts.consts'
+import type { ConvertSanityPostToPostFunction, ConvertSanityPostToPostFunctionRetrieveFieldsI, PostType } from './Posts.interface'
 
 const convertSanityPostToPost: ConvertSanityPostToPostFunction = (items, options) => {
   const prefix = options?.prefix ? DEFAULT_PREFIX : false
-  const retrieveFields = Object.assign(RETRIEVE_FIELDS_DEFAULTS, { ...options?.retrieveFields })
+  const retrieveFields: ConvertSanityPostToPostFunctionRetrieveFieldsI = { ...RETRIEVE_FIELDS_DEFAULTS, ...options?.retrieveFields }
   return items.map(({ title, slug, _createdAt, _updatedAt, body, mainImage, estimatedReadingTime, tags }) => ({
     title,
     slug: prefix ? `${prefix}/${slug}` : slug,

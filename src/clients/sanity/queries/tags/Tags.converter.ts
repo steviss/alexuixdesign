@@ -1,7 +1,5 @@
-import type { TagType } from 'src/types'
-
-import { DEFAULT_PREFIX } from './convertSanityTagToTag.consts'
-import type { ConvertSanityTagToTagFunction } from './convertSanityTagToTag.interface'
+import { DEFAULT_PREFIX } from './Tags.consts'
+import type { ConvertSanityTagToTagFunction, TagType } from './Tags.interface'
 
 const convertSanityTagToTag: ConvertSanityTagToTagFunction = (items, options) => {
   const prefix = options?.prefix ? DEFAULT_PREFIX : false

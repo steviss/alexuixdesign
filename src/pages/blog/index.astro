@@ -1,31 +1,13 @@
 ---
 import { FormattedDate } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
-import { useSanityClient } from '@sanity/astro'
-import {
-  type SanityPostsGroqQueryType,
-  type SanityTagsGroqQueryType,
-  convertSanityPostToPost,
-  convertSanityTagToTag,
-  sanityPostsGroqQuery,
-  sanityTagsGroqQuery,
-} from 'src/clients/sanity'
+import { getPosts, getTags } from 'src/clients/sanity'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
 
-export async function getBlogPosts() {
-  const posts = await useSanityClient().fetch<SanityPostsGroqQueryType[]>(sanityPostsGroqQuery)
-  return convertSanityPostToPost(posts)
-}
+const posts = await getPosts()
 
-export async function getBlogTags() {
-  const tags = await useSanityClient().fetch<SanityTagsGroqQueryType[]>(sanityTagsGroqQuery)
-  return convertSanityTagToTag(tags)
-}
-
-const posts = await getBlogPosts()
-
-const tags = await getBlogTags()
+const tags = await getTags()
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>

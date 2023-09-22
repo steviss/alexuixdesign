@@ -1,7 +1,36 @@
 ---
 import Layout from 'src/layouts/Layout.astro'
+import { getProjects } from 'src/clients/sanity'
+import { FormattedDate } from 'src/components/react'
+import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
+
+const projects = await getProjects(true)
 ---
 
 <Layout title="Home Page" description="Lorem ipsum dolor sit amet">
   <p>Index Page</p>
+  <section class="flex flex-col">
+    <h1>Projects</h1>
+  </section>
+  <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 grid-flow-row gap-4 md:gap-8 py-24">
+    {
+      projects.map(({ featuredImage, title, pubDate, slug, estimatedReadingTime }) => (
+        <div class="flex flex-col">
+          <div class="relative rounded-md overflow-hidden h-[208px]">
+            {featuredImage && <FeaturedImage class="max-h-52" width={360} height={240} asset={featuredImage} alt={title} />}
+          </div>
+          <div class="flex flex-col md:flex-row text-primary mt-6">
+            <div class="flex flex-col md:flex-row">
+              <FormattedDate date={pubDate} />
+              <span class="px-2">•</span>
+              <h4>Reading time: {estimatedReadingTime} min</h4>
+            </div>
+          </div>
+          <h3 class="text-3xl lg:text-4xl font-nunito font-semibold text-white py-8">
+            <a href={slug}>{title}</a>
+          </h3>
+        </div>
+      ))
+    }
+  </section>
 </Layout>

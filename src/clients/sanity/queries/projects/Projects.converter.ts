@@ -1,7 +1,5 @@
-import type { ProjectType } from 'src/types'
-
-import { DEFAULT_PREFIX } from './convertSanityProjectToProject.consts'
-import type { ConvertSanityProjectToProjectFunction } from './convertSanityProjectToProject.interface'
+import { DEFAULT_PREFIX } from './Projects.consts'
+import type { ConvertSanityProjectToProjectFunction, ProjectType } from './Projects.interface'
 
 const convertSanityProjectToProject: ConvertSanityProjectToProjectFunction = (items, options) => {
   const prefix = options?.prefix ? DEFAULT_PREFIX : false
