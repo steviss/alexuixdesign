@@ -102,8 +102,7 @@ jobs:
           passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
           port: ${{ secrets.DEPLOY_SSH_PORT }}
           envs: DEPLOY_PATH
-          script: |
-            echo "BACKUP_REQUIRED=$([ -d ~/$DEPLOY_PATH/* ] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
+          script: echo "BACKUP_REQUIRED=$([ -d '~/$DEPLOY_PATH/*' ] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
       - name: Delete and Backup Previous deployment to Alpha LionDev Cloud
         if: steps.backup-required.outputs.BACKUP_REQUIRED == 'true'
         id: backup-and-delete
