@@ -112,7 +112,7 @@ jobs:
           script: |
             mkdir -p ~/temp-backup
             mv ~/$DEPLOY_PATH/* ~/temp-backup/
-            rm -rf ~/$DEPLOY_PATH
+            rm -rf ~/$DEPLOY_PATH/*
       - name: Deploy build to Alpha LionDev Cloud
         id: deploy
         uses: appleboy/scp-action@v0.1.4
