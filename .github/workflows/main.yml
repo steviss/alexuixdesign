@@ -30,7 +30,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}}"
                   }
                 },
                 {
@@ -39,11 +39,11 @@ jobs:
                     {
                       "type": "image",
                       "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -160,7 +160,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}}"
                   }
                 },
                 {
@@ -169,11 +169,11 @@ jobs:
                     {
                       "type": "image",
                       "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -238,7 +238,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}}"
                   }
                 },
                 {
@@ -247,11 +247,11 @@ jobs:
                     {
                       "type": "image",
                       "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },

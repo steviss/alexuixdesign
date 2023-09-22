@@ -28,7 +28,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}}"
                   }
                 },
                 {
@@ -41,7 +41,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Sanity"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -78,13 +78,6 @@ jobs:
         with:
           cache: 'yarn'
           node-version-file: 'package.json'
-      - name: Create .env file for Sanity Studio
-        uses: SpicyPizza/create-envfile@v2.0.2
-        with:
-          envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
-          envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
-          envkey_SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
-          file_name: .env
       - name: Yarn Install
         run: yarn install --immutable
       - name: Build for deploy
@@ -157,7 +150,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}}"
                   }
                 },
                 {
@@ -170,7 +163,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Sanity"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -235,7 +228,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}}"
                   }
                 },
                 {
@@ -248,7 +241,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Sanity"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
