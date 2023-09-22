@@ -1,0 +1,26 @@
+---
+import { useSanityClient } from '@sanity/astro'
+import { type SanityProjectsGroqQueryType, convertSanityProjectsToProject, sanityProjectsGroqQuery } from 'src/clients/sanity'
+import PortableText from 'src/components/sanity/PortableText.astro'
+import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
+
+export async function getStaticPaths() {
+  const projects = convertSanityProjectsToProject(await useSanityClient().fetch<SanityProjectsGroqQueryType[]>(sanityProjectsGroqQuery), {
+    prefix: false,
+  })
+  return projects.map((project) => {
+    return {
+      params: {
+        slug: project.slug,
+      },
+      props: { ...project },
+    }
+  })
+}
+
+const { title, body, description, createdAt, updatedAt, heroImage } = Astro.props
+---
+
+<BlogPostLayout title={title} description={description} createdAt={createdAt} updatedAt={updatedAt} heroImage={heroImage}>
+  <PortableText portableText={body} />
+</BlogPostLayout>

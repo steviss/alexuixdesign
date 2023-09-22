@@ -22,6 +22,7 @@ export const sanityProjectsGroqQuery = `
 *[_type == 'project']
 {
     title,
+    "slug": slug.current,
     subtitle,
     description,
     body,
