@@ -30,7 +30,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} - Run: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
                   }
                 },
                 {
@@ -160,7 +160,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} - Run: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
                   }
                 },
                 {
@@ -238,7 +238,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} - Run: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
                   }
                 },
                 {

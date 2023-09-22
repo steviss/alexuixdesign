@@ -28,7 +28,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} - Run: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
                   }
                 },
                 {
@@ -88,6 +88,10 @@ jobs:
       - name: Yarn Install
         run: yarn install --immutable
       - name: Build for deploy
+        env:
+          SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         run: yarn build
       - name: Delete and Backup Previous deployment to Alpha LionDev Cloud
         id: backup-and-delete
@@ -153,7 +157,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} - Run: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
                   }
                 },
                 {
@@ -231,7 +235,7 @@ jobs:
                   "type": "header",
                   "text": {
                     "type": "plain_text",
-                    "text": "${{ github.workflow }} - Run: ${{ github.run_id }}"
+                    "text": "${{ github.workflow }} #${{github.run_number}} \n - ID: ${{ github.run_id }}"
                   }
                 },
                 {
