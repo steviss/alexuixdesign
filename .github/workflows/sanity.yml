@@ -104,10 +104,10 @@ jobs:
           script_stop: true
           script: |
             if [ ! "$(ls -A ~/$DEPLOY_PATH)" ]; then \
-            mkdir -p ~/temp-backup \
-            mv ~/$DEPLOY_PATH/* ~/temp-backup \
-            rm -rf ~/$DEPLOY_PATH \
-            fi
+              mkdir -p ~/temp-backup \
+              mv ~/$DEPLOY_PATH/* ~/temp-backup \
+              rm -rf ~/$DEPLOY_PATH \
+              fi
       - name: Deploy build to Alpha LionDev Cloud
         id: deploy
         uses: appleboy/scp-action@v0.1.4
