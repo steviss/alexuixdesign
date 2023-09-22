@@ -103,10 +103,10 @@ jobs:
           envs: DEPLOY_PATH
           script_stop: true
           script: |
-            if [ ! "$(ls -A '~/$DEPLOY_PATH')" ]; then
-            mkdir -p ~/temp-backup
-            mv ~/$DEPLOY_PATH/* ~/temp-backup
-            rm -rf ~/$DEPLOY_PATH
+            if [ ! "$(ls -A ~/$DEPLOY_PATH)" ]; then \
+            mkdir -p ~/temp-backup \
+            mv ~/$DEPLOY_PATH/* ~/temp-backup \
+            rm -rf ~/$DEPLOY_PATH \
             fi
       - name: Deploy build to Alpha LionDev Cloud
         id: deploy
