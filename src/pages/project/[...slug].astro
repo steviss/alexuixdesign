@@ -1,0 +1,25 @@
+---
+import { getProjects, type ProjectType } from 'src/clients/sanity'
+import PortableText from 'src/components/sanity/PortableText.astro'
+import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
+
+type Props = ProjectType
+
+export async function getStaticPaths() {
+  const projects = await getProjects()
+  return projects.map((project) => {
+    return {
+      params: {
+        slug: project.slug,
+      },
+      props: { ...project },
+    }
+  })
+}
+
+const { title, body, description, pubDate, featuredImage } = Astro.props
+---
+
+<BlogPostLayout title={title} description={description} createdAt={pubDate} heroImage={featuredImage?.asset.url}>
+  <PortableText portableText={body} />
+</BlogPostLayout>

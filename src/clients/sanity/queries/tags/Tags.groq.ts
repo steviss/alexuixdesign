@@ -1,17 +1,3 @@
-export type SanityTagsGroqQueryType = {
-  slug: string
-  title: string
-  description: string
-  posts: {
-    title: string
-    slug: string
-    _createdAt: string
-    _updatedAt: string
-  }[]
-  _createdAt: string
-  _updatedAt: string
-}
-
 export const sanityTagsGroqQuery = `
 *[_type == "tag"]{
   title,
