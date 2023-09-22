@@ -39,11 +39,11 @@ jobs:
                     {
                       "type": "image",
                       "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Sanity Logo"
+                      "alt_text": "Astro Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
+                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -169,11 +169,11 @@ jobs:
                     {
                       "type": "image",
                       "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Sanity Logo"
+                      "alt_text": "Astro Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
+                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -247,11 +247,11 @@ jobs:
                     {
                       "type": "image",
                       "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Sanity Logo"
+                      "alt_text": "Astro Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
+                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
