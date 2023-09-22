@@ -1,4 +1,4 @@
-name: Release Sanity Studio
+name: Deploy Sanity Studio
 
 'on':
   workflow_dispatch:
@@ -6,7 +6,7 @@ name: Release Sanity Studio
 jobs:
   deploy:
     environment: production
-    name: Deploy the build to LionDev Cloud
+    name: Deploying to LionDev Cloud
     runs-on: ubuntu-latest
     defaults:
       run:

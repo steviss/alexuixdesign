@@ -1,4 +1,4 @@
-name: Release Production
+name: Deploy Production
 #'on':
 #  push:
 #    branches: ['production']
@@ -11,7 +11,7 @@ env:
 jobs:
   deploy:
     environment: production
-    name: Deploy the build to LionDev Cloud
+    name: Deploying to LionDev Cloud
     runs-on: ubuntu-latest
     steps:
       - name: Initial Slack Message
