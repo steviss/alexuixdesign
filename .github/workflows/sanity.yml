@@ -78,7 +78,7 @@ jobs:
         with:
           cache: 'yarn'
           node-version-file: 'package.json'
-      - name: Create .env file for frontend
+      - name: Create .env file for Sanity Studio
         uses: SpicyPizza/create-envfile@v2.0.2
         with:
           envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
@@ -103,11 +103,10 @@ jobs:
           envs: DEPLOY_PATH
           script_stop: true
           script: |
-            if [ ! "$(ls -A ~/$DEPLOY_PATH)" ]; then \
-              mkdir -p ~/temp-backup \
-              mv ~/$DEPLOY_PATH/* ~/temp-backup \
-              rm -rf ~/$DEPLOY_PATH \
-              fi
+            [ ! "$(ls -A ~/$DEPLOY_PATH)" ] && \
+            mkdir -p ~/temp-backup && \
+            mv ~/$DEPLOY_PATH/* ~/temp-backup && \
+            rm -rf ~/$DEPLOY_PATH
       - name: Deploy build to Alpha LionDev Cloud
         id: deploy
         uses: appleboy/scp-action@v0.1.4
