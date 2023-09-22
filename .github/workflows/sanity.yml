@@ -83,6 +83,8 @@ jobs:
             IdentityFile ~/.ssh/id_ed25519
             StrictHostKeyChecking no
           END
+          apt-get install -y sshpass 
+          sshpass -p "$SSH_KEY_PASS" ssh "$SSH_USER@$SSH_HOST"
         env:
           SSH_USER: ${{ secrets.DEPLOY_SSH_USERNAME }}
           SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
