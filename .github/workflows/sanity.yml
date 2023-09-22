@@ -74,83 +74,28 @@ jobs:
                 }
               ]
             }
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          cache: 'yarn'
-          node-version-file: 'package.json'
-      - name: Create .env file for frontend
-        uses: SpicyPizza/create-envfile@v2.0.2
-        with:
-          envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
-          envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
-          envkey_SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
-          file_name: .env
-      - name: Yarn Install
-        run: yarn install --immutable
-      - name: Build for deploy
-        run: yarn build
-      - name: Is Backup Required on LionDev Cloud
-        uses: appleboy/ssh-action@v1.0.0
-        id: backup-required
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          cat >>~/.ssh/config <<END
+          Host deployment
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/id_ed25519
+            StrictHostKeyChecking no
+          END
+          apt-get install -y sshpass 
+          sshpass -p "$SSH_KEY_PASS" ssh "$SSH_USER@$SSH_HOST"
         env:
-          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
-        with:
-          host: ${{ secrets.DEPLOY_SSH_HOST }}
-          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
-          port: ${{ secrets.DEPLOY_SSH_PORT }}
-          envs: DEPLOY_PATH
-          script: echo "BACKUP_REQUIRED=$([ -d '~/$DEPLOY_PATH/*' ] && echo 'true' || echo 'false')" >> $GITHUB_OUTPUT
-      - name: Delete and Backup Previous deployment to Alpha LionDev Cloud
-        if: steps.backup-required.outputs.BACKUP_REQUIRED == 'true'
-        id: backup-and-delete
-        uses: appleboy/ssh-action@v1.0.0
-        env:
-          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
-        with:
-          host: ${{ secrets.DEPLOY_SSH_HOST }}
-          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
-          port: ${{ secrets.DEPLOY_SSH_PORT }}
-          envs: DEPLOY_PATH
-          script_stop: true
-          script: |
-            mkdir -p ~/temp-backup
-            mv ~/$DEPLOY_PATH/* ~/temp-backup/
-            rm -rf ~/$DEPLOY_PATH
-      - name: Deploy build to Alpha LionDev Cloud
-        id: deploy
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.DEPLOY_SSH_HOST }}
-          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
-          port: ${{ secrets.DEPLOY_SSH_PORT }}
-          source: 'dist/**,.env'
-          target: ${{ vars.DEPLOY_PATH }}
-          overwrite: true
-      - name: Cleanup deployment to Alpha LionDev Cloud
-        id: cleanup
-        uses: appleboy/ssh-action@v1.0.0
-        env:
-          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
-        with:
-          host: ${{ secrets.DEPLOY_SSH_HOST }}
-          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
-          key: ${{ secrets.DEPLOY_SSH_KEY }}
-          passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
-          port: ${{ secrets.DEPLOY_SSH_PORT }}
-          envs: DEPLOY_PATH
-          script_stop: true
-          script: |
-            cd ~/$DEPLOY_PATH
-            mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
-            rm -rf ~/$DEPLOY_PATH/dist
-            rm -rf ~/temp-backup
+          SSH_USER: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
+          SSH_KEY_PASS: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
+      - name: Test
+        run: |
+          ssh deployment echo "Hello World"
       - name: Update Slack Message - Success
         uses: slackapi/slack-github-action@v1.24.0
         if: steps.deploy.outcome == 'success' || steps.cleanup.outcome == 'success' || steps.backup-and-delete.outcome == 'success'
