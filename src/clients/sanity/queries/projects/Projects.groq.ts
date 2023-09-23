@@ -1,13 +1,13 @@
 import { baseSanityDocumentFragment } from '../base/BaseSanityDocument.groq'
 
 export const sanityProjectFragment = `
-    ${baseSanityDocumentFragment}
-    subtitle,
-    projectWebsite,
-    roles[]->{
-        title
-    },
-    projectImage{asset->{url}},
+  ${baseSanityDocumentFragment}
+  subtitle,
+  projectWebsite,
+  roles[]->{
+    title
+  },
+  projectImage{asset->{url}},
 `
 
 export const sanityProjectsGroqQuery = `
@@ -20,7 +20,7 @@ export const sanityProjectsGroqQuery = `
 export const stanityProjectsPaginatedGroqQuery = `
 *[_type == 'project' && _id > $lastId] | order(_id $orderBy) [0...$limit]
 {
-    _id,
-    ${sanityProjectFragment}
+  _id,
+  ${sanityProjectFragment}
 } 
 `
