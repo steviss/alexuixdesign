@@ -1,20 +1,13 @@
+import { addSlugPrefix } from '..'
 import { DEFAULT_PREFIX } from './Tags.consts'
 import type { ConvertSanityTagToTagFunction, TagType } from './Tags.interface'
 
 const convertSanityTagToTag: ConvertSanityTagToTagFunction = (items, options) => {
   const prefix = options?.prefix ? DEFAULT_PREFIX : false
-  return items.map(({ title, slug, _createdAt, _updatedAt, description, posts }) => ({
-    title,
-    slug: prefix ? `${prefix}/${slug}` : slug,
-    description,
-    posts: posts.map((post) => ({
-      ...post,
-      createdAt: new Date(post._createdAt),
-      updatedAt: new Date(post._updatedAt),
-    })),
-    createdAt: new Date(_createdAt),
-    updatedAt: new Date(_updatedAt),
-  })) as unknown as TagType[]
+  return items.map(({ slug, ...tag }) => <TagType>({
+    ...tag,
+    slug: addSlugPrefix(slug, prefix),
+  }))
 }
 
 export default convertSanityTagToTag

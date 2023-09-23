@@ -1,45 +1,13 @@
-import type { PortableTextProps } from 'astro-portabletext/types'
+import type { BaseSanityDocument, ConvertSanityDocument } from 'src/types'
 
-import type { ConvertSanityDocumentToTypeFunction } from 'src/types'
+import type { TagType } from '..'
 
-export interface ConvertSanityPostToPostFunctionRetrieveFieldsI {
-  body?: boolean
+export type ConvertSanityPostToPostFunction = ConvertSanityDocument<SanityPostType, PostType>
+
+export type PostTagType = Pick<TagType, 'title' | 'slug'>
+
+export type SanityPostType = BaseSanityDocument & {
+  tags: PostTagType[]
 }
 
-export type ConvertSanityPostToPostFunction = ConvertSanityDocumentToTypeFunction<
-  SanityPostType,
-  PostType,
-  ConvertSanityPostToPostFunctionRetrieveFieldsI
->
-
-export type SanityPostType = {
-  slug: string
-  title: string
-  mainImage: {
-    asset: {
-      path: string
-      url: string
-    }
-  }
-  body: PortableTextProps
-  tags: {
-    title: string
-    slug: string
-  }[]
-  estimatedReadingTime: number
-  _createdAt: string
-  _updatedAt: string
-}
-export type PostType = {
-  title: string
-  slug: string
-  heroImage?: string
-  body: PortableTextProps
-  tags: {
-    title: string
-    slug: string
-  }[]
-  estimatedReadingTime: number
-  updatedAt: Date
-  createdAt: Date
-}
+export type PostType = SanityPostType

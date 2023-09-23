@@ -1,37 +1,18 @@
-import type { PortableTextProps } from 'astro-portabletext/types'
+import type { SanityImageWithAssetStub } from '@sanity/image-url/lib/types/types'
 
-import type { ConvertSanityDocumentToTypeFunction, SanityAssetType } from 'src/types'
+import type { BaseSanityDocument, ConvertSanityDocument } from 'src/types'
 
-export type ConvertSanityProjectToProjectFunction = ConvertSanityDocumentToTypeFunction<SanityProjectType, ProjectType>
+export type ConvertSanityProjectToProjectFunction = ConvertSanityDocument<SanityProjectType, ProjectType>
 
-export type SanityProjectType = {
-  slug: string
-  title: string
+export type SanityProjectType = BaseSanityDocument & {
   subtitle: string
-  description: string
   projectWebsite?: string
-  featuredImage?: SanityAssetType
-  projectImage?: SanityAssetType
-  body: PortableTextProps
+  projectImage?: SanityImageWithAssetStub
   roles: {
     title: string
   }[]
-  estimatedReadingTime: number
-  pubDate: string
 }
 
-export type ProjectType = {
-  title: string
-  subtitle: string
-  description: string
-  slug: string
-  featuredImage?: SanityAssetType
-  projectImage?: SanityAssetType
-  projectWebsite?: string
-  body: PortableTextProps
-  roles: {
-    title: string
-  }[]
-  estimatedReadingTime: number
-  pubDate: Date
+export type ProjectType = Omit<SanityProjectType, 'roles'> & {
+  roles: string[]
 }

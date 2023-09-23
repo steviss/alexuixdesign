@@ -1,1 +1,2 @@
-export { default as getPosts } from './Posts.query'
+export * from './Posts.queries'
+export type { PostType } from './Posts.interface'

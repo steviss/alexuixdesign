@@ -1,18 +1,26 @@
-export const sanityProjectsGroqQuery = `
-*[_type == 'project']
-{
-    title,
-    "slug": slug.current,
+import { baseSanityDocumentFragment } from '../base/BaseSanityDocument.groq'
+
+export const sanityProjectFragment = `
+    ${baseSanityDocumentFragment}
     subtitle,
-    description,
-    body,
     projectWebsite,
     roles[]->{
         title
     },
-    'pubDate': _createdAt,
-    "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
-    featuredImage{asset->{url}},
     projectImage{asset->{url}},
+`
+
+export const sanityProjectsGroqQuery = `
+*[_type == 'project']
+{
+  ${sanityProjectFragment}
+} 
+`
+
+export const stanityProjectsPaginatedGroqQuery = `
+*[_type == 'project' && _id > $lastId] | order(_id $orderBy) [0...$limit]
+{
+    _id,
+    ${sanityProjectFragment}
 } 
 `

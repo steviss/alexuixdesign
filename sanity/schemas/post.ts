@@ -20,6 +20,11 @@ export default defineType({
       },
     }),
     defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+    }),
+    defineField({
       name: "subtitle",
       title: "Subtitle",
       description:
@@ -27,8 +32,8 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      name: "mainImage",
-      title: "Main image",
+      name: "featuredImage",
+      title: "Featured image",
       type: "image",
       options: {
         hotspot: true,

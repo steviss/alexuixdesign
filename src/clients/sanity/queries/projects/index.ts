@@ -1,2 +1,2 @@
-export { default as getProjects } from './Projects.query'
+export * from './Projects.queries'
 export type { ProjectType } from './Projects.interface'

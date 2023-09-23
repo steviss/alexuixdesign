@@ -1,2 +1,2 @@
 export type * from './ConvertSanityDocumentToTypeFunction'
-export type * from './SanityAssetType'
+export type * from './BaseSanityDocument'
