@@ -1,10 +1,10 @@
 import { addSlugPrefix } from '..'
 import { DEFAULT_PREFIX } from './Tags.consts'
-import type { ConvertSanityTagToTagFunction, TagType } from './Tags.interface'
+import type { ConvertSanityTagToTagFunction } from './Tags.interface'
 
 const convertSanityTagToTag: ConvertSanityTagToTagFunction = (items, options) => {
   const prefix = options?.prefix ? DEFAULT_PREFIX : false
-  return items.map(({ slug, ...tag }) => <TagType>({
+  return items.map(({ slug, ...tag }) => ({
     ...tag,
     slug: addSlugPrefix(slug, prefix),
   }))

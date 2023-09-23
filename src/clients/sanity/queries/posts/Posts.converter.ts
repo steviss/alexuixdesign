@@ -1,14 +1,14 @@
 import { addSlugPrefix } from '..'
-import { DEFAULT_PREFIX } from './Posts.consts'
 import { DEFAULT_PREFIX as DEFAULT_PREFIX_TAG } from '../tags/Tags.consts'
-import type { ConvertSanityPostToPostFunction,  PostType } from './Posts.interface'
+import { DEFAULT_PREFIX } from './Posts.consts'
+import type { ConvertSanityPostToPostFunction } from './Posts.interface'
 
 const convertSanityPostToPost: ConvertSanityPostToPostFunction = (items, options) => {
   const prefix = options?.prefix ? DEFAULT_PREFIX : false
-  return items.map(({ slug, body, featuredImage, tags, ...post }) => <PostType>({
+  return items.map(({ slug, tags, ...post }) => ({
     ...post,
     slug: addSlugPrefix(slug, prefix),
-    tags: tags.map((tag) => ({ ...tag, slug: addSlugPrefix(slug, DEFAULT_PREFIX_TAG ) })),
+    tags: tags.map((tag) => ({ ...tag, slug: addSlugPrefix(slug, DEFAULT_PREFIX_TAG) })),
   }))
 }
 
