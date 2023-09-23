@@ -1,27 +1,21 @@
 ---
 import { FormattedDate } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
-import { getPosts, getTags, type PostType, type TagType } from 'src/clients/sanity'
+import { getPostsQuery, getTagsQuery } from 'src/clients/sanity'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
 
-type Props = {
-  posts: PostType[]
-  tags: TagType[]
+export async function getTags() {
+  return await getTagsQuery(true)
 }
 
-export async function getStaticPaths() {
-  const posts = await getPosts()
-  const tags = await getTags()
-  return {
-    props: {
-      posts,
-      tags,
-    },
-  }
+export async function getPosts() {
+  return await getPostsQuery(true)
 }
 
-const { posts, tags } = Astro.props
+const tags = await getTags()
+
+const posts = await getPosts()
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>

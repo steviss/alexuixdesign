@@ -1,12 +1,12 @@
 ---
-import { getProjects, type ProjectType } from 'src/clients/sanity'
+import { getProjectsQuery, type ProjectType } from 'src/clients/sanity'
 import PortableText from 'src/components/sanity/PortableText.astro'
 import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
 
 type Props = ProjectType
 
 export async function getStaticPaths() {
-  const projects = await getProjects()
+  const projects = await getProjectsQuery()
   return projects.map((project) => {
     return {
       params: {

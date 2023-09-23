@@ -3,7 +3,7 @@ import type { ConvertSanityProjectToProjectFunction, ProjectType } from './Proje
 
 const convertSanityProjectToProject: ConvertSanityProjectToProjectFunction = (items, options) => {
   const prefix = options?.prefix ? DEFAULT_PREFIX : false
-  return items.map(({ pubDate, roles, slug, ...project }) => <ProjectType>({
+  return items.map(({ roles, slug, ...project }) => <ProjectType>({
     ...project,
     slug: prefix ? `${prefix}/${slug}` : slug,
     roles: roles.map(({ title }) => title),

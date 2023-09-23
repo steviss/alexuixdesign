@@ -1,10 +1,12 @@
 ---
-import { getPosts } from 'src/clients/sanity'
+import { getPostsQuery, type PostType } from 'src/clients/sanity'
 import PortableText from 'src/components/sanity/PortableText.astro'
 import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
 
+export type Props = PostType
+
 export async function getStaticPaths() {
-  const posts = await getPosts()
+  const posts = await getPostsQuery()
   return posts.map((post) => {
     return {
       params: {
@@ -15,9 +17,9 @@ export async function getStaticPaths() {
   })
 }
 
-const { title, body, description, createdAt, updatedAt, heroImage } = Astro.props
+const { title, body, description, pubDate, upDate, featuredImage } = Astro.props
 ---
 
-<BlogPostLayout title={title} description={description} createdAt={createdAt} updatedAt={updatedAt} heroImage={heroImage}>
+<BlogPostLayout title={title} description={description} pubDate={pubDate} upDate={upDate} featuredImage={featuredImage}>
   <PortableText portableText={body} />
 </BlogPostLayout>
