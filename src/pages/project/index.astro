@@ -3,9 +3,21 @@ import { FormattedDate } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
-import { getProjects } from 'src/clients/sanity'
+import { getProjects, type ProjectType } from 'src/clients/sanity'
 
-const projects = await getProjects(true)
+type Props = { projects: ProjectType[] }
+
+export async function getStaticPaths() {
+  const projects = await getProjects(true)
+
+  return {
+    props: {
+      projects,
+    },
+  }
+}
+
+const { projects } = Astro.props
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>

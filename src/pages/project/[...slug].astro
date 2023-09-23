@@ -17,9 +17,9 @@ export async function getStaticPaths() {
   })
 }
 
-const { title, body, description, pubDate, featuredImage } = Astro.props
+const { title, body, description, pubDate, upDate, featuredImage } = Astro.props
 ---
 
-<BlogPostLayout title={title} description={description} createdAt={pubDate} heroImage={featuredImage?.asset.url}>
+<BlogPostLayout title={title} description={description} pubDate={pubDate} upDate={upDate} featuredImage={featuredImage}>
   <PortableText portableText={body} />
 </BlogPostLayout>
