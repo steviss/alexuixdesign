@@ -3,23 +3,28 @@ import { getProjectsQuery, type ProjectType } from 'src/clients/sanity'
 import PortableText from 'src/components/sanity/PortableText.astro'
 import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
 
-type Props = ProjectType
+type Props = ProjectType & {
+  previousProjectUrl?: string
+  nextProjectUrl?: string
+}
 
 export async function getStaticPaths() {
   const projects = await getProjectsQuery()
-  return projects.map((project) => {
+  return projects.map((project, idx) => {
     return {
       params: {
         slug: project.slug,
       },
-      props: { ...project },
+      props: { ...project, previousProjectUrl: projects[idx - 1]?.slug, nextProjectUrl: projects[idx + 1]?.slug },
     }
   })
 }
 
-const { title, body, description, pubDate, upDate, featuredImage } = Astro.props
+const { title, body, description, pubDate, upDate, featuredImage, previousProjectUrl, nextProjectUrl } = Astro.props
 ---
 
 <BlogPostLayout title={title} description={description} pubDate={pubDate} upDate={upDate} featuredImage={featuredImage}>
   <PortableText portableText={body} />
+  {previousProjectUrl ? <a href={previousProjectUrl}>Previous Project</a> : 'This is the first project'}
+  {nextProjectUrl ? <a href={nextProjectUrl}>Next Project</a> : 'This is the last project'}
 </BlogPostLayout>
