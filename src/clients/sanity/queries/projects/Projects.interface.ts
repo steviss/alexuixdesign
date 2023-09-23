@@ -1,8 +1,8 @@
 import type { PortableTextProps } from 'astro-portabletext/types'
 
-import type { ConvertSanityDocumentToTypeFunction, SanityAssetType } from 'src/types'
+import type { ConvertSanityDocument, SanityAssetType } from 'src/types'
 
-export type ConvertSanityProjectToProjectFunction = ConvertSanityDocumentToTypeFunction<SanityProjectType, ProjectType>
+export type ConvertSanityProjectToProjectFunction = ConvertSanityDocument<SanityProjectType, ProjectType>
 
 export type SanityProjectType = {
   slug: string
@@ -20,18 +20,6 @@ export type SanityProjectType = {
   pubDate: string
 }
 
-export type ProjectType = {
-  title: string
-  subtitle: string
-  description: string
-  slug: string
-  featuredImage?: SanityAssetType
-  projectImage?: SanityAssetType
-  projectWebsite?: string
-  body: PortableTextProps
-  roles: {
-    title: string
-  }[]
-  estimatedReadingTime: number
-  pubDate: Date
+export type ProjectType = Omit<SanityProjectType, 'roles'> & {
+  roles: string[]
 }

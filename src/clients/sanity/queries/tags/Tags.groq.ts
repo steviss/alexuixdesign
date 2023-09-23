@@ -7,10 +7,8 @@ export const sanityTagsGroqQuery = `
   	title,
   	"slug": slug.current,
     "estimatedReadingTime": round(length(pt::text(body)) / 5 / 180),
-  	_createdAt,
-    _updatedAt
+    'pubDate': _createdAt,
 	},
-  _createdAt,
-  _updatedAt
+  'pubDate': _createdAt,
 }
 `
