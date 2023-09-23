@@ -1,0 +1,34 @@
+---
+import { addSlugPrefix, DEFAULT_PROJECTS_PREFIX, getProjectsQuery, type ProjectType } from 'src/clients/sanity'
+import PortableText from 'src/components/sanity/PortableText.astro'
+import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
+
+type Props = ProjectType & {
+  previousProjectSlug?: string
+  nextProjectSlug?: string
+}
+
+export async function getStaticPaths() {
+  const projects = await getProjectsQuery()
+  return projects.map((project, idx) => {
+    const previousProject = projects[idx - 1]
+    const nextProject = projects[idx + 1]
+    const previousProjectSlug = previousProject ? `/${addSlugPrefix(previousProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
+    const nextProjectSlug = nextProject ? `/${addSlugPrefix(nextProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
+    return {
+      params: {
+        slug: project.slug,
+      },
+      props: { ...project, previousProjectSlug, nextProjectSlug },
+    }
+  })
+}
+
+const { title, body, description, pubDate, upDate, featuredImage, previousProjectSlug, nextProjectSlug } = Astro.props
+---
+
+<BlogPostLayout title={title} description={description} pubDate={pubDate} upDate={upDate} featuredImage={featuredImage}>
+  <PortableText portableText={body} />
+  {previousProjectSlug ? <a href={previousProjectSlug}>Previous Project</a> : 'This is the first project'}
+  {nextProjectSlug ? <a href={nextProjectSlug}>Next Project</a> : 'This is the last project'}
+</BlogPostLayout>

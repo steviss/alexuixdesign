@@ -2,9 +2,10 @@
   "folders": [
     {
       "name": "alexuix.design Astro ReactJS",
-      "path": "./"
+      "path": "./",
+      "prettier.configPath": "./.prettierrc.cjs"
     },
-    { "name": "alexuix.design Blogging Studio", "path": "./sanity" }
+    { "name": "alexuix.design Blogging Studio", "path": "./sanity", "prettier.configPath": "./.prettierrc.cjs" }
   ],
   "extensions": {
     "recommendations": [
@@ -28,7 +29,7 @@
     "eslint.validate": ["javascript", "javascriptreact", "html", "typescript", "typescriptreact"],
     "css.lint.unknownAtRules": "ignore", //@tailwind imports for warnings
     "prettier.documentSelectors": ["**/*.astro"],
-    "eslint.workingDirectories": ["./"],
+    "eslint.workingDirectories": ["./", "./sanity"],
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "typescript.preferences.importModuleSpecifier": "relative",
     "files.eol": "\n",

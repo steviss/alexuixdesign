@@ -16,7 +16,7 @@ module.exports = {
   ],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-  plugins: [require.resolve('prettier-plugin-astro'), require.resolve('@trivago/prettier-plugin-sort-imports')],
+  plugins: ['prettier-plugin-astro', '@trivago/prettier-plugin-sort-imports'],
   overrides: [
     {
       files: '*.astro',

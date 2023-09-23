@@ -1,9 +1,8 @@
-export interface ConvertSanityDocumentToTypeFunction<T = unknown, K = unknown, J = void> {
+export interface ConvertSanityDocument<T = unknown, K = unknown> {
   (
     items: T[],
     options?: {
       prefix: string | undefined | boolean | null
-      retrieveFields?: J
     },
   ): K[]
 }

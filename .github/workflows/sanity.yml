@@ -1,7 +1,5 @@
-name: Deploy Production
-#'on':
-#  push:
-#    branches: ['production']
+name: Deploy Sanity Studio
+
 'on':
   workflow_dispatch:
 
@@ -10,6 +8,9 @@ jobs:
     environment: production
     name: Deploying to LionDev Cloud
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./sanity
     steps:
       - name: Initial Slack Message
         id: slack
@@ -35,12 +36,12 @@ jobs:
                   "elements": [
                     {
                       "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -66,7 +67,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
+                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
                     }
                   ]
                 }
@@ -77,29 +78,19 @@ jobs:
         with:
           cache: 'yarn'
           node-version-file: 'package.json'
-      - name: Create .env file for frontend
-        uses: SpicyPizza/create-envfile@v2.0.2
-        with:
-          envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
-          envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
-          file_name: .env
-      - name: Yarn FontAwesome Setup
-        env:
-          FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
-        run: |
-          yarn config set initScope npmScopes
-          yarn config set npmScopes.fortawesome.npmRegistryServer "https://npm.fontawesome.com"
-          yarn config set npmScopes.fortawesome.npmAlwaysAuth true
-          yarn config set npmScopes.fortawesome.npmAuthToken $FONTAWESOME_NPM_AUTH_TOKEN
       - name: Yarn Install
         run: yarn install --immutable
       - name: Build for deploy
+        env:
+          SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
+          SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         run: yarn build
       - name: Delete and Backup Previous deployment to Alpha LionDev Cloud
         id: backup-and-delete
         uses: appleboy/ssh-action@v1.0.0
         env:
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -110,7 +101,7 @@ jobs:
           script_stop: true
           script: |
             mkdir -p ~/temp-backup
-            mv ~/$DEPLOY_PATH/* ~/temp-backup/
+            mv ~/$DEPLOY_PATH/* ~/temp-backup
             rm -rf ~/$DEPLOY_PATH/*
       - name: Deploy build to Alpha LionDev Cloud
         id: deploy
@@ -121,14 +112,14 @@ jobs:
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
           port: ${{ secrets.DEPLOY_SSH_PORT }}
-          source: 'dist/**,.env'
-          target: ${{ vars.DEPLOY_PATH }}
+          source: 'sanity/dist/**,sanity/deployment/.htaccess'
+          target: ${{ vars.SANITY_DEPLOY_PATH }}
           overwrite: true
       - name: Cleanup deployment to Alpha LionDev Cloud
         id: cleanup
         uses: appleboy/ssh-action@v1.0.0
         env:
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -139,8 +130,8 @@ jobs:
           script_stop: true
           script: |
             cd ~/$DEPLOY_PATH
-            mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
-            rm -rf ~/$DEPLOY_PATH/dist
+            mv ~/$DEPLOY_PATH/sanity/dist/* ~/$DEPLOY_PATH
+            rm -rf ~/$DEPLOY_PATH/sanity
             rm -rf ~/temp-backup
       - name: Update Slack Message - Success
         uses: slackapi/slack-github-action@v1.24.0
@@ -167,12 +158,12 @@ jobs:
                   "elements": [
                     {
                       "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -198,7 +189,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
+                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
                     }
                   ]
                 }
@@ -208,7 +199,7 @@ jobs:
         if: steps.deploy.outcome == 'failure' || steps.cleanup.outcome == 'failure' || steps.backup-and-delete.outcome == 'failure'
         uses: appleboy/ssh-action@v1.0.0
         env:
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
+          DEPLOY_PATH: ${{ vars.SANITY_DEPLOY_PATH }}
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -218,15 +209,15 @@ jobs:
           envs: DEPLOY_PATH
           script_stop: true
           script: |
-            mv ~/temp-backup/* ~/$DEPLOY_PATH/
+            mv ~/temp-backup/* ~/$DEPLOY_PATH
             rm -rf ~/temp-backup
       - name: Update Slack Message - Failed
         uses: slackapi/slack-github-action@v1.24.0
         if: failure()
         env:
-          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN}}'
+          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
         with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           update-ts: ${{ steps.slack.outputs.ts }}
           payload: |
             {
@@ -245,12 +236,12 @@ jobs:
                   "elements": [
                     {
                       "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
+                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
+                      "alt_text": "Sanity Logo"
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
+                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
                     }
                   ]
                 },
@@ -276,7 +267,7 @@ jobs:
                     },
                     {
                       "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
+                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
                     }
                   ]
                 }

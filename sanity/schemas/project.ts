@@ -1,8 +1,8 @@
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-  name: "post",
-  title: "Post",
+  name: "project",
+  title: "Project",
   type: "document",
   fields: [
     defineField({
@@ -20,11 +20,6 @@ export default defineType({
       },
     }),
     defineField({
-      name: "description",
-      title: "Description",
-      type: "text",
-    }),
-    defineField({
       name: "subtitle",
       title: "Subtitle",
       description:
@@ -32,18 +27,42 @@ export default defineType({
       type: "string",
     }),
     defineField({
-      name: "featuredImage",
-      title: "Featured image",
+      name: "description",
+      title: "Description",
+      description:
+        "Contents of this field appear on the Project page on the top.",
+      type: "string",
+    }),
+    defineField({
+      name: "projectWebsite",
+      title: "Project Website URL",
+      description: "URL of the finished project.",
+      type: "url",
+    }),
+    defineField({
+      name: "projectImage",
+      title: "Project image",
+      description: "Project image that appears on the Home Page.",
       type: "image",
       options: {
         hotspot: true,
       },
     }),
     defineField({
-      name: "tags",
-      title: "Tags",
+      name: "featuredImage",
+      title: "Featured image",
+      description:
+        "Featured image that appears on the Project page on the top.",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: "roles",
+      title: "Roles",
       type: "array",
-      of: [{ type: "reference", to: { type: "tag" } }],
+      of: [{ type: "reference", to: { type: "role" } }],
     }),
     defineField({
       name: "body",
