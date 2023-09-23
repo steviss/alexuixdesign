@@ -2,12 +2,21 @@
 import Logo from './Logo.astro'
 import Navigation from './Navigation.astro'
 import { MenuButton } from 'src/components/react'
+
+export type Props = { primaryStyles: boolean }
+
+const { primaryStyles } = Astro.props
 ---
 
-<header class="flex justify-between items-center bg-secondary border-b border-black px-5 md:px-10 lg:px-12">
-  <Logo />
-  <MenuButton client:only />
-  <ul class="hidden md:flex flex-row list-none">
-    <Navigation />
-  </ul>
+<header style=`background-color: ${primaryStyles ? "#161616" : "#C6FB3E"};` id="top" class="w-full">
+  <main
+    style=`border-color: ${primaryStyles ? "white": "black"}`
+    class="container py-8 md:py-0 mx-auto flex justify-between items-center border-b border-black px-5 md:px-10 lg:px-12"
+  >
+    <Logo primaryStyles={primaryStyles} />
+    <MenuButton client:only />
+    <ul class="hidden md:flex flex-row list-none">
+      <Navigation />
+    </ul>
+  </main>
 </header>

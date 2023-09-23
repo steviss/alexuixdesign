@@ -2,9 +2,15 @@
 import NavigationLink from './NavigationLink.astro'
 ---
 
-<section class="flex items-center py-6">
-  <NavigationLink label="About" href="/about" />
-  <NavigationLink label="Work" href="/work" />
-  <NavigationLink label="Blog" href="/blog" />
-  <button class="py-1 px-4 border border-black rounded-full text-black bg-secondary hover:text-secondary hover:bg-black">Say Hello</button>
+<section class="flex items-center gap-4 py-8">
+  <div class="flex items-center">
+    <NavigationLink label="About" href="/about" />
+    <NavigationLink label="Work" href="/work" />
+    <NavigationLink label="Blog" href="/blog" />
+  </div>
+  <a
+    href="/contact"
+    class="font-bold uppercase text-2xl leading-7 tracking-wide py-3 px-6 border border-black rounded-full text-black bg-secondary hover:text-secondary hover:bg-black"
+    >Say Hello</a
+  >
 </section>
