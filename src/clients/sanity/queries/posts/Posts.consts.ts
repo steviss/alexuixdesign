@@ -1,6 +1,6 @@
 import type { ConvertSanityPostToPostFunctionRetrieveFieldsI } from './Posts.interface'
 
-export const RETRIEVE_FIELDS_DEFAULTS: ConvertSanityPostToPostFunctionRetrieveFieldsI = {
+export const DEFAULT_RETRIEVE_FIELDS: ConvertSanityPostToPostFunctionRetrieveFieldsI = {
   body: false,
 }
 
