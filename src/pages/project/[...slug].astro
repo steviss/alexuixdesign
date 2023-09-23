@@ -1,5 +1,5 @@
 ---
-import { getProjectsQuery, type ProjectType } from 'src/clients/sanity'
+import { addSlugPrefix, DEFAULT_PROJECTS_PREFIX, getProjectsQuery, type ProjectType } from 'src/clients/sanity'
 import PortableText from 'src/components/sanity/PortableText.astro'
 import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
 
@@ -11,11 +11,15 @@ type Props = ProjectType & {
 export async function getStaticPaths() {
   const projects = await getProjectsQuery()
   return projects.map((project, idx) => {
+    const previousProject = projects[idx - 1]
+    const nextProject = projects[idx + 1]
+    const previousProjectSlug = previousProject ? `/${addSlugPrefix(previousProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
+    const nextProjectSlug = nextProject ? `/${addSlugPrefix(nextProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
     return {
       params: {
         slug: project.slug,
       },
-      props: { ...project, previousProjectSlug: projects[idx - 1]?.slug, nextProjectSlug: projects[idx + 1]?.slug },
+      props: { ...project, previousProjectSlug, nextProjectSlug },
     }
   })
 }
