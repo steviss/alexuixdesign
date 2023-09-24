@@ -1,3 +1,33 @@
+:root {
+  --scrollbar-width: 15px;
+  --font-size: 16px;
+}
+
+html,
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+}
+
+.lock-scroll {
+  height: 100vh;
+  overflow: hidden !important;
+  padding-right: var(--scrollbar-width);
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+body {
+  position: relative;
+}
+
+main {
+  @apply h-full;
+}
 @font-face {
   font-family: 'Neue Haas Grotesk Display Pro';
   src: url('/fonts/NeueHaasDisplayBold.ttf') format('woff');
@@ -25,7 +55,4 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-}
-body {
-  font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
 }

@@ -2,7 +2,7 @@
 import NavigationLink from './NavigationLink.astro'
 ---
 
-<section class="flex items-center gap-4 py-8">
+<section class="flex items-center flex-col md:flex-row gap-4 py-4 md:py-8">
   <div class="flex items-center">
     <NavigationLink label="About" href="/about" />
     <NavigationLink label="Work" href="/work" />
@@ -10,7 +10,7 @@ import NavigationLink from './NavigationLink.astro'
   </div>
   <a
     href="/contact"
-    class="font-bold uppercase text-2xl leading-7 tracking-wide py-3 px-6 border border-black rounded-full text-black bg-secondary hover:text-secondary hover:bg-black"
+    class="font-bold uppercase md:text-xl text-lg lg:text-2xl tracking-wide py-3 px-6 border border-black rounded-full text-black bg-secondary hover:text-secondary hover:bg-black"
     >Say Hello</a
   >
 </section>
