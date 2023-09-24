@@ -1,6 +1,7 @@
 ---
 import Layout from 'src/layouts/Layout.astro'
 import { getProjectsQuery } from 'src/clients/sanity'
+import { ProjectSection } from 'src/components/react'
 
 export async function getProjects() {
   return await getProjectsQuery(true)
@@ -9,7 +10,7 @@ export async function getProjects() {
 const projects = await getProjects()
 ---
 
-<Layout primaryStyles={false} title="Home Page" description="Lorem ipsum dolor sit amet">
+<Layout headerStyle title="Home Page" description="Lorem ipsum dolor sit amet">
   <section class="w-full bg-secondary">
     <div class="container mx-auto flex flex-col min-h-screen w-full px-5 md:px-10 lg:px-12 justify-center border-b border-black">
       <p class="text-lightGray font-bold uppercase md:text-7xl text-5xl lg:text-[115px] lg:leading-[115px] max-w-screen-lg">
@@ -38,4 +39,5 @@ const projects = await getProjects()
       </div>
     </div>
   </section>
+  {projects.map((project) => <ProjectSection client:only {...project} />)}
 </Layout>
