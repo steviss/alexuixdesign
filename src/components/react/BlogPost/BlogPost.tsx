@@ -17,7 +17,7 @@ const BlogPost: FC<BlogPostProps> = ({ title, pubDate, slug }) => {
         <a className="mb-5 rounded-lg bg-orange-600 shadow-xl lg:mb-0" href={`/blog/${slug}/`}>
           <h3 className="mb-1 text-lg font-semibold">{title}</h3>
         </a>
-        <FormattedDate className="italic text-gray-600" date={pubDate} />
+        <FormattedDate className="text-gray-600 italic" date={pubDate} />
       </div>
     </div>
   )

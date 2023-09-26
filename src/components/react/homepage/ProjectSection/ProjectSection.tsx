@@ -9,22 +9,22 @@ const ProjectSection: FC<ProjectSectionProps> = ({ projectImage, title, slug, su
       <div className="container mx-auto">
         <div
           onClick={() => handleClick()}
-          className="cursor-pointer flex flex-col gap-2 md:gap-0 justify-end md:relative px-5 md:px-10 lg:px-12"
+          className="flex cursor-pointer flex-col justify-end gap-2 px-5 md:relative md:gap-0 md:px-10 lg:px-12"
         >
-          <div className="w-full h-full opacity-50">
-            <img src={projectImage?.asset.url} className="w-full h-auto object-cover block" />
+          <div className="h-full w-full opacity-50">
+            <img src={projectImage?.asset.url} className="block h-auto w-full object-cover" />
           </div>
-          <div className="md:absolute w-full h-full bottom-0 justify-end items-start px-0 md:px-16 lg:px-20 left-0 flex flex-col gap-2 md:gap-8 md:pb-10 text-white z-10">
-            <h3 className="md:text-3xl text-2xl lg:text-4xl font-bold ">
+          <div className="bottom-0 left-0 z-10 flex h-full w-full flex-col items-start justify-end gap-2 px-0 text-white md:absolute md:gap-8 md:px-16 md:pb-10 lg:px-20">
+            <h3 className="text-2xl font-bold md:text-3xl lg:text-4xl ">
               <a>{title}</a>
             </h3>
-            <h4 className="text-lg md:text-xl lg:text-2xl font-medium max-w-[370px]">{subtitle}</h4>
+            <h4 className="max-w-[370px] text-lg font-medium md:text-xl lg:text-2xl">{subtitle}</h4>
             <div className="flex flex-row gap-4 ">
-              <ul className="flex flex-row flex-wrap gap-3 md:gap-6 justify-start">
+              <ul className="flex flex-row flex-wrap justify-start gap-3 md:gap-6">
                 {roles.map((role: string) => {
                   return (
                     <li key={role}>
-                      <span className="text-xs text-center md:text-sm border border-white rounded-full py-2 px-4 md:py-3 md:px-6">
+                      <span className="rounded-full border border-white px-4 py-2 text-center text-xs md:px-6 md:py-3 md:text-sm">
                         {role}
                       </span>
                     </li>
