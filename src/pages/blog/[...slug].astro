@@ -1,12 +1,12 @@
 ---
-import { getPostsQuery, type PostType } from 'src/clients/sanity'
+import { useGetPostsQuery, type PostType } from 'src/clients/sanity'
 import PortableText from 'src/components/sanity/PortableText.astro'
 import BlogPostLayout from 'src/layouts/BlogPostLayout.astro'
 
 export type Props = PostType
 
 export async function getStaticPaths() {
-  const posts = await getPostsQuery()
+  const posts = await useGetPostsQuery()
   return posts.map((post) => {
     return {
       params: {

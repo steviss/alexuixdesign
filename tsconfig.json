@@ -7,5 +7,5 @@
     "jsxImportSource": "react",
     "baseUrl": "."
   },
-  "include": ["src/**/*"]
+  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"]
 }
