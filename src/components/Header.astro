@@ -4,10 +4,10 @@ import Navigation from './Navigation.astro'
 import { MenuButton } from 'src/components/react'
 ---
 
-<header class="flex justify-between items-center py-6 md:py-12">
-  <Logo class="mx-4 sm:mr-auto text-3xl" />
+<header class="flex items-center justify-between py-6 md:py-12">
+  <Logo class="mx-4 text-3xl sm:mr-auto" />
   <MenuButton client:only />
-  <ul class="hidden md:flex flex-row list-none">
+  <ul class="hidden list-none flex-row md:flex">
     <Navigation />
   </ul>
 </header>

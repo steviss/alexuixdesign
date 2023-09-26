@@ -1,12 +1,12 @@
 ---
 import { FormattedDate } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
-import { useGetPostsQuery, getTagsQuery } from 'src/clients/sanity'
+import { useGetPostsQuery, useGetTagsQuery } from 'src/clients/sanity'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
 
 export async function getTags() {
-  return await getTagsQuery(true)
+  return await useGetTagsQuery(true)
 }
 
 export async function getPosts() {

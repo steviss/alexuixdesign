@@ -1,4 +1,5 @@
-import { addSlugPrefix } from '..'
+import { addSlugPrefix } from 'src/clients/sanity'
+
 import { DEFAULT_PREFIX } from './Tags.consts'
 import type { ConvertSanityTagToTagFunction } from './Tags.interface'
 

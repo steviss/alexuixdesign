@@ -5,6 +5,6 @@ import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
 export const imageBuilder = imageUrlBuilder(useSanityClient())
 
-export function getImageUrl(source: SanityImageSource) {
+export function useGetImageUrl(source: SanityImageSource) {
   return imageBuilder.image(source)
 }
