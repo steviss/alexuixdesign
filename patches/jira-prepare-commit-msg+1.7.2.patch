@@ -1,0 +1,17 @@
+diff --git a/node_modules/jira-prepare-commit-msg/bin/config.js b/node_modules/jira-prepare-commit-msg/bin/config.js
+index b51d947..06fef47 100644
+--- a/node_modules/jira-prepare-commit-msg/bin/config.js
++++ b/node_modules/jira-prepare-commit-msg/bin/config.js
+@@ -29,10 +29,12 @@ async function loadConfig(configPath) {
+             searchPlaces: [
+                 'package.json',
+                 '.jirapreparecommitmsgrc',
++                '.jirapreparecommitmsgrc.cjs',
+                 '.jirapreparecommitmsgrc.json',
+                 '.jirapreparecommitmsgrc.yaml',
+                 '.jirapreparecommitmsgrc.yml',
+                 'jira-prepare-commit-msg.config.js',
++                'jira-prepare-commit-msg.config.cjs',
+             ],
+         });
+         const config = configPath ? await explorer.load(resolveConfig(configPath)) : await explorer.search();

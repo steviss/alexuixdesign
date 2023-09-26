@@ -5,6 +5,7 @@
   "license": "Copyrighted",
   "private": true,
   "scripts": {
+    "postinstall": "patch-package",
     "sanity": "docker-compose up",
     "sanity:down": "docker-compose down",
     "dev": "astro dev",
@@ -70,6 +71,8 @@
     "husky": "^8.0.3",
     "jira-prepare-commit-msg": "^1.7.2",
     "lint-staged": "^14.0.1",
+    "patch-package": "^8.0.0",
+    "postinstall": "^0.8.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "prettier-plugin-css-order": "^2.0.0",
