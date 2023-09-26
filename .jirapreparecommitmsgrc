@@ -1,5 +1,5 @@
 {
-  "messagePattern": "($J) $M",
+  "messagePattern": "[$J] $M",
   "jiraTicketPattern": "([A-Z]+-\\d+)",
   "isConventionalCommit": true,
   "conventionalCommitPattern": "^([a-z]+)(\\([a-z0-9.,-_ ]+\\))?!?: ([\\w \\S]+)$",
