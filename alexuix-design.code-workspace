@@ -31,7 +31,7 @@
     "prettier.documentSelectors": ["**/*.astro"],
     "eslint.workingDirectories": ["./", "./sanity"],
     "typescript.enablePromptUseWorkspaceTsdk": true,
-    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
     "files.eol": "\n",
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
