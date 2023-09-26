@@ -1,10 +1,10 @@
 ---
-import { getImageUrl } from 'src/clients/sanity'
+import { useGetImageUrl } from 'src/clients/sanity'
 
 const { asset, alt } = Astro.props.node
 
-const url = getImageUrl(asset).url()
-const webpUrl = getImageUrl(asset).format('webp').url()
+const url = useGetImageUrl(asset).url()
+const webpUrl = useGetImageUrl(asset).format('webp').url()
 ---
 
 <picture>

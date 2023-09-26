@@ -13,7 +13,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write ."
+    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,cjs,mjs,astro}'",
+    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx,cjs,mjs,astro}' --report-unused-disable-directives"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.2",
@@ -48,10 +49,12 @@
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "^6.7.2",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-astro": "^0.29.0",
+    "eslint-plugin-astro": "latest",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-no-relative-import-paths": "^1.5.2",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "^7.33.2",
@@ -62,7 +65,8 @@
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "prettier-plugin-css-order": "^2.0.0",
-    "prettier-plugin-tailwindcss": "^0.5.4"
+    "prettier-plugin-tailwindcss": "^0.5.4",
+    "typescript": "^5.2.2"
   },
   "engines": {
     "node": ">=18.18.0 <19",

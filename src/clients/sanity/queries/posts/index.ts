@@ -1,2 +1,2 @@
 export * from './Posts.queries'
-export type { PostType } from './Posts.interface'
+export type { PostType, SanityPostType } from './Posts.interface'

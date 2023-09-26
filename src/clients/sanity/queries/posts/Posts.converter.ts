@@ -1,5 +1,5 @@
-import { addSlugPrefix } from '..'
-import { DEFAULT_PREFIX as DEFAULT_PREFIX_TAG } from '../tags/Tags.consts'
+import { DEFAULT_PREFIX as DEFAULT_PREFIX_TAG, addSlugPrefix } from 'src/clients/sanity'
+
 import { DEFAULT_PREFIX } from './Posts.consts'
 import type { ConvertSanityPostToPostFunction } from './Posts.interface'
 

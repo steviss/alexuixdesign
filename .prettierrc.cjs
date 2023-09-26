@@ -1,6 +1,5 @@
 /** @type {import("prettier").Config} */
-
-module.exports = {
+const config = {
   printWidth: 140,
   trailingComma: 'all',
   tabWidth: 2,
@@ -28,3 +27,5 @@ module.exports = {
   tailwindFunctions: ['classNames'],
   cssDeclarationSorterOrder: 'smacss',
 }
+
+module.exports = config
