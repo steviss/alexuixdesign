@@ -10,3 +10,6 @@ src/env.d.ts
 .eslintrc.cjs
 .prettierrc.cjs
 tailwind.config.cjs
+.commitlintrc.cjs
+.jirapreparecommitmsgrc.cjs
+.lintstagedrc.cjs
