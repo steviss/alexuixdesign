@@ -1,4 +1,8 @@
 const config = {
+  env: {
+    browser: true,
+    node: true,
+  },
   plugins: [
     'react',
     'react-redux',
