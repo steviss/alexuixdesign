@@ -11,5 +11,5 @@ src/env.d.ts
 .prettierrc.cjs
 tailwind.config.cjs
 .commitlintrc.cjs
-.jirapreparecommitmsgrc.cjs
+jira-prepare-commit-msg.config.cjs
 .lintstagedrc.cjs
