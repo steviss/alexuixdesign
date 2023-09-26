@@ -1,5 +1,11 @@
 import { useRef } from 'react'
 
+declare global {
+  interface CSSStyleDeclaration {
+    msOverflowStyle?: 'auto' | 'none' | 'scrollbar' | 'scrollbar-thin' | 'inherit' | 'initial' | 'revert' | 'unset'
+  }
+}
+
 const useScrollbarWidth = (): number => {
   const didCompute = useRef(false)
   const widthRef = useRef(0)
@@ -9,7 +15,7 @@ const useScrollbarWidth = (): number => {
   const outer = document.createElement('div')
   outer.style.visibility = 'hidden'
   outer.style.overflow = 'scroll'
-  //@ts-ignore
+
   outer.style.msOverflowStyle = 'scrollbar'
   document.body.appendChild(outer)
 

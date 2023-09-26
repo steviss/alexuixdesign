@@ -1,6 +1,6 @@
-import type { BaseSanityDocument, ConvertSanityDocument } from 'src/types'
+import type { SanityPostType } from 'src/clients/sanity'
 
-import type { SanityPostType } from '../posts/Posts.interface'
+import type { BaseSanityDocument, ConvertSanityDocument } from 'src/types'
 
 export type ConvertSanityTagToTagFunction = ConvertSanityDocument<SanityTagType, TagType>
 
