@@ -5,6 +5,7 @@
   "license": "Copyrighted",
   "private": true,
   "scripts": {
+    "postinstall": "patch-package",
     "sanity": "docker-compose up",
     "sanity:down": "docker-compose down",
     "dev": "astro dev",
@@ -14,7 +15,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,cjs,mjs,astro}'",
-    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx,cjs,mjs,astro}' --report-unused-disable-directives"
+    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx,cjs,mjs,astro}' --report-unused-disable-directives",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
     "@astrojs/react": "^3.0.2",
@@ -45,6 +47,11 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.7.1",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@mindblowing/commitlint-config-jira": "^1.7.0",
+    "@mindblowing/commitlint-jira-utils": "^1.7.0",
+    "@mindblowing/commitlint-plugin-jira-rules": "^1.7.0",
     "@tailwindcss/typography": "^0.5.10",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/react": "^18.2.22",
@@ -61,7 +68,11 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-redux": "^4.0.0",
     "eslint-plugin-testing-library": "^6.0.1",
+    "husky": "^8.0.3",
+    "jira-prepare-commit-msg": "^1.7.2",
     "lint-staged": "^14.0.1",
+    "patch-package": "^8.0.0",
+    "postinstall": "^0.8.0",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0",
     "prettier-plugin-css-order": "^2.0.0",

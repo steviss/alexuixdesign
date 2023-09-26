@@ -1,12 +1,12 @@
 ---
 import { FormattedDate } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
-import { useGetPostsQuery, getTagsQuery } from 'src/clients/sanity'
+import { useGetPostsQuery, useGetTagsQuery } from 'src/clients/sanity'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
 
 export async function getTags() {
-  return await getTagsQuery(true)
+  return await useGetTagsQuery(true)
 }
 
 export async function getPosts() {
@@ -45,7 +45,7 @@ const posts = await getPosts()
           <div class="relative h-[208px] overflow-hidden rounded-md">
             {featuredImage && <FeaturedImage class="max-h-52" width={360} height={240} asset={featuredImage.asset.url} alt={title} />}
           </div>
-          <div class="text-primary mt-6 flex flex-col md:flex-row">
+          <div class="mt-6 flex flex-col text-primary md:flex-row">
             <div class="flex flex-col md:flex-row">
               <FormattedDate date={pubDate} />
               <span class="px-2">•</span>
