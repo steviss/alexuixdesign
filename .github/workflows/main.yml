@@ -96,7 +96,7 @@ jobs:
         if: steps.deploy.outcome == 'success' || steps.cleanup.outcome == 'success' || steps.backup-and-delete.outcome == 'success'
         uses: ./.github/actions/slack/notification-success
         with:
-          slack-initial: ${{ steps.slack-initial.outputs.ts }}
+          initial-message: ${{ steps.slack-initial.outputs.ts }}
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
@@ -120,7 +120,7 @@ jobs:
         if: failure()
         uses: ./.github/actions/slack/notification-failed
         with:
-          slack-initial: ${{ steps.slack-initial.outputs.ts }}
+          initial-message: ${{ steps.slack-initial.outputs.ts }}
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
