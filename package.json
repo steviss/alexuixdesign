@@ -5,6 +5,7 @@
   "license": "Copyrighted",
   "private": true,
   "scripts": {
+    "prepare": "husky install",
     "postinstall": "patch-package",
     "sanity": "docker-compose up",
     "sanity:down": "docker-compose down",
