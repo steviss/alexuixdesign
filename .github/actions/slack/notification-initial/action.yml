@@ -30,6 +30,7 @@ runs:
   using: 'composite'
   steps:
     - name: 📨 Send Notification to Slack Channel
+      id: slack-initial
       uses: slackapi/slack-github-action@v1.24.0
       env:
         SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
