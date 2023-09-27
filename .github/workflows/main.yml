@@ -9,6 +9,7 @@ jobs:
     name: Deploying to LionDev Cloud
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: 💬 Initial Slack Message
         id: slack-initial
         uses: ./.github/actions/slack/notification-initial
@@ -16,7 +17,6 @@ jobs:
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
           deploy-url: ${{ vars.DEPLOY_URL }}
-      - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
