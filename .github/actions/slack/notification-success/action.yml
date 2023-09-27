@@ -1,4 +1,4 @@
-name: 'Slack Notifications - Failed'
+name: 'Slack Notifications - Success'
 description: 'Update the existing slack notifications with failed status'
 inputs:
   initial-message:
@@ -11,11 +11,11 @@ inputs:
     default: 'None'
   slack-channel-id:
     description: 'Slack Channel ID to post to'
-    required: false
+    required: true
     default: 'default'
   deploy-url:
     description: 'URL to the deployed environment'
-    required: false
+    required: true
     default: 'true'
   context-message:
     description: 'Context Message to display in Slack'
@@ -29,7 +29,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: 📨 Update Slack Notification - Failed
+    - name: 📨 Update Slack Notification - Success
       uses: slackapi/slack-github-action@v1.24.0
       env:
         SLACK_BOT_TOKEN: '${{ inputs.slack-bot-token }}'
@@ -71,7 +71,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Status:*\n 🔴 Job Failed"
+                    "text": "*Status:*\n 🟢 Job Succeeded"
                   }
                 ]
               },

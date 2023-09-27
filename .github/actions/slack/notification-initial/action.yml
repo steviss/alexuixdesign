@@ -7,11 +7,11 @@ inputs:
     default: 'None'
   slack-channel-id:
     description: 'Slack Channel ID to post to'
-    required: false
+    required: true
     default: 'default'
   deploy-url:
     description: 'URL to the deployed environment'
-    required: false
+    required: true
     default: 'true'
   context-message:
     description: 'Context Message to display in Slack'

@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: 💬 Initial Slack Message
         id: slack-initial
-        uses: ./actions/slack/notification-initial
+        uses: ./.github/actions/slack/notification-initial
         with:
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
@@ -94,7 +94,7 @@ jobs:
             rm -rf ~/temp-backup
       - name: 🟢 Update Slack Message - Success
         if: steps.deploy.outcome == 'success' || steps.cleanup.outcome == 'success' || steps.backup-and-delete.outcome == 'success'
-        uses: ./actions/slack/notification-success
+        uses: ./.github/actions/slack/notification-success
         with:
           slack-initial: ${{ steps.slack-initial.outputs.ts }}
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -118,7 +118,7 @@ jobs:
             rm -rf ~/temp-backup
       - name: 🔴 Update Slack Message - Failed
         if: failure()
-        uses: ./actions/slack/notification-failed
+        uses: ./.github/actions/slack/notification-failed
         with:
           slack-initial: ${{ steps.slack-initial.outputs.ts }}
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
