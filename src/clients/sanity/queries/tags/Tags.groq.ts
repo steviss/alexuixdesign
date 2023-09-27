@@ -1,7 +1,8 @@
-import { baseSanityDocumentDateFragment, baseSanityDocumentMetaFragment } from 'src/clients/sanity'
+import { baseSanityDocumentDateFragment, baseSanityDocumentMetaFragment } from 'src/clients/sanity/base/BaseSanityDocument.groq'
 
 export const sanityTagsGroqQuery = `
-*[_type == "tag"]{
+*[_type == "tag"]
+{
   ${baseSanityDocumentMetaFragment}
   "posts": *[_type=="post" && references(^._id)]{ 
     title,
