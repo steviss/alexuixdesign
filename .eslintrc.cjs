@@ -1,4 +1,8 @@
-module.exports = {
+const config = {
+  env: {
+    browser: true,
+    node: true,
+  },
   plugins: [
     'react',
     'react-redux',
@@ -7,7 +11,7 @@ module.exports = {
     'prettier',
     'no-relative-import-paths',
     'testing-library',
-    'plugin:astro/recommended',
+    'eslint-plugin-jsx-a11y',
   ],
   extends: [
     'eslint:recommended',
@@ -19,6 +23,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'plugin:react-redux/recommended',
     'prettier',
+    'plugin:astro/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -28,13 +33,11 @@ module.exports = {
   },
   rules: {
     'no-console': 1,
-    'prettier/prettier': 2,
-    'testing-library/await-async-query': 'error',
-    'testing-library/no-await-sync-query': 'error',
     'testing-library/no-debugging-utils': 'warn',
     'testing-library/no-dom-import': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: 'req|res|next|val' }],
     'no-relative-import-paths/no-relative-import-paths': ['error', { allowSameFolder: true }],
+    'react/react-in-jsx-scope': 'off',
   },
   overrides: [
     {
@@ -49,6 +52,9 @@ module.exports = {
         extraFileExtensions: ['.astro'],
       },
       rules: {
+        'react/no-unknown-property': 'off',
+        'react/jsx-key': 'off',
+        'react-hooks/rules-of-hooks': 'off',
         // override/add rules settings here, such as:
         // "astro/no-set-html-directive": "error"
       },
@@ -65,3 +71,5 @@ module.exports = {
   },
   root: true,
 }
+
+module.exports = config

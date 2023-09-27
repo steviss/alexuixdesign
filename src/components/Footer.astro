@@ -7,25 +7,25 @@ const { styling } = Astro.props
 <footer style=`background-color: ${styling ? "#C6FB3E": "#161616" };` class="w-full">
   <div
     class={classNames(
-      'w-full py-14 container flex md:flex-row flex-col mx-auto justify-between gap-8 md:gap-0 items-center border-t px-5 md:px-10 lg:px-12',
+      'container mx-auto flex w-full flex-col items-center justify-between gap-8 border-t px-5 py-14 md:flex-row md:gap-0 md:px-10 lg:px-12',
       {
         'text-black': styling,
         'text-white': !styling,
       },
     )}
   >
-    <a class="leading-7 font-bold lg:text-2xl md:text-xl text-lg lg:leading-7 tracking-wide" href="mailto:aleksandra@alexuix.design"
+    <a class="text-lg font-bold leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7" href="mailto:aleksandra@alexuix.design"
       >aleksandra@alexuix.design</a
     >
     <ul class="flex items-center gap-2 md:gap-8 lg:gap-28">
       <li>
-        <a href="/" class="uppercase leading-7 font-bold lg:text-2xl md:text-xl text-lg lg:leading-7 tracking-wide">Dribble</a>
+        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Dribble</a>
       </li>
       <li>
-        <a href="/" class="uppercase leading-7 font-bold lg:text-2xl md:text-xl text-lg lg:leading-7 tracking-wide">Behance</a>
+        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Behance</a>
       </li>
       <li>
-        <a href="/" class="uppercase leading-7 font-bold lg:text-2xl md:text-xl text-lg lg:leading-7 tracking-wide">LinkedIn</a>
+        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">LinkedIn</a>
       </li>
     </ul>
   </div>

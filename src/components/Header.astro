@@ -11,14 +11,14 @@ const { styling } = Astro.props
 
 <header style=`background-color: ${styling ? "#C6FB3E": "#161616" };` id="top" class="w-full">
   <div
-    class={classNames('container py-8 md:py-0 mx-auto flex justify-between items-center border-b  px-5 md:px-10 lg:px-12', {
+    class={classNames('container mx-auto flex items-center justify-between border-b px-5 py-8  md:px-10 md:py-0 lg:px-12', {
       'border-black': styling,
       'border-white': !styling,
     })}
   >
     <Logo secondaryStyles={styling} />
     <MenuButton client:only />
-    <ul class="hidden md:flex flex-row list-none">
+    <ul class="hidden list-none flex-row md:flex">
       <Navigation />
     </ul>
   </div>

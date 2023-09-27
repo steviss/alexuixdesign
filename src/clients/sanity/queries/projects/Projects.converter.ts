@@ -1,4 +1,5 @@
-import { addSlugPrefix } from '../base/addSlugPrefix'
+import { addSlugPrefix } from 'src/clients/sanity'
+
 import { DEFAULT_PREFIX } from './Projects.consts'
 import type { ConvertSanityProjectToProjectFunction } from './Projects.interface'
 
