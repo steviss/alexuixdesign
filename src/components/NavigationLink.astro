@@ -1,10 +1,9 @@
 ---
+import type { NavigationLinkType } from 'src/types'
 import Link from './Link.astro'
 
 import type { HTMLAttributes } from 'astro/types'
-type Props = HTMLAttributes<'a'> & {
-  label: string
-}
+type Props = HTMLAttributes<'a'> & NavigationLinkType
 
 const { href, label } = Astro.props
 ---
