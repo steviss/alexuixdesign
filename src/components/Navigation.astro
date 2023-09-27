@@ -1,12 +1,11 @@
 ---
+import { NAVIGATION_LINKS } from 'src/config'
 import NavigationLink from './NavigationLink.astro'
 ---
 
 <section class="flex flex-col items-center gap-4 py-4 md:flex-row md:py-8">
   <div class="flex items-center">
-    <NavigationLink label="About" href="/about" />
-    <NavigationLink label="Work" href="/work" />
-    <NavigationLink label="Blog" href="/blog" />
+    {NAVIGATION_LINKS.map((link) => <NavigationLink {...link} />)}
   </div>
   <a
     href="/contact"
