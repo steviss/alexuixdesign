@@ -9,67 +9,15 @@ jobs:
     name: Deploying to LionDev Cloud
     runs-on: ubuntu-latest
     steps:
-      - name: Initial Slack Message
-        id: slack
-        uses: slackapi/slack-github-action@v1.24.0
+      - name: 💬 Initial Slack Message
+        id: slack-initial
+        uses: ./.github/actions/slack/notifications/initial
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN}}'
         with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
-          payload: |
-            {
-              "unfurl_links": false,
-              "unfurl_media": false,
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Started by:*\n ${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Status:*\n ⏳ Working on it..."
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
-                    }
-                  ]
-                }
-              ]
-            }
+          slack-bot-token: '${{ secrets.SLACK_BOT_TOKEN}}'
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          deploy-url: ${{ vars.DEPLOY_URL }}
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
@@ -146,68 +94,16 @@ jobs:
             mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
             rm -rf ~/$DEPLOY_PATH/dist
             rm -rf ~/temp-backup
-      - name: Update Slack Message - Success
-        uses: slackapi/slack-github-action@v1.24.0
+      - name: 🟢 Update Slack Message - Success
         if: steps.deploy.outcome == 'success' || steps.cleanup.outcome == 'success' || steps.backup-and-delete.outcome == 'success'
+        uses: ./.github/actions/slack/notifications/success
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN}}'
         with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
-          update-ts: ${{ steps.slack.outputs.ts }}
-          payload: |
-            {
-              "unfurl_links": false,
-              "unfurl_media": false,
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Started by:*\n ${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Status:*\n 🟢 Job Succeeded"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
-                    }
-                  ]
-                }
-              ]
-            }
+          slack-initial: ${{ steps.slack-initial.outputs.ts }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          deploy-url: ${{ vars.DEPLOY_URL }}
       - name: RollBack to previous Deployment to Alpha LionDev Cloud
         if: steps.deploy.outcome == 'failure' || steps.cleanup.outcome == 'failure' || steps.backup-and-delete.outcome == 'failure'
         uses: appleboy/ssh-action@v1.0.0
@@ -224,65 +120,13 @@ jobs:
           script: |
             mv ~/temp-backup/* ~/$DEPLOY_PATH/
             rm -rf ~/temp-backup
-      - name: Update Slack Message - Failed
-        uses: slackapi/slack-github-action@v1.24.0
+      - name: 🔴 Update Slack Message - Failed
         if: failure()
+        uses: ./.github/actions/slack/notifications/failed
         env:
           SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN}}'
         with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
-          update-ts: ${{ steps.slack.outputs.ts }}
-          payload: |
-            {
-              "unfurl_links": false,
-              "unfurl_media": false,
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "image",
-                      "image_url": "https://assets.wearelion.dev/astro-icon-slack.png",
-                      "alt_text": "Astro Logo"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Deploying Astro · ID: ${{ github.run_id }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Started by:*\n ${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Status:*\n 🔴 Job Failed"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ vars.DEPLOY_URL }}|View Enviroment>"
-                    }
-                  ]
-                }
-              ]
-            }
+          slack-initial: ${{ steps.slack-initial.outputs.ts }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          deploy-url: ${{ vars.DEPLOY_URL }}
