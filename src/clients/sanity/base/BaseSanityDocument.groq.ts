@@ -7,7 +7,6 @@ export const baseSanityDocumentMetaFragment = `
     title,
     "slug": slug.current,
     description,
-
 `
 export const baseSanityDocumentFragment = `
     ${baseSanityDocumentMetaFragment}
