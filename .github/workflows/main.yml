@@ -57,7 +57,7 @@ jobs:
           source: 'dist/**,.env'
           deploy-path: ${{ vars.DEPLOY_PATH }}
       - name: 💬 Update Slack Message - Success
-        if: steps.deploy-to-plesk == 'success'
+        if: steps.deploy-to-plesk.outcome == 'success'
         uses: ./.github/actions/slack/notification-success
         with:
           initial-message: ${{ steps.slack-initial.outputs.ts }}
