@@ -12,68 +12,16 @@ jobs:
       run:
         working-directory: ./sanity
     steps:
-      - name: 📨 Initial Slack Message
-        id: slack
-        uses: slackapi/slack-github-action@v1.24.0
-        env:
-          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN}}'
-        with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
-          payload: |
-            {
-              "unfurl_links": false,
-              "unfurl_media": false,
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "image",
-                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
-                      "alt_text": "Sanity Logo"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Started by:*\n ${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Status:*\n ⏳ Working on it..."
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
-                    }
-                  ]
-                }
-              ]
-            }
       - uses: actions/checkout@v3
+      - name: 💬 Initial Slack Message
+        id: slack-initial
+        uses: ./.github/actions/slack/notification-initial
+        context-message: 'Deploying Sanity'
+        context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
+        with:
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          deploy-url: ${{ vars.SANITY_DEPLOY_URL }}
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
@@ -139,68 +87,16 @@ jobs:
             mv ~/$DEPLOY_PATH/sanity/dist/* ~/$DEPLOY_PATH
             rm -rf ~/$DEPLOY_PATH/sanity
             rm -rf ~/temp-backup
-      - name: Update Slack Message - Success
-        uses: slackapi/slack-github-action@v1.24.0
+      - name: 💬 Update Slack Message - Success
         if: steps.deploy.outcome == 'success' || steps.cleanup.outcome == 'success' || steps.backup-and-delete.outcome == 'success'
-        env:
-          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN}}'
+        uses: ./.github/actions/slack/notification-success
         with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
-          update-ts: ${{ steps.slack.outputs.ts }}
-          payload: |
-            {
-              "unfurl_links": false,
-              "unfurl_media": false,
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "image",
-                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
-                      "alt_text": "Sanity Logo"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Started by:*\n ${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Status:*\n 🟢 Job Succeeded"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
-                    }
-                  ]
-                }
-              ]
-            }
+          initial-message: ${{ steps.slack-initial.outputs.ts }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          deploy-url: ${{ vars.SANITY_DEPLOY_URL }}
+          context-message: 'Deploying Sanity'
+          context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
       - name: RollBack to previous Deployment to Alpha LionDev Cloud
         if: steps.deploy.outcome == 'failure' || steps.cleanup.outcome == 'failure' || steps.backup-and-delete.outcome == 'failure'
         uses: appleboy/ssh-action@v1.0.0
@@ -217,65 +113,13 @@ jobs:
           script: |
             mv ~/temp-backup/* ~/$DEPLOY_PATH
             rm -rf ~/temp-backup
-      - name: Update Slack Message - Failed
-        uses: slackapi/slack-github-action@v1.24.0
+      - name: 💬 Update Slack Message - Failed
         if: failure()
-        env:
-          SLACK_BOT_TOKEN: '${{ secrets.SLACK_BOT_TOKEN }}'
+        uses: ./.github/actions/slack/notification-failed
         with:
-          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
-          update-ts: ${{ steps.slack.outputs.ts }}
-          payload: |
-            {
-              "unfurl_links": false,
-              "unfurl_media": false,
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "${{ github.workflow }} #${{github.run_number}}"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "image",
-                      "image_url": "https://assets.wearelion.dev/sanity-icon-slack.png",
-                      "alt_text": "Sanity Logo"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "Deploying Sanity · ID: ${{ github.run_id }}"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Started by:*\n ${{ github.actor }}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Status:*\n 🔴 Job Failed"
-                    }
-                  ]
-                },
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "<${{ vars.SANITY_DEPLOY_URL }}|View Enviroment>"
-                    }
-                  ]
-                }
-              ]
-            }
+          initial-message: ${{ steps.slack-initial.outputs.ts }}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          deploy-url: ${{ vars.SANITY_DEPLOY_URL }}
+          context-message: 'Deploying Sanity'
+          context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'

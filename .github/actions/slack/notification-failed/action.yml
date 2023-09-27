@@ -29,6 +29,7 @@ outputs:
   ts:
     description: 'Timestamp of the message'
     value: ${{ steps.slack-initial.outputs.ts }}
+
 runs:
   using: 'composite'
   steps:
