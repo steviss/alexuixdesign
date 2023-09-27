@@ -1,4 +1,4 @@
-name: 'Slack Notifications - Failed'
+name: 'Slack Notifications - Success'
 description: 'Update the existing slack notifications with failed status'
 inputs:
   initial-message:
