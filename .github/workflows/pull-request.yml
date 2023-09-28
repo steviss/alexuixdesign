@@ -128,7 +128,6 @@ jobs:
           rm -rf dist.tar.gz
 
       - name: Deploy build to Server
-        id: deploy
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
@@ -139,3 +138,20 @@ jobs:
           source: 'dist/**,.env'
           target: ${{ steps.preview-url.outputs.deploy-path }}
           overwrite: true
+
+      - name: Cleanup deployment to Server
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          DEPLOY_PATH: ${{ steps.preview-url.outputs.deploy-path }}
+        with:
+          host: ${{ secrets.DEPLOY_SSH_HOST }}
+          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
+          port: ${{ secrets.DEPLOY_SSH_PORT }}
+          envs: DEPLOY_PATH
+          script_stop: true
+          script: |
+            cd ~/$DEPLOY_PATH
+            mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
+            rm -rf ~/$DEPLOY_PATH/dist
