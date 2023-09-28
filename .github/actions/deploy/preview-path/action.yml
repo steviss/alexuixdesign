@@ -11,7 +11,7 @@ inputs:
 outputs:
   deploy-url:
     description: 'Preview URL'
-    value: ${{ steps.generate-preview-url.outputs.preview-url }}}
+    value: ${{ steps.generate-preview-url.outputs.preview-url }}
   deploy-path:
     description: 'Preview PATH'
     value: ${{ steps.generate-preview-path.outputs.preview-path }}
