@@ -9,7 +9,9 @@ jobs:
     name: Deploying to LionDev Cloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: 💬 Initial Slack Message
         id: slack-initial
         uses: ./.github/actions/slack/notification-initial
@@ -17,9 +19,12 @@ jobs:
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
           deploy-url: ${{ vars.DEPLOY_URL }}
-      - uses: actions/setup-node@v3
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
         with:
           node-version-file: 'package.json'
+
       - name: Yarn FontAwesome Setup
         env:
           FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
@@ -28,6 +33,7 @@ jobs:
           yarn config set npmScopes.fortawesome.npmRegistryServer "https://npm.fontawesome.com"
           yarn config set npmScopes.fortawesome.npmAlwaysAuth true
           yarn config set npmScopes.fortawesome.npmAuthToken $FONTAWESOME_NPM_AUTH_TOKEN
+
       - name: Install Yarn
         uses: ./.github/actions/yarn/install
         with:
@@ -35,14 +41,18 @@ jobs:
           enable-corepack: false
           cache-node-modules: true
           cache-install-state: true
+
       - name: Create .env file for frontend
         uses: SpicyPizza/create-envfile@v2.0.2
         with:
           envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
           envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
           file_name: .env
+
       - name: Build for deploy
+        shell: bash
         run: yarn build
+
       - name: Deploy to LionDev Cloud
         id: deploy-to-plesk
         uses: ./.github/actions/deploy/deploy-to-plesk
@@ -54,6 +64,7 @@ jobs:
           port: ${{ secrets.DEPLOY_SSH_PORT }}
           source: 'dist/**,.env'
           deploy-path: ${{ vars.DEPLOY_PATH }}
+
       - name: 💬 Update Slack Message - Success
         if: steps.deploy-to-plesk.outcome == 'success'
         uses: ./.github/actions/slack/notification-success
@@ -62,6 +73,7 @@ jobs:
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
+
       - name: 💬 Update Slack Message - Failed
         if: failure()
         uses: ./.github/actions/slack/notification-failed

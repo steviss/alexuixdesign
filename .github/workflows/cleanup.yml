@@ -8,12 +8,14 @@ on:
 
 jobs:
   cleanup:
+    environment:
+      name: ${{ github.base_ref }}
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cleanup
+      - name: Cleanup Git Cache
         run: |
           gh extension install actions/gh-actions-cache
 
@@ -33,3 +35,28 @@ jobs:
           echo "Done"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Preview Deployment URL
+        id: preview-url
+        uses: ./.github/actions/deploy/preview-path
+        with:
+          deploy-path: ${{ secrets.DEPLOY_PATH }}
+
+      - name: Cleanup deployment to Server
+        id: cleanup
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          DEPLOY_PATH: ${{ steps.preview-url.outputs.deploy-path }}}
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE  }}
+          port: ${{ secrets.SSH_PORT }}
+          envs: DEPLOY_PATH
+          script_stop: true
+          script: |
+            cd ~/$DEPLOY_PATH
+            mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
+            rm -rf ~/$DEPLOY_PATH/dist
+            rm -rf ~/temp-backup
