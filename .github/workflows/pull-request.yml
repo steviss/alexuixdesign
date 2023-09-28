@@ -85,13 +85,16 @@ jobs:
         run: |
           yarn build
 
+      - name: Tar Build
+        shell: bash
+        run: |
+          tar -cvf dist.tar ./dist ./.env
+
       - name: Store Build
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3.13
         with:
           name: preview-build
-          path: |
-            ./dist
-            ./.env
+          path: dist.tar
           retention-days: 2
 
   preview:
@@ -110,12 +113,15 @@ jobs:
           deploy-path: ${{ vars.DEPLOY_PATH }}
 
       - name: Restore Build from previous job
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3.0.2
         with:
           name: preview-build
-          path: |
-            ./dist
-            ./.env
+          path: dist.tar
+
+      - name: Untar Build
+        shell: bash
+        run: |
+          tar -xvf dist.tar
 
       - name: Deploy build to Server
         id: deploy
