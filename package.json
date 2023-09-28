@@ -15,8 +15,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,cjs,mjs,astro}'",
-    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx,cjs,mjs,astro}' --report-unused-disable-directives",
+    "format": "prettier --write --no-error-on-unmatched-pattern '{**/*,*}.{ts,tsx,js,jsx,cjs,mjs,astro}'",
+    "lint": "eslint  --no-error-on-unmatched-pattern --report-unused-disable-directives '{**/*,*}.{ts,tsx,js,jsx,cjs,mjs,astro}'",
     "commitlint": "commitlint --edit"
   },
   "dependencies": {
