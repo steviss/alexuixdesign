@@ -88,7 +88,7 @@ jobs:
       - name: Tar Build
         shell: bash
         run: |
-          tar -cvzf dist.tar.gz ./dist ./.env
+          tar -cvzf dist.tar.gz dist .env
 
       - name: Store Build
         uses: actions/upload-artifact@v3.1.3
