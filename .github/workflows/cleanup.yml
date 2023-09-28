@@ -8,7 +8,7 @@ on:
 
 jobs:
   cleanup:
-    environment: ${{ github.base_ref }}
+    environment: ${{ github.event.pull_request.base.ref }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
