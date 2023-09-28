@@ -9,12 +9,12 @@ export type Props = { styling?: boolean }
 const { styling } = Astro.props
 ---
 
-<header style=`background-color: ${styling ? "#C6FB3E": "#161616" };` id="top" class="w-full">
+<header class={classNames('w-full', `${styling ? 'bg-secondary' : 'bg-primary'}`)}>
   <div
-    class={classNames('container mx-auto flex items-center justify-between border-b px-5 py-8  md:px-10 md:py-0 lg:px-12', {
-      'border-black': styling,
-      'border-white': !styling,
-    })}
+    class={classNames(
+      'container mx-auto flex items-center justify-between border-b px-5 py-8  md:px-10 md:py-0 lg:px-12',
+      `${styling ? 'text-black' : 'text-white'} `,
+    )}
   >
     <Logo secondaryStyles={styling} />
     <MenuButton client:only />

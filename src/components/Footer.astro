@@ -4,14 +4,11 @@ type Props = { styling?: boolean }
 const { styling } = Astro.props
 ---
 
-<footer style=`background-color: ${styling ? "#C6FB3E": "#161616" };` class="w-full">
+<footer class={classNames('w-full', `${styling ? 'bg-secondary' : 'bg-primary'}`)}>
   <div
     class={classNames(
       'container mx-auto flex w-full flex-col items-center justify-between gap-8 border-t px-5 py-14 md:flex-row md:gap-0 md:px-10 lg:px-12',
-      {
-        'text-black': styling,
-        'text-white': !styling,
-      },
+      `${styling ? 'text-black' : 'text-white'} `,
     )}
   >
     <a class="text-lg font-bold leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7" href="mailto:aleksandra@alexuix.design"
