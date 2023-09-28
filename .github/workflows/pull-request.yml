@@ -126,6 +126,7 @@ jobs:
         run: |
           ls -la
           cd dist.tar.gz
+          file dist.tar.gz
           ls -la
           tar -xvzf dist.tar.gz ../
           rm -rf dist.tar.gz
