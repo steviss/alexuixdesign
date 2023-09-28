@@ -24,16 +24,14 @@ jobs:
           deploy-url: ${{ vars.SANITY_DEPLOY_URL }}
       - uses: actions/setup-node@v3
         with:
-          cache: 'yarn'
           node-version-file: 'package.json'
-      - name: Cache node modules
-        uses: actions/cache@v3
+      - name: Install Yarn
+        uses: ./.github/actions/yarn/install
         with:
-          path: node_modules
-          key: node_modules-${{hashFiles('yarn.lock')}}
-          restore-keys: node_modules-
-      - name: Yarn Install
-        run: yarn install --immutable
+          cwd: '.'
+          enable-corepack: false
+          cache-node-modules: true
+          cache-install-state: true
       - name: Build for deploy
         env:
           SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
