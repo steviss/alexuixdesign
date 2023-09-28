@@ -1,30 +1,38 @@
 name: 'Deploy to Plesk with SSH'
+
 description: 'Deploy to plesk using SSH, copy and backup previous build, deploy the new one, if anything fails rollback to previous one.'
+
 inputs:
   host:
     description: 'SSH Host address or IP'
     required: true
     default: 'None'
+
   username:
     description: 'SSH Username'
     required: true
     default: 'None'
+
   key:
     description: 'SSH Private Key'
     required: true
     default: 'None'
+
   passphrase:
     description: 'SSH Key passphrase'
     required: true
     default: 'None'
+
   port:
     description: 'SSH Port'
     required: true
     default: 'None'
+
   source:
     description: 'Paths to files you want to copy seperated with a comma (,)'
     required: true
     default: 'dist/**,.env'
+
   deploy-path:
     description: 'Deploy path in the host. Containing the system location where we want to deploy the build.'
     required: true
@@ -50,6 +58,7 @@ runs:
           mkdir -p ~/temp-backup
           mv ~/$DEPLOY_PATH/* ~/temp-backup/
           rm -rf ~/$DEPLOY_PATH/*
+
     - name: Deploy build to Server
       id: deploy
       uses: appleboy/scp-action@v0.1.4
@@ -62,6 +71,7 @@ runs:
         source: ${{ inputs.source }}
         target: ${{ inputs.deploy-path }}
         overwrite: true
+
     - name: Cleanup deployment to Server
       id: cleanup
       uses: appleboy/ssh-action@v1.0.0
@@ -80,6 +90,7 @@ runs:
           mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
           rm -rf ~/$DEPLOY_PATH/dist
           rm -rf ~/temp-backup
+
     - name: RollBack to previous Deployment to Server
       if: steps.deploy.outcome == 'failure' || steps.cleanup.outcome == 'failure' || steps.backup-and-delete.outcome == 'failure'
       uses: appleboy/ssh-action@v1.0.0
