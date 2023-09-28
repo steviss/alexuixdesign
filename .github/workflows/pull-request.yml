@@ -124,8 +124,10 @@ jobs:
       - name: Untar Build
         shell: bash
         run: |
+          ls -la
           cd dist.tar.gz
-          tar -xvzf dist.tar.gz .
+          ls -la
+          tar -xvzf dist.tar.gz ../
           rm -rf dist.tar.gz
 
       - name: Deploy build to Server
