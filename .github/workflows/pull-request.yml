@@ -4,6 +4,9 @@ on:
   pull_request:
     branches: [main, production]
 
+permissions: 
+   pull-requests: write
+
 jobs:
   test:
     name: Test
@@ -75,11 +78,19 @@ jobs:
           enable-corepack: false
           cache-node-modules: true
           cache-install-state: true
+
+      - name: Generate Preview URL
+        id: preview-url
+        uses: ./.github/actions/deploy/preview-path
+        with:
+          deploy-path: ${{ vars.DEPLOY_PATH }}
+
       - name: Create .env file for frontend
         uses: SpicyPizza/create-envfile@v2.0.2
         with:
           envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
           envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+          envkey_ASTRO_WEBSITE_URL: ${{ steps.preview-url.outputs.deploy-url }}
           file_name: .env
 
       - name: Build
@@ -97,7 +108,7 @@ jobs:
         with:
           name: preview-build
           path: dist.tar.gz
-          retention-days: 2
+          retention-days: 1
 
   preview:
     name: Deploy Preview
@@ -155,3 +166,9 @@ jobs:
             cd ~/$DEPLOY_PATH
             mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
             rm -rf ~/$DEPLOY_PATH/dist
+      - name: Add Preview URL Comment to Pull Request
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Pull Request Preview Build URL: [Click here to preview](${{ steps.preview-url.outputs.deploy-url }})
+          comment_tag: pr-preview-url
