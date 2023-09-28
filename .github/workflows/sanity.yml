@@ -28,7 +28,7 @@ jobs:
       - name: Install Yarn
         uses: ./.github/actions/yarn/install
         with:
-          cwd: '.'
+          cwd: './sanity'
           enable-corepack: false
           cache-node-modules: true
           cache-install-state: true
