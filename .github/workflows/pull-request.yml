@@ -88,7 +88,7 @@ jobs:
       - name: Tar Build
         shell: bash
         run: |
-          tar -cvzf dist.tar.gz ./dist ./.env
+          tar -cvzf dist.tar.gz dist .env
 
       - name: Store Build
         uses: actions/upload-artifact@v3.1.3
@@ -121,7 +121,7 @@ jobs:
       - name: Untar Build
         shell: bash
         run: |
-          tar -xvzf dist.tar
+          tar -xvzf dist.tar.gz
 
       - name: Deploy build to Server
         id: deploy
