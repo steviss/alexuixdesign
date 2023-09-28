@@ -29,7 +29,7 @@ jobs:
           yarn config set npmScopes.fortawesome.npmAlwaysAuth true
           yarn config set npmScopes.fortawesome.npmAuthToken $FONTAWESOME_NPM_AUTH_TOKEN
       - name: Install Yarn
-        uses: ./github/actions/yarn/install
+        uses: ./.github/actions/yarn/install
         with:
           cwd: '.'
           enable-corepack: false
