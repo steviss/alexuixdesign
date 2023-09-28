@@ -20,25 +20,19 @@ runs:
   using: 'composite'
   steps:
     - name: Generate MD5 Hash
+      id: generate-md5-hash
+      shell: bash
       run: |
         echo "md5-hash=$(echo -n ${{ github.ref_name }}-${{ github.event.pull_request.id }} | md5sum | head -c 16 | awk '{ print $1 }')"
-      shell: bash
-      id: generate-md5-hash
 
     - name: Generate Preview URL
       id: generate-preview-url
       shell: bash
-      env:
-        DEPLOY_PATH: ${{ inputs.deploy-path }}
-        HASH_URL: ${{ steps.generate-md5-hash.outputs.md5-hash }}
       run: |
-        echo "preview-url=https://$DEPLOY_PATH/preview/$HASH_URL" >> $GITHUB_OUTPUT
+        echo "preview-url=https://${{ inputs.deploy-path }}/preview/${{ steps.generate-md5-hash.outputs.md5-hash }}" >> $GITHUB_OUTPUT
 
     - name: Generate Preview Path URL
       id: generate-preview-path
       shell: bash
-      env:
-        DEPLOY_PATH: ${{ inputs.deploy-path }}
-        HASH_URL: ${{ steps.generate-md5-hash.outputs.md5-hash }}
       run: |
-        echo "preview-path=$DEPLOY_PATH/preview/$HASH_URL" >> $GITHUB_OUTPUT
+        echo "preview-path=${{ inputs.deploy-path }}/preview/${{ steps.generate-md5-hash.outputs.md5-hash }}" >> $GITHUB_OUTPUT
