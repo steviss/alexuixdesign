@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    environment: ${{ github.base_ref }}
+    environment: ${{ github.event.pull_request.base.ref }}
     runs-on: ubuntu-latest
 
     steps:
@@ -45,7 +45,7 @@ jobs:
           yarn lint
 
   build:
-    environment: ${{ github.base_ref }}
+    environment: ${{ github.event.pull_request.base.ref }}
     runs-on: ubuntu-latest
     needs: test
 
@@ -95,7 +95,7 @@ jobs:
           retention-days: 2
 
   preview:
-    environment: ${{ github.base_ref }}
+    environment: ${{ github.event.pull_request.base.ref }}
     runs-on: ubuntu-latest
     needs: [test, build]
 
@@ -106,7 +106,7 @@ jobs:
       - name: Generate Preview URL
         id: preview-url
         uses: ./.github/actions/deploy/preview-path
-        env:
+        with:
           deploy-path: ${{ vars.DEPLOY_PATH }}
 
       - name: Restore Build from previous job
@@ -117,9 +117,9 @@ jobs:
             ./dist
             ./.env
 
-      - name: Deploy to LionDev Cloud
-        id: deploy-to-plesk
-        uses: ./.github/actions/deploy/deploy-to-plesk
+      - name: Deploy build to Server
+        id: deploy
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -128,3 +128,4 @@ jobs:
           port: ${{ secrets.DEPLOY_SSH_PORT }}
           source: 'dist/**,.env'
           deploy-path: ${{ steps.preview-url.outputs.deploy-path }}
+          overwrite: true
