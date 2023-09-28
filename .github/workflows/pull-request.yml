@@ -118,11 +118,12 @@ jobs:
           name: preview-build
           path: dist.tar.gz
 
-      - name: Move Build to Root
+      - name: Untar Build
         shell: bash
         run: |
-          mv dist.tar.gz/* .
-          rm -rf dist.tar.gz
+          cd ${{ runner.temp }}/dist.tar.gz
+          tar -xvzf dist.tar.gz ${{ runner.temp }}
+          rm -rf ${{ runner.temp }}/dist.tar.gz
 
       - name: Deploy build to Server
         id: deploy
