@@ -121,7 +121,7 @@ jobs:
       - name: Untar Build
         shell: bash
         run: |
-          tar -xvzf dist.tar
+          tar -xvzf dist.tar.gz
 
       - name: Deploy build to Server
         id: deploy
