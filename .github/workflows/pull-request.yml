@@ -137,5 +137,5 @@ jobs:
           passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
           port: ${{ secrets.DEPLOY_SSH_PORT }}
           source: 'dist/**,.env'
-          deploy-path: ${{ steps.preview-url.outputs.deploy-path }}
+          target: ${{ steps.preview-url.outputs.deploy-path }}
           overwrite: true
