@@ -26,6 +26,13 @@
     "[astro]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "yaml.schemas": {
+      "https://json.schemastore.org/github-workflow.json": ["*.github/workflows/*.yaml", "*.github/workflows/*.yml"],
+      "https://json.schemastore.org/github-action.json": ["action.yaml", "action.yml"]
+    },
+    "[github-actions-workflow]": {
+      "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
     "eslint.validate": ["javascript", "javascriptreact", "html", "typescript", "typescriptreact"],
     "css.lint.unknownAtRules": "ignore", //@tailwind imports for warnings
     "prettier.documentSelectors": ["**/*.astro"],
@@ -35,6 +42,9 @@
     "files.eol": "\n",
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
     "jest.autoRun": "off",
     "jest.showCoverageOnLoad": false,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
