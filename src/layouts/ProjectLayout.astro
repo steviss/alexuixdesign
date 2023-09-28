@@ -1,11 +1,12 @@
 ---
 import Layout from './Layout.astro'
+import { FormattedDate } from 'src/components/react'
 import type { ProjectType } from 'src/clients/sanity'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
 
-type Props = Pick<ProjectType, 'title' | 'description' | 'pubDate' | 'upDate' | 'featuredImage'>
+type Props = Pick<ProjectType, 'title' | 'description' | 'pubDate' | 'upDate' | 'featuredImage' | 'roles'>
 
-const { title, description, featuredImage } = Astro.props
+const { title, description, upDate, featuredImage, roles } = Astro.props
 ---
 
 <Layout title={title} description={description}>
@@ -25,6 +26,24 @@ const { title, description, featuredImage } = Astro.props
               fill="#E9E9E9"></path>
           </svg>
         </div>
+        {
+          upDate && roles && (
+            <div class="hidden items-start gap-20 md:flex">
+              <div class="flex flex-col gap-4 text-xl text-white md:text-2xl lg:text-3xl">
+                <p class="font-bold uppercase">Date</p>
+                <FormattedDate date={upDate} />
+              </div>
+              <div class="flex flex-col gap-4 text-xl text-white md:text-2xl lg:text-3xl">
+                <p class="font-bold uppercase"> Roles</p>
+                <ul class="font-normal">
+                  {roles.map((role) => (
+                    <li> {role}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )
+        }
       </div>
       <div class="mb-28 w-full">
         {featuredImage && <FeaturedImage asset={featuredImage} alt={description} />}

@@ -1,4 +1,4 @@
-import { baseSanityDocumentFragment } from 'src/clients/sanity'
+import { baseSanityDocumentFragment } from 'src/clients/sanity/base/BaseSanityDocument.groq'
 
 export const sanityPostsGroqQuery = `
 *[_type == "post"]

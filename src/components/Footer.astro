@@ -1,22 +1,29 @@
 ---
-import Logo from './Logo.astro'
-import { SITE_OWNER } from 'src/config'
-
-const today = new Date()
+import classNames from 'classnames'
+type Props = { styling?: boolean }
+const { styling } = Astro.props
 ---
 
-<footer class="border-primary flex flex-col border-t border-opacity-40 py-12 xl:py-24 2xl:flex-row 2xl:items-center 2xl:justify-center">
-  <div class="flex flex-col items-start">
-    <h3 class="font-nunito text-center text-3xl font-black tracking-[-1px] text-white lg:text-4xl 2xl:text-6xl 2xl:tracking-[-3px]">
-      {SITE_OWNER}
-    </h3>
-    <h4 class="mb-4 py-1 text-base md:py-2 lg:text-lg">
-      Experienced developer who loves working with cutting-edge technologies. I write about stuff I like. I love animals.
-    </h4>
-    <span class="flex flex-1 text-white text-opacity-50">
-      alexuix.design &copy; 2016-{today.getFullYear()}
-      {SITE_OWNER} · All rights reserved · My website doesn&apos;t use any Cookies · It&apos;s built with 🚀 Astro and Sanity
-    </span>
+<footer class={classNames('w-full', `${styling ? 'bg-secondary' : 'bg-primary'}`)}>
+  <div
+    class={classNames(
+      'container mx-auto flex w-full flex-col items-center justify-between gap-8 border-t px-5 py-14 md:flex-row md:gap-0 md:px-10 lg:px-12',
+      `${styling ? 'text-black' : 'text-white'} `,
+    )}
+  >
+    <a class="text-lg font-bold leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7" href="mailto:aleksandra@alexuix.design"
+      >aleksandra@alexuix.design</a
+    >
+    <ul class="flex items-center gap-2 md:gap-8 lg:gap-28">
+      <li>
+        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Dribble</a>
+      </li>
+      <li>
+        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Behance</a>
+      </li>
+      <li>
+        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">LinkedIn</a>
+      </li>
+    </ul>
   </div>
-  <Logo class="mt-10 text-4xl 2xl:ml-auto 2xl:mt-0" />
 </footer>

@@ -13,10 +13,10 @@ const IconLink: FC<IconLinkProps> = ({ label, icon, className, ...props }) => {
       <IconContainer className="relative px-2">
         <FontAwesomeIcon
           icon={icon}
-          className="text-primary group-hover:text-secondary transition-color h-8 w-8 duration-300 ease-in-out group-hover:scale-90"
+          className="transition-color h-8 w-8 text-primary duration-300 ease-in-out group-hover:scale-90 group-hover:text-secondary"
         />
       </IconContainer>
-      <span className="group-hover:text-secondary transition-color relative whitespace-nowrap p-2 pr-8 text-white underline decoration-white underline-offset-8 duration-300 ease-in-out">
+      <span className="transition-color relative whitespace-nowrap p-2 pr-8 text-white underline decoration-white underline-offset-8 duration-300 ease-in-out group-hover:text-secondary">
         {label}
       </span>
       <IconContainer className="absolute bottom-2 right-[-10px] px-2 opacity-0 transition-all duration-300 ease-in-out group-hover:right-0 group-hover:opacity-100">

@@ -19,9 +19,9 @@ const MobileMenu: FC<MobileMenuProps> = ({ children }) => {
           exit="close"
           transition={{ y: { type: 'spring', stiffness: 300, damping: 30 } }}
           variants={MOBILE_MENU_ANIMATION}
-          className="max-w-screen max-h-d-screen bg-bg-secondary fixed bottom-0 left-0 right-0 z-30 flex flex-col shadow-md shadow-black md:hidden"
+          className="max-w-screen fixed bottom-0 left-0 right-0 z-30 flex max-h-screen flex-col bg-secondary shadow-md shadow-black md:hidden"
         >
-          <nav className="flex flex-col p-8">
+          <nav className="flex flex-col py-4">
             <ul className="flex list-none flex-col">{children}</ul>
           </nav>
         </motion.div>
