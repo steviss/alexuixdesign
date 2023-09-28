@@ -73,6 +73,12 @@ jobs:
           enable-corepack: false
           cache-node-modules: true
           cache-install-state: true
+      - name: Create .env file for frontend
+        uses: SpicyPizza/create-envfile@v2.0.2
+        with:
+          envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
+          envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+          file_name: .env
 
       - name: Build
         shell: bash
@@ -83,8 +89,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: preview-build
-          path: path/to/artifacts
-          retention-days: 1
+          path: |
+            ./dist
+            ./.env
+          retention-days: 2
 
   preview:
     environment:
@@ -105,7 +113,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: preview-build
-          path: path/to/artifacts
+          path: |
+            ./dist
+            ./.env
 
       - name: Deploy to LionDev Cloud
         id: deploy-to-plesk
