@@ -13,8 +13,8 @@ body {
 
 .lock-scroll {
   height: 100vh;
-  overflow: hidden !important;
   padding-right: var(--scrollbar-width);
+  overflow: hidden !important;
 }
 
 html {
@@ -29,30 +29,37 @@ main {
   @apply h-full;
 }
 @font-face {
+  font-style: normal;
+  font-weight: 100;
+  src: url('/fonts/NeueHaasDisplayThin.ttf') format('woff');
   font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('/fonts/NeueHaasDisplayBold.ttf') format('woff');
+  font-display: swap;
+}
+@font-face {
+  font-style: normal;
   font-weight: 300;
-  font-style: normal;
+  src: url('/fonts/NeueHaasDisplayLight.ttf') format('woff');
+  font-family: 'Neue Haas Grotesk Display Pro';
   font-display: swap;
 }
 @font-face {
-  font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('/fonts/NeueHaasDisplayBold.ttf') format('woff');
+  font-style: normal;
   font-weight: 500;
-  font-style: normal;
+  src: url('/fonts/NeueHaasDisplayMedium.ttf') format('woff');
+  font-family: 'Neue Haas Grotesk Display Pro';
   font-display: swap;
 }
 @font-face {
-  font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('/fonts/NeueHaasDisplayBold.ttf') format('woff');
+  font-style: normal;
   font-weight: 600;
-  font-style: normal;
+  src: url('/fonts/NeueHaasDisplayBold.ttf') format('woff');
+  font-family: 'Neue Haas Grotesk Display Pro';
   font-display: swap;
 }
 @font-face {
-  font-family: 'Neue Haas Grotesk Display Pro';
-  src: url('/fonts/NeueHaasDisplayBold.ttf') format('woff');
-  font-weight: 700;
   font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/NeueHaasDisplayBold.ttf') format('woff');
+  font-family: 'Neue Haas Grotesk Display Pro';
   font-display: swap;
 }
