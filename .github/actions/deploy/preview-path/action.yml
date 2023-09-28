@@ -23,7 +23,7 @@ runs:
       id: generate-md5-hash
       shell: bash
       run: |
-        echo "md5-hash=$(echo -n ${{ github.ref_name }}-${{ github.event.pull_request.id }} | md5sum | head -c 16 | awk '{ print $1 }')"
+        echo "md5-hash=$(echo -n ${{ github.ref_name }}-${{ github.event.pull_request.id }} | md5sum | head -c 16 | awk '{ print $1 }')" >> $GITHUB_OUTPUT
 
     - name: Generate Preview URL
       id: generate-preview-url
