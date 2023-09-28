@@ -19,20 +19,7 @@ jobs:
           deploy-url: ${{ vars.DEPLOY_URL }}
       - uses: actions/setup-node@v3
         with:
-          cache: 'yarn'
           node-version-file: 'package.json'
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: node_modules-${{hashFiles('yarn.lock')}}
-          restore-keys: node_modules-
-      - name: Create .env file for frontend
-        uses: SpicyPizza/create-envfile@v2.0.2
-        with:
-          envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
-          envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
-          file_name: .env
       - name: Yarn FontAwesome Setup
         env:
           FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
@@ -41,8 +28,19 @@ jobs:
           yarn config set npmScopes.fortawesome.npmRegistryServer "https://npm.fontawesome.com"
           yarn config set npmScopes.fortawesome.npmAlwaysAuth true
           yarn config set npmScopes.fortawesome.npmAuthToken $FONTAWESOME_NPM_AUTH_TOKEN
-      - name: Yarn Install
-        run: yarn install --immutable
+      - name: Install Yarn
+        uses: ./github/actions/yarn/install
+        with:
+          cwd: '.'
+          enable-corepack: false
+          cache-node-modules: true
+          cache-install-state: true
+      - name: Create .env file for frontend
+        uses: SpicyPizza/create-envfile@v2.0.2
+        with:
+          envkey_SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
+          envkey_SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+          file_name: .env
       - name: Build for deploy
         run: yarn build
       - name: Deploy to LionDev Cloud
