@@ -121,15 +121,6 @@ jobs:
           name: preview-build
           path: dist.tar.gz
 
-      - name: Untar Build
-        shell: bash
-        run: |
-          ls -la
-          cd dist.tar.gz
-          ls -la
-          tar -xvzf dist.tar.gz ../
-          rm -rf dist.tar.gz
-
       - name: Deploy build to Server
         id: deploy
         uses: appleboy/scp-action@v0.1.4
