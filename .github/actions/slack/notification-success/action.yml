@@ -1,5 +1,7 @@
 name: 'Slack Notification - Success'
+
 description: 'Update the existing slack notifications with success status'
+
 inputs:
   initial-message:
     description: 'ID of the intial task that created the message'
@@ -32,6 +34,7 @@ inputs:
 
 runs:
   using: 'composite'
+
   steps:
     - name: 📨 Update Slack Notification - Success
       uses: slackapi/slack-github-action@v1.24.0

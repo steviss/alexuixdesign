@@ -9,11 +9,12 @@ jobs:
   cleanup:
     environment: ${{ github.event.pull_request.base.ref }}
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: 🔀 Checkout
         uses: actions/checkout@v3
 
-      - name: Cleanup Git Cache
+      - name: 🧹 Cleanup Git Cache
         run: |
           gh extension install actions/gh-actions-cache
 
@@ -34,13 +35,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate Preview Deployment URL
+      - name: 🔗 Generate Preview Deployment URL
         id: preview-url
         uses: ./.github/actions/deploy/preview-path
         with:
           deploy-path: ${{ vars.DEPLOY_PATH }}
 
-      - name: Cleanup deployment to Server
+      - name: 🧹 Cleanup deployment to Server
         id: cleanup
         uses: appleboy/ssh-action@v1.0.0
         env:

@@ -11,8 +11,11 @@ jobs:
     defaults:
       run:
         working-directory: ./sanity
+
     steps:
-      - uses: actions/checkout@v3
+      - name: 🔀 Checkout
+        uses: actions/checkout@v3
+      
       - name: 💬 Initial Slack Message
         id: slack-initial
         uses: ./.github/actions/slack/notification-initial
@@ -22,24 +25,28 @@ jobs:
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
           deploy-url: ${{ vars.SANITY_DEPLOY_URL }}
+
       - uses: actions/setup-node@v3
         with:
           node-version-file: 'package.json'
-      - name: Install Yarn
+
+      - name: 🐱‍🏍 Install Yarn
         uses: ./.github/actions/yarn/install
         with:
           cwd: './sanity'
           enable-corepack: false
           cache-node-modules: true
           cache-install-state: true
-      - name: Build for deploy
+
+      - name: ⚙️ Build for deploy
         shell: bash
         env:
           SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
           SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
         run: yarn build
-      - name: Delete and Backup Previous deployment to Alpha LionDev Cloud
+
+      - name: 🗑️ Delete and Backup Previous deployment to Alpha LionDev Cloud
         id: backup-and-delete
         uses: appleboy/ssh-action@v1.0.0
         env:
@@ -56,7 +63,8 @@ jobs:
             mkdir -p ~/temp-backup
             mv ~/$DEPLOY_PATH/* ~/temp-backup
             rm -rf ~/$DEPLOY_PATH/*
-      - name: Deploy build to Alpha LionDev Cloud
+
+      - name: 📀 Deploy build to Alpha LionDev Cloud
         id: deploy
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -68,7 +76,8 @@ jobs:
           source: 'sanity/dist/**,sanity/deployment/.htaccess'
           target: ${{ vars.SANITY_DEPLOY_PATH }}
           overwrite: true
-      - name: Cleanup deployment to Alpha LionDev Cloud
+
+      - name: 🧹 Cleanup deployment to Alpha LionDev Cloud
         id: cleanup
         uses: appleboy/ssh-action@v1.0.0
         env:
@@ -86,6 +95,7 @@ jobs:
             mv ~/$DEPLOY_PATH/sanity/dist/* ~/$DEPLOY_PATH
             rm -rf ~/$DEPLOY_PATH/sanity
             rm -rf ~/temp-backup
+
       - name: 💬 Update Slack Message - Success
         if: steps.deploy.outcome == 'success' || steps.cleanup.outcome == 'success' || steps.backup-and-delete.outcome == 'success'
         uses: ./.github/actions/slack/notification-success
@@ -96,7 +106,8 @@ jobs:
           deploy-url: ${{ vars.SANITY_DEPLOY_URL }}
           context-message: 'Deploying Sanity'
           context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
-      - name: RollBack to previous Deployment to Alpha LionDev Cloud
+
+      - name: 🧻 RollBack to previous Deployment to Alpha LionDev Cloud
         if: steps.deploy.outcome == 'failure' || steps.cleanup.outcome == 'failure' || steps.backup-and-delete.outcome == 'failure'
         uses: appleboy/ssh-action@v1.0.0
         env:
@@ -112,6 +123,7 @@ jobs:
           script: |
             mv ~/temp-backup/* ~/$DEPLOY_PATH
             rm -rf ~/temp-backup
+
       - name: 💬 Update Slack Message - Failed
         if: failure()
         uses: ./.github/actions/slack/notification-failed

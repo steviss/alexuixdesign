@@ -1,5 +1,7 @@
 name: 'Slack Notification - Initial'
+
 description: 'Send the initial slack notification to the channel'
+
 inputs:
   slack-bot-token:
     description: 'Slack Bot Token required to post to Slack Workspace'
@@ -32,6 +34,7 @@ outputs:
 
 runs:
   using: 'composite'
+
   steps:
     - name: 📨 Send Notification to Slack Channel
       id: slack-initial

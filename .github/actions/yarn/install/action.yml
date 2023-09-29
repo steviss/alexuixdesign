@@ -28,6 +28,7 @@ inputs:
 
 runs:
   using: 'composite'
+
   steps:
     - name: ⚙️ Enable Corepack
       if: inputs.enable-corepack == 'true'
