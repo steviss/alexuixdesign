@@ -19,7 +19,8 @@
       "chrisbibby.hide-node-modules", //Hide Node Modules with a click
       "wallabyjs.console-ninja", // displays console log in VSCode
       "astro-build.astro-vscode", // Astro Extension
-      "bradlc.vscode-tailwindcss" // Tailwind CSS IntelliSense
+      "bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense
+      "github.vscode-github-actions" // Github Actions"
     ]
   },
   "settings": {
