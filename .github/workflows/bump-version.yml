@@ -1,4 +1,4 @@
-name: Cleanup caches for closed branches
+name: Bump project version
 
 on:
   workflow_dispatch:
