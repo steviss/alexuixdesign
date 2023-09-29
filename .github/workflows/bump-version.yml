@@ -1,13 +1,12 @@
 name: Bump project version
 
-
 on:
   push:
     branches: [main, production]
 
 permissions:
   contents: write
-  
+
 env:
  BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 
