@@ -4,8 +4,8 @@ on:
   pull_request:
     branches: [main, production]
 
-permissions: 
-   pull-requests: write
+permissions:
+  pull-requests: write
 
 jobs:
   test:
@@ -167,7 +167,7 @@ jobs:
             cd ~/$DEPLOY_PATH
             mv ~/$DEPLOY_PATH/dist/* ~/$DEPLOY_PATH/
             rm -rf ~/$DEPLOY_PATH/dist
-            
+
       - name: Add Preview URL Comment to Pull Request
         uses: thollander/actions-comment-pull-request@v2
         with:
