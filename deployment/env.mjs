@@ -20,6 +20,7 @@ const {
   ASTRO_WEBSITE_URL,
   FONTAWESOME_NPM_AUTH_TOKEN,
   SKIP_ENV_VALIDATION,
+  CI,
 } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
 const processEnv = {
@@ -56,7 +57,11 @@ const yarnEnvSchema = z.object({
   FONTAWESOME_NPM_AUTH_TOKEN: z.string({ message: VALIDATION_MESSAGES.fontAwesomeNpmAuthToken }),
 })
 
-const requiredSchema = astroEnvSchema.merge(sanityEnvSchema).merge(yarnEnvSchema)
+let requiredSchema = astroEnvSchema.merge(sanityEnvSchema)
+
+if (!!CI == false) {
+  requiredSchema = requiredSchema.merge(yarnEnvSchema)
+}
 
 let env = processEnv
 
