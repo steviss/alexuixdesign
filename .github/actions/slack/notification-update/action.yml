@@ -1,8 +1,12 @@
-name: 'Slack Notification - Initial'
+name: 'Slack Notification - Update'
 
-description: 'Send the initial slack notification to the channel'
+description: 'Update the existing slack notification with custom status'
 
 inputs:
+  initial-message:
+    description: 'ID of the intial task that created the message'
+    required: true
+    default: 'None'
   slack-bot-token:
     description: 'Slack Bot Token required to post to Slack Workspace'
     required: true
@@ -13,7 +17,7 @@ inputs:
     default: 'default'
   deploy-url:
     description: 'URL to the deployed environment'
-    required: true
+    required: false
     default: 'true'
   context-message:
     description: 'Context Message to display in Slack'
@@ -27,22 +31,19 @@ inputs:
     description: 'Status to display on Slack'
     required: false
     default: 'Working on it...'
-outputs:
-  ts:
-    description: 'Timestamp of the message'
-    value: ${{ steps.slack-initial.outputs.ts }}
 
 runs:
   using: 'composite'
 
   steps:
-    - name: 📨 Send Notification to Slack Channel
+    - name: 📨 Update Slack Notification
       id: slack-initial
       uses: slackapi/slack-github-action@v1.24.0
       env:
-        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
+        SLACK_BOT_TOKEN: '${{ inputs.slack-bot-token }}'
       with:
         channel-id: ${{ inputs.slack-channel-id }}
+        update-ts: ${{ inputs.initial-message }}
         payload: |
           {
             "unfurl_links": false,
@@ -78,7 +79,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Status:*\n ⏳ ${{ inputs.context-status }}"
+                    "text": "*Status:*\n ⌛ ${{ inputs.context-status }}"
                   }
                 ]
               },

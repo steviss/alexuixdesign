@@ -13,3 +13,4 @@ tailwind.config.cjs
 .commitlintrc.cjs
 jira-prepare-commit-msg.config.cjs
 .lintstagedrc.cjs
+deployment/env.mjs

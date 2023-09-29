@@ -40,8 +40,9 @@ inputs:
 
 runs:
   using: 'composite'
+
   steps:
-    - name: Delete and Backup Previous deployment to Server
+    - name: 🗑️ Delete and Backup Previous deployment to Server
       id: backup-and-delete
       uses: appleboy/ssh-action@v1.0.0
       env:
@@ -59,7 +60,7 @@ runs:
           mv ~/$DEPLOY_PATH/* ~/temp-backup/
           rm -rf ~/$DEPLOY_PATH/*
 
-    - name: Deploy build to Server
+    - name: 📀 Deploy build to Server
       id: deploy
       uses: appleboy/scp-action@v0.1.4
       with:
@@ -72,7 +73,7 @@ runs:
         target: ${{ inputs.deploy-path }}
         overwrite: true
 
-    - name: Cleanup deployment to Server
+    - name: 🧹 Cleanup deployment to Server
       id: cleanup
       uses: appleboy/ssh-action@v1.0.0
       env:
@@ -91,7 +92,7 @@ runs:
           rm -rf ~/$DEPLOY_PATH/dist
           rm -rf ~/temp-backup
 
-    - name: RollBack to previous Deployment to Server
+    - name: 🧻 RollBack to previous Deployment to Server
       if: steps.deploy.outcome == 'failure' || steps.cleanup.outcome == 'failure' || steps.backup-and-delete.outcome == 'failure'
       uses: appleboy/ssh-action@v1.0.0
       env:
