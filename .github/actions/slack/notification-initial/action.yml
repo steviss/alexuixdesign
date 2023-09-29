@@ -1,4 +1,4 @@
-name: 'Slack Notifications - Initial'
+name: 'Slack Notification - Initial'
 description: 'Send the initial slack notification to the channel'
 inputs:
   slack-bot-token:
@@ -21,6 +21,10 @@ inputs:
     description: 'Cache yarn install state, might speed up resolution step when node-modules cache is activated (invalidated lock/os/node-version/branch)'
     required: false
     default: 'https://assets.wearelion.dev/astro-icon-slack.png'
+  context-status:
+    description: 'Status to display on Slack'
+    required: false
+    default: 'Working on it...'
 outputs:
   ts:
     description: 'Timestamp of the message'
@@ -71,7 +75,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Status:*\n ⏳ Working on it..."
+                    "text": "*Status:*\n ⏳ ${{ inputs.context-status }}"
                   }
                 ]
               },

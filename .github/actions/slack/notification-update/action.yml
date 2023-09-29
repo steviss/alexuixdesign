@@ -1,5 +1,5 @@
-name: 'Slack Notification - Failed'
-description: 'Update the existing slack notifications with failed status'
+name: 'Slack Notification - Update'
+description: 'Update the existing slack notification with custom status'
 inputs:
   initial-message:
     description: 'ID of the intial task that created the message'
@@ -28,12 +28,12 @@ inputs:
   context-status:
     description: 'Status to display on Slack'
     required: false
-    default: 'Job Failed'
+    default: 'Working on it...'
 
 runs:
   using: 'composite'
   steps:
-    - name: 📨 Update Slack Notification - Failed
+    - name: 📨 Update Slack Notification
       id: slack-initial
       uses: slackapi/slack-github-action@v1.24.0
       env:
@@ -76,7 +76,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Status:*\n 🔴 ${{ context-status }}"
+                    "text": "*Status:*\n ⌛ ${{ inputs.context-status }}"
                   }
                 ]
               },

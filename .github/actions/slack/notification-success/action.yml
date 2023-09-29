@@ -1,5 +1,5 @@
-name: 'Slack Notifications - Success'
-description: 'Update the existing slack notifications with failed status'
+name: 'Slack Notification - Success'
+description: 'Update the existing slack notifications with success status'
 inputs:
   initial-message:
     description: 'ID of the intial task that created the message'
@@ -25,6 +25,10 @@ inputs:
     description: 'Cache yarn install state, might speed up resolution step when node-modules cache is activated (invalidated lock/os/node-version/branch)'
     required: false
     default: 'https://assets.wearelion.dev/astro-icon-slack.png'
+  context-status:
+    description: 'Status to display on Slack'
+    required: false
+    default: 'Job Succeeded'
 
 runs:
   using: 'composite'
@@ -71,7 +75,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Status:*\n 🟢 Job Succeeded"
+                    "text": "*Status:*\n 🟢 ${{ inputs.context-status }}"
                   }
                 ]
               },
