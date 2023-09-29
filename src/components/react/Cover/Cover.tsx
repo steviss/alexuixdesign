@@ -29,7 +29,7 @@ const Cover: FC = () => {
           <IconContainer className="group absolute right-0 top-0 hidden p-12 md:block">
             <FontAwesomeIcon
               icon={faXmarkLarge}
-              className="group-hover:text-secondary h-7 w-7 cursor-pointer text-white transition-all duration-300 ease-in-out"
+              className="h-7 w-7 cursor-pointer text-white transition-all duration-300 ease-in-out group-hover:text-secondary"
             />
           </IconContainer>
         </motion.div>
