@@ -50,6 +50,11 @@ jobs:
           envkey_ASTRO_WEBSITE_URL: ${{ vars.DEPLOY_URL }}
           file_name: .env
 
+      - name: Run Env Variables Check
+        shell: bash
+        run: |
+          yarn env:check
+
       - name: Build for deploy
         shell: bash
         run: yarn build

@@ -58,13 +58,25 @@ const yarnEnvSchema = z.object({
 
 const requiredSchema = astroEnvSchema.merge(sanityEnvSchema).merge(yarnEnvSchema)
 
+let env = processEnv
+
 if (!!SKIP_ENV_VALIDATION == false) {
   const parsed = requiredSchema.safeParse(processEnv)
   if (!parsed.success) {
     console.table(parsed.error.flatten().fieldErrors)
     throw new Error('❌ Invalid environment variables:')
   }
+  env = new Proxy(parsed.data, {
+    get(target, prop) {
+      if (prop in target) {
+        return target[prop]
+      }
+      throw new Error(`❌ Missing required environment variable: ${prop}`)
+    },
+  })
   console.log('✅ All Required Env Variables present in the .env file.')
 } else {
   console.log('⏩ Validation was skipped.')
 }
+
+export { env }

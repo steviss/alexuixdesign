@@ -93,6 +93,11 @@ jobs:
           envkey_ASTRO_WEBSITE_URL: ${{ steps.preview-url.outputs.deploy-url }}
           file_name: .env
 
+      - name: Run Env Variables Check
+        shell: bash
+        run: |
+          yarn env:check
+
       - name: Build
         shell: bash
         run: |
