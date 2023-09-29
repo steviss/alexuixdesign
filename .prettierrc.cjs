@@ -1,9 +1,9 @@
 /** @type {import("prettier").Config} */
-
-module.exports = {
+const config = {
   printWidth: 140,
   trailingComma: 'all',
   tabWidth: 2,
+  endOfLine: 'lf',
   semi: false,
   singleQuote: true,
   importOrder: [
@@ -16,7 +16,7 @@ module.exports = {
   ],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,
-  plugins: [require.resolve('prettier-plugin-astro'), require.resolve('@trivago/prettier-plugin-sort-imports')],
+  plugins: ['prettier-plugin-astro', '@trivago/prettier-plugin-sort-imports', 'prettier-plugin-css-order', 'prettier-plugin-tailwindcss'],
   overrides: [
     {
       files: '*.astro',
@@ -25,4 +25,8 @@ module.exports = {
       },
     },
   ],
+  tailwindFunctions: ['classNames'],
+  cssDeclarationSorterOrder: 'smacss',
 }
+
+module.exports = config

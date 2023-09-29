@@ -1,0 +1,66 @@
+---
+import { addSlugPrefix, DEFAULT_PROJECTS_PREFIX, useGetProjectsQuery, type ProjectType } from 'src/clients/sanity'
+import PortableText from 'src/components/sanity/PortableText.astro'
+import ProjectLayout from 'src/layouts/ProjectLayout.astro'
+
+type Props = ProjectType & {
+  previousProjectSlug?: string
+  nextProjectSlug?: string
+}
+
+export async function getStaticPaths() {
+  const projects = await useGetProjectsQuery()
+  return projects.map((project, idx) => {
+    const previousProject = projects[idx - 1]
+    const nextProject = projects[idx + 1]
+    const previousProjectSlug = previousProject ? `/${addSlugPrefix(previousProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
+    const nextProjectSlug = nextProject ? `/${addSlugPrefix(nextProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
+    return {
+      params: {
+        slug: project.slug,
+      },
+      props: { ...project, previousProjectSlug, nextProjectSlug },
+    }
+  })
+}
+
+const { title, body, description, roles, pubDate, upDate, featuredImage, previousProjectSlug, nextProjectSlug } = Astro.props
+---
+
+<ProjectLayout roles={roles} title={title} description={description} pubDate={pubDate} upDate={upDate} featuredImage={featuredImage}>
+  <div class="flex flex-col gap-8 text-white">
+    <PortableText portableText={body} />
+  </div>
+  <div class="mt-24 flex w-full items-center justify-between text-2xl text-white">
+    {
+      previousProjectSlug ? (
+        <a class="flex items-center gap-4 uppercase" href={previousProjectSlug}>
+          <svg class="rotate-180" xmlns="http://www.w3.org/2000/svg" width="36" height="24" viewBox="0 0 41 24" fill="none">
+            <path
+              d="M40.0607 13.0607C40.6464 12.4749 40.6464 11.5251 40.0607 10.9393L30.5147 1.3934C29.9289 0.807611 28.9792 0.807611 28.3934 1.3934C27.8076 1.97919 27.8076 2.92893 28.3934 3.51472L36.8787 12L28.3934 20.4853C27.8076 21.0711 27.8076 22.0208 28.3934 22.6066C28.9792 23.1924 29.9289 23.1924 30.5147 22.6066L40.0607 13.0607ZM0 13.5L39 13.5V10.5L0 10.5L0 13.5Z"
+              fill="#E9E9E9"
+            />
+          </svg>{' '}
+          Previous Project
+        </a>
+      ) : (
+        <p class="">This is the first project</p>
+      )
+    }
+    {
+      nextProjectSlug ? (
+        <a class="flex items-center gap-4 uppercase" href={nextProjectSlug}>
+          Next Project{' '}
+          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="24" viewBox="0 0 41 24" fill="none">
+            <path
+              d="M40.0607 13.0607C40.6464 12.4749 40.6464 11.5251 40.0607 10.9393L30.5147 1.3934C29.9289 0.807611 28.9792 0.807611 28.3934 1.3934C27.8076 1.97919 27.8076 2.92893 28.3934 3.51472L36.8787 12L28.3934 20.4853C27.8076 21.0711 27.8076 22.0208 28.3934 22.6066C28.9792 23.1924 29.9289 23.1924 30.5147 22.6066L40.0607 13.0607ZM0 13.5L39 13.5V10.5L0 10.5L0 13.5Z"
+              fill="#E9E9E9"
+            />
+          </svg>
+        </a>
+      ) : (
+        <p class=""> This is the last project</p>
+      )
+    }
+  </div>
+</ProjectLayout>

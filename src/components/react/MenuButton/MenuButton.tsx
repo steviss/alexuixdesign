@@ -1,12 +1,15 @@
-import type { MenuButtonProps } from './MenuButton.interface'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faXmarkLarge } from '@fortawesome/sharp-solid-svg-icons'
 import { useStore } from '@nanostores/react'
 import classNames from 'classnames'
 import type { FC } from 'react'
-import { IconContainer } from 'src/components/react'
-import { isMenuOpen } from 'src/stores'
 import { useScrollbarWidth } from 'src/utility'
+
+import { IconContainer } from 'src/components/react'
+
+import { isMenuOpen } from 'src/stores'
+
+import type { MenuButtonProps } from './MenuButton.interface'
 
 const MenuButton: FC<MenuButtonProps> = ({ className, ...props }) => {
   useScrollbarWidth()
@@ -18,7 +21,7 @@ const MenuButton: FC<MenuButtonProps> = ({ className, ...props }) => {
       <IconContainer className="group px-2">
         <FontAwesomeIcon
           icon={menuIcon}
-          className="w-7 h-7 text-primary group-hover:text-secondary transition-all duration-300 ease-in-out cursor-pointer"
+          className="h-7 w-7 cursor-pointer text-primary transition-all duration-300 ease-in-out group-hover:text-secondary"
         />
       </IconContainer>
     </button>

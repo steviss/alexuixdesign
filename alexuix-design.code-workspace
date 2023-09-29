@@ -2,9 +2,10 @@
   "folders": [
     {
       "name": "alexuix.design Astro ReactJS",
-      "path": "./"
+      "path": "./",
+      "prettier.configPath": "./.prettierrc.cjs"
     },
-    { "name": "alexuix.design Blogging Studio", "path": "./sanity" }
+    { "name": "alexuix.design Blogging Studio", "path": "./sanity", "prettier.configPath": "./.prettierrc.cjs" }
   ],
   "extensions": {
     "recommendations": [
@@ -18,22 +19,33 @@
       "chrisbibby.hide-node-modules", //Hide Node Modules with a click
       "wallabyjs.console-ninja", // displays console log in VSCode
       "astro-build.astro-vscode", // Astro Extension
-      "bradlc.vscode-tailwindcss" // Tailwind CSS IntelliSense
+      "bradlc.vscode-tailwindcss", // Tailwind CSS IntelliSense
+      "github.vscode-github-actions" // Github Actions"
     ]
   },
   "settings": {
     "[astro]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "yaml.schemas": {
+      "https://json.schemastore.org/github-workflow.json": ["*.github/workflows/*.yaml", "*.github/workflows/*.yml"],
+      "https://json.schemastore.org/github-action.json": ["action.yaml", "action.yml"]
+    },
+    "[github-actions-workflow]": {
+      "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
     "eslint.validate": ["javascript", "javascriptreact", "html", "typescript", "typescriptreact"],
     "css.lint.unknownAtRules": "ignore", //@tailwind imports for warnings
     "prettier.documentSelectors": ["**/*.astro"],
-    "eslint.workingDirectories": ["./"],
+    "eslint.workingDirectories": ["./", "./sanity"],
     "typescript.enablePromptUseWorkspaceTsdk": true,
-    "typescript.preferences.importModuleSpecifier": "relative",
+    "typescript.preferences.importModuleSpecifier": "non-relative",
     "files.eol": "\n",
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
     "jest.autoRun": "off",
     "jest.showCoverageOnLoad": false,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -46,7 +58,7 @@
       "**/CVS": true,
       "**/.DS_Store": true,
       "**/Thumbs.db": true,
-      "**/node_modules": true
+      "**/node_modules": false
     }
   }
 }

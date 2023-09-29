@@ -1,3 +1,3 @@
 export * from './getImageUrl'
 export * from './queries'
-export * from './converters'
+export * from './base'

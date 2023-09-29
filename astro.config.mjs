@@ -5,7 +5,7 @@ import sanity from '@sanity/astro'
 import { defineConfig } from 'astro/config'
 import { loadEnv } from 'vite'
 
-const { SANITY_STUDIO_PROJECT_ID, SANITY_STUDIO_DATASET } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
+const { SANITY_STUDIO_PROJECT_ID, SANITY_STUDIO_DATASET, ASTRO_WEBSITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
 export const sanityClienfConfig = {
   projectId: SANITY_STUDIO_PROJECT_ID,
@@ -16,6 +16,6 @@ export const sanityClienfConfig = {
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://alexuix.design',
+  site: ASTRO_WEBSITE_URL,
   integrations: [sitemap(), react(), tailwind(), sanity(sanityClienfConfig)],
 })

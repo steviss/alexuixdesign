@@ -1,0 +1,100 @@
+name: 'Slack Notification - Update'
+
+description: 'Update the existing slack notification with custom status'
+
+inputs:
+  initial-message:
+    description: 'ID of the intial task that created the message'
+    required: true
+    default: 'None'
+  slack-bot-token:
+    description: 'Slack Bot Token required to post to Slack Workspace'
+    required: true
+    default: 'None'
+  slack-channel-id:
+    description: 'Slack Channel ID to post to'
+    required: true
+    default: 'default'
+  deploy-url:
+    description: 'URL to the deployed environment'
+    required: false
+    default: 'true'
+  context-message:
+    description: 'Context Message to display in Slack'
+    required: false
+    default: 'Deploying Astro'
+  context-icon-url:
+    description: 'Cache yarn install state, might speed up resolution step when node-modules cache is activated (invalidated lock/os/node-version/branch)'
+    required: false
+    default: 'https://assets.wearelion.dev/astro-icon-slack.png'
+  context-status:
+    description: 'Status to display on Slack'
+    required: false
+    default: 'Working on it...'
+
+runs:
+  using: 'composite'
+
+  steps:
+    - name: 📨 Update Slack Notification
+      id: slack-initial
+      uses: slackapi/slack-github-action@v1.24.0
+      env:
+        SLACK_BOT_TOKEN: '${{ inputs.slack-bot-token }}'
+      with:
+        channel-id: ${{ inputs.slack-channel-id }}
+        update-ts: ${{ inputs.initial-message }}
+        payload: |
+          {
+            "unfurl_links": false,
+            "unfurl_media": false,
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "${{ github.workflow }} #${{github.run_number}}"
+                }
+              },
+              {
+                "type": "context",
+                "elements": [
+                  {
+                    "type": "image",
+                    "image_url": "${{ inputs.context-icon-url }}",
+                    "alt_text": "${{ inputs.context-message }}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "${{ inputs.context-message }} · ID: ${{ github.run_id }}"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Started by:*\n ${{ github.actor }}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Status:*\n ⌛ ${{ inputs.context-status }}"
+                  }
+                ]
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Run>"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "<${{ inputs.deploy-url }}|View Enviroment>"
+                  }
+                ]
+              }
+            ]
+          }

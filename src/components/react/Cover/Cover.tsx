@@ -1,11 +1,14 @@
-import { COVER_ANIMATION } from './Cover.consts'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmarkLarge } from '@fortawesome/sharp-solid-svg-icons'
 import { useStore } from '@nanostores/react'
 import { AnimatePresence, motion } from 'framer-motion'
 import type { FC } from 'react'
+
 import { IconContainer } from 'src/components/react'
+
 import { isMenuOpen } from 'src/stores'
+
+import { COVER_ANIMATION } from './Cover.consts'
 
 const Cover: FC = () => {
   const menuState = useStore(isMenuOpen)
@@ -20,13 +23,13 @@ const Cover: FC = () => {
           initial="close"
           exit="close"
           variants={COVER_ANIMATION}
-          className="fixed hidden inset-0 bg-bg-primary cursor-pointer z-20"
+          className="bg-bg-primary fixed inset-0 z-20 hidden cursor-pointer"
           onClick={handleToggleMenuState}
         >
-          <IconContainer className="absolute top-0 right-0 group p-12 hidden md:block">
+          <IconContainer className="group absolute right-0 top-0 hidden p-12 md:block">
             <FontAwesomeIcon
               icon={faXmarkLarge}
-              className="w-7 h-7 text-white group-hover:text-secondary transition-all duration-300 ease-in-out cursor-pointer"
+              className="h-7 w-7 cursor-pointer text-white transition-all duration-300 ease-in-out group-hover:text-secondary"
             />
           </IconContainer>
         </motion.div>
