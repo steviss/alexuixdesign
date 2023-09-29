@@ -19,6 +19,5 @@ jobs:
           pre_release_branches: main
           default_bump: minor
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          dry_run: true
           custom_release_rules: chore:preminor:Other,fix:patch:Fixes,feat:minor:Features,bug:patch:Bug Fixes,refactor:patch:Refactoring,docs:preminor:Documentation,ci:preminor:CI/CD
           append_to_pre_release_tag: rc
