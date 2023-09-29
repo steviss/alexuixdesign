@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  cleanup:
+  bump-version:
     runs-on: ubuntu-latest
 
     steps:
