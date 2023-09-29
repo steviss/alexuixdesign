@@ -7,6 +7,10 @@ on:
 permissions:
   pull-requests: write
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Test
@@ -179,3 +183,4 @@ jobs:
           message: |
             Pull Request Preview Build URL: [Click here to preview](${{ steps.preview-url.outputs.deploy-url }})
           comment_tag: pr-preview-url
+          mode: recreate
