@@ -1,8 +1,11 @@
 name: Bump project version
 
-on:
-  workflow_dispatch:
 
+on:
+  pull_request:
+    branches: [main, production]
+    types: closed
+    
 permissions:
   contents: write
 
