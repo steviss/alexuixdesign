@@ -8,21 +8,36 @@ const { styling } = Astro.props
   <div
     class={classNames(
       'container mx-auto flex w-full flex-col items-center justify-between gap-8 border-t px-5 py-14 md:flex-row md:gap-0 md:px-10 lg:px-12',
-      `${styling ? 'text-black' : 'text-white'} `,
+      `${styling ? 'text-black' : 'text-white'}`,
+      `${styling ? 'border-black' : 'border-white'}`,
     )}
   >
-    <a class="text-lg font-bold leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7" href="mailto:aleksandra@alexuix.design"
-      >aleksandra@alexuix.design</a
+    <a
+      class={classNames(
+        'text-lg font-bold leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7',
+        `${styling ? 'hover:opacity-80' : 'hover:text-secondary'}`,
+      )}
+      href="mailto:aleksandra@alexuix.design">aleksandra@alexuix.design</a
     >
-    <ul class="flex items-center gap-2 md:gap-8 lg:gap-28">
+    <ul
+      class="flex items-center gap-2 text-lg font-bold uppercase leading-7 tracking-wide md:gap-8 md:text-xl lg:gap-28 lg:text-2xl lg:leading-7"
+    >
       <li>
-        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Dribble</a>
+        <a href="https://dribbble.com/aleksandralazarevic" target="_blank" class=`${styling ? 'hover:opacity-80' : 'hover:text-secondary'}`
+          >Dribble</a
+        >
       </li>
       <li>
-        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Behance</a>
+        <a href="https://www.behance.net/alexuix" target="_blank" class=`${styling ? 'hover:opacity-80' : 'hover:text-secondary'}`
+          >Behance</a
+        >
       </li>
       <li>
-        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">LinkedIn</a>
+        <a
+          href="https://www.linkedin.com/in/alexlazarevic/"
+          target="_blank"
+          class=`${styling ? 'hover:opacity-80' : 'hover:text-secondary'}`>LinkedIn</a
+        >
       </li>
     </ul>
   </div>

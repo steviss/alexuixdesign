@@ -12,8 +12,8 @@ const { styling } = Astro.props
 <header class={classNames('w-full', `${styling ? 'bg-secondary' : 'bg-primary'}`)}>
   <div
     class={classNames(
-      'container mx-auto flex items-center justify-between border-b px-5 py-8  md:px-10 md:py-0 lg:px-12',
-      `${styling ? 'text-black' : 'text-white'} `,
+      'container mx-auto flex items-center justify-between border-b px-5 py-8 md:px-10 md:py-0 lg:px-12',
+      `${styling ? 'border-black' : 'border-white'} `,
     )}
   >
     <Logo secondaryStyles={styling} />
