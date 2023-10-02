@@ -79,7 +79,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Status:*\n 🔴 ${{ context-status }}"
+                    "text": "*Status:*\n 🔴 ${{ inputs.context-status }}"
                   }
                 ]
               },

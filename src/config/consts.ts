@@ -10,3 +10,4 @@ export const NAVIGATION_LINKS: NavigationLinkType[] = [
   { label: 'Work', href: '/project' },
   { label: 'Blog', href: '/blog' },
 ]
+export const SITE_URL = import.meta.env.ASTRO_WEBSITE_URL
