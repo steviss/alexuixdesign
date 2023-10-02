@@ -4,17 +4,17 @@ on:
   pull_request:
     types:
       - closed
-  workflow_dispatch:
 
 jobs:
   cleanup:
     environment: ${{ github.event.pull_request.base.ref }}
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: 🔀 Checkout
         uses: actions/checkout@v3
 
-      - name: Cleanup Git Cache
+      - name: 🧹 Cleanup Git Cache
         run: |
           gh extension install actions/gh-actions-cache
 
@@ -35,23 +35,23 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Generate Preview Deployment URL
+      - name: 🔗 Generate Preview Deployment URL
         id: preview-url
         uses: ./.github/actions/deploy/preview-path
         with:
           deploy-path: ${{ vars.DEPLOY_PATH }}
 
-      - name: Cleanup deployment to Server
+      - name: 🧹 Cleanup deployment to Server
         id: cleanup
         uses: appleboy/ssh-action@v1.0.0
         env:
-          DEPLOY_PATH: ${{ steps.preview-url.outputs.deploy-path }}}
+          DEPLOY_PATH: ${{ steps.preview-url.outputs.deploy-path }}
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          passphrase: ${{ secrets.SSH_PASSPHRASE  }}
-          port: ${{ secrets.SSH_PORT }}
+          host: ${{ secrets.DEPLOY_SSH_HOST }}
+          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          passphrase: ${{ secrets.DEPLOY_SSH_PASSPHRASE }}
+          port: ${{ secrets.DEPLOY_SSH_PORT }}
           envs: DEPLOY_PATH
           script_stop: true
           script: |

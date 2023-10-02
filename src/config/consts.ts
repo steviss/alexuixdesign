@@ -16,3 +16,4 @@ export const FOOTER_LINKS = [
   { label: 'Behance', href: 'https://www.behance.net/alexuix' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/alexlazarevic/' },
 ]
+export const SITE_URL = import.meta.env.ASTRO_WEBSITE_URL
