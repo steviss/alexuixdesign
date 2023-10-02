@@ -5,9 +5,9 @@ import Header from 'src/components/Header.astro'
 import Navigation from 'src/components/Navigation.astro'
 import { Cover, MobileMenu } from 'src/components/react'
 
-type Props = { title: string; description: string; errorPage?: boolean; headerStyle?: boolean; footerStyle?: boolean }
+type Props = { title: string; description: string; errorPage?: boolean; headerVariant?: boolean; footerVariant?: boolean }
 
-const { title, description, errorPage, headerStyle, footerStyle } = Astro.props
+const { title, description, errorPage, headerVariant, footerVariant } = Astro.props
 ---
 
 <!doctype html>
@@ -29,9 +29,9 @@ const { title, description, errorPage, headerStyle, footerStyle } = Astro.props
           </MobileMenu>
 
           <div class="flex flex-col">
-            <Header styling={headerStyle} />
+            <Header variant={headerVariant} />
             <slot />
-            <Footer styling={footerStyle} />
+            <Footer variant={footerVariant} />
           </div>
         </>
       )

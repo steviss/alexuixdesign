@@ -2,26 +2,23 @@
 import Layout from 'src/layouts/Layout.astro'
 import { Image } from 'astro:assets'
 import alex from 'src/assets/alex.png'
+import { SectionContainer } from 'src/components/react'
 ---
 
 <Layout title="About Me" description="Lorem ipsum dolor sit amet">
-  <section class="w-full bg-primary">
-    <div
-      class="container mx-auto flex h-full min-h-screen flex-col-reverse items-center gap-10 px-5 py-20 md:flex-row md:px-10 md:pb-20 lg:px-12"
-    >
-      <div class="flex w-full flex-col gap-5 md:w-[60%]">
-        <h1 class="pb-4 text-4xl font-bold uppercase text-white md:text-5xl lg:text-6xl">About me</h1>
-        <p class="max-w-[670px] text-xl font-medium text-white md:text-2xl lg:text-3xl">
-          UI/UX designer with over three years of experience in crafting digital experiences. My expertise spans across websites, mobile
-          apps, branding and visual direction. My passion lies in not just meeting but exceeding my clients&apos; expectations, infusing
-          every project with creativity, precision and a touch of positivity. <br />
-          <br /> Beyond the world of design, you&apos;ll often find me strumming my guitar, riding my bicycle and enjoying animated movies
-          and sitcoms.
-        </p>
-      </div>
-      <div class="w-full md:w-[40%]">
-        <Image src={alex} alt="alex" class="aspect-square w-full" />
-      </div>
+  <SectionContainer className="bg-primary" containerClass="gap-10 flex-col-reverse items-center py-20 md:pb-20 md:flex-row">
+    <div class="flex w-full flex-col gap-5 md:w-[60%]">
+      <h1 class="pb-4 text-4xl font-medium uppercase text-white md:text-5xl lg:text-6xl">About me</h1>
+      <p class="max-w-2xl text-xl font-normal text-white md:text-2xl lg:text-3xl">
+        UI/UX designer with over three years of experience in crafting digital experiences. My expertise spans across websites, mobile apps,
+        branding and visual direction. My passion lies in not just meeting but exceeding my clients&apos; expectations, infusing every
+        project with creativity, precision and a touch of positivity. <br />
+        <br /> Beyond the world of design, you&apos;ll often find me strumming my guitar, riding my bicycle and enjoying animated movies and
+        sitcoms.
+      </p>
     </div>
-  </section>
+    <div class="w-full md:w-[40%]">
+      <Image src={alex} alt="alex" class="aspect-square w-full" />
+    </div>
+  </SectionContainer>
 </Layout>
