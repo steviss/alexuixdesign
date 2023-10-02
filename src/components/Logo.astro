@@ -1,21 +1,16 @@
 ---
 import type { HTMLAttributes } from 'astro/types'
 import classNames from 'classnames'
+import type { StyleVariantType } from 'src/types'
 
-type Props = HTMLAttributes<'a'> & {
-  secondaryStyles?: boolean
-}
+type Props = HTMLAttributes<'a'> & StyleVariantType
 
-const { ...props } = Astro.props
-const { secondaryStyles } = Astro.props
+const { variant, ...props } = Astro.props
 ---
 
 <a {...props} href="/"
   ><svg
-    class={classNames(
-      `${secondaryStyles ? 'fill-darkGray' : 'fill-white'}`,
-      `${secondaryStyles ? 'hover:opacity-80' : 'hover:fill-secondary'}`,
-    )}
+    class={classNames(`${variant ? 'fill-darkGray' : 'fill-white'}`, `${variant ? 'hover:opacity-80' : 'hover:fill-secondary'}`)}
     width="92"
     height="33"
     viewBox="0 0 92 33"

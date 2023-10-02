@@ -32,26 +32,30 @@ const { title, description, upDate, featuredImage, roles } = Astro.props
           </svg>
         </a>
 
-        {
-          upDate && roles && (
-            <div class="hidden items-start gap-20 md:flex">
+        <div class="hidden items-start gap-20 md:flex">
+          {
+            upDate && (
               <div class="flex flex-col gap-4 text-xl text-white md:text-2xl lg:text-3xl">
                 <p class="font-medium uppercase">Date</p>
                 <p class="font-light">
                   <FormattedDate date={upDate} />
                 </p>
               </div>
+            )
+          }
+          {
+            roles?.length > 0 && (
               <div class="flex flex-col gap-4 text-xl text-white md:text-2xl lg:text-3xl">
-                <p class="font-medium uppercase"> Roles</p>
+                <p class="font-medium uppercase">Roles</p>
                 <ul class="font-light">
                   {roles.map((role) => (
                     <li> {role}</li>
                   ))}
                 </ul>
               </div>
-            </div>
-          )
-        }
+            )
+          }
+        </div>
       </div>
       <div class="mb-28 w-full">
         {featuredImage && <FeaturedImage asset={featuredImage} alt={description} />}

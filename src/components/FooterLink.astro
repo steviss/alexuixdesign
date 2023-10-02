@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+import classNames from 'classnames'
+import type { StyleVariantType } from 'src/types'
+
+type Props = StyleVariantType & Pick<HTMLAttributes<'a'>, 'href' | 'class'> & { label: string }
+const { variant, href, label, class: className } = Astro.props
+---
+
+<li>
+  <a
+    href={href}
+    target="_blank"
+    class={classNames(className, `${variant ? 'hover:opacity-80' : 'hover:text-secondary'}`)}
+    rel="noopener noreferrer">{label}</a
+  >
+</li>
