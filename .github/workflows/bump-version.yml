@@ -1,13 +1,14 @@
 name: Bump project version
 
-
 on:
-  pull_request:
+  push:
     branches: [main, production]
-    types: closed
-    
+
 permissions:
   contents: write
+
+env:
+ BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
 
 jobs:
   bump-version:
@@ -27,3 +28,11 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           custom_release_rules: chore:preminor:Other,fix:patch:Fixes,feat:minor:Features,bug:patch:Bug Fixes,refactor:patch:Refactoring,docs:preminor:Documentation,ci:preminor:CI/CD
           append_to_pre_release_tag: rc
+
+      - name: Create a GitHub release
+        if: ${{ env.BRANCH_NAME }} == 'production'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}

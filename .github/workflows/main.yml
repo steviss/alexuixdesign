@@ -27,7 +27,7 @@ jobs:
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
           deploy-url: ${{ vars.DEPLOY_URL }}
-          context-status: 'Starting: Test'
+          context-status: 'Running: Test'
 
       - uses: actions/setup-node@v3
         with:
@@ -96,7 +96,7 @@ jobs:
           slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
           slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
           deploy-url: ${{ vars.DEPLOY_URL }}
-          context-status: 'Starting: Build Astro'
+          context-status: 'Running: Build Astro'
 
       - uses: actions/setup-node@v3
         with:
