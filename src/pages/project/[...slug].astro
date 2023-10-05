@@ -13,8 +13,8 @@ export async function getStaticPaths() {
   return projects.map((project, idx) => {
     const previousProject = projects[idx - 1]
     const nextProject = projects[idx + 1]
-    const previousProjectSlug = previousProject ? `/${addSlugPrefix(previousProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
-    const nextProjectSlug = nextProject ? `/${addSlugPrefix(nextProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
+    const previousProjectSlug = previousProject ? `${addSlugPrefix(previousProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
+    const nextProjectSlug = nextProject ? `${addSlugPrefix(nextProject.slug, DEFAULT_PROJECTS_PREFIX)}` : null
     return {
       params: {
         slug: project.slug,
