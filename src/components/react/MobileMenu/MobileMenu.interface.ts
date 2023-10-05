@@ -1,3 +1,5 @@
 import type { PropsWithChildren } from 'react'
 
-export type MobileMenuProps = PropsWithChildren
+import type { StyleVariantType } from 'src/types'
+
+export type MobileMenuProps = PropsWithChildren<StyleVariantType>

@@ -1,9 +1,12 @@
 ---
 import { FormattedDate, SectionContainer } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
-import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
+import { SITE_DESCRIPTION, SITE_TITLE_PREFIX } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
 import { useGetProjectsQuery } from 'src/clients/sanity'
+
+const PROJECT_PAGE_TITLE = `${SITE_TITLE_PREFIX} My Work`
+const PROJECT_PAGE_DESCRIPTION = SITE_DESCRIPTION
 
 export async function getProjects() {
   return await useGetProjectsQuery(true)
@@ -12,7 +15,7 @@ export async function getProjects() {
 const projects = await getProjects()
 ---
 
-<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<Layout title={PROJECT_PAGE_TITLE} description={PROJECT_PAGE_DESCRIPTION}>
   <SectionContainer containerClass="gap-8 md:gap-16 py-16 md:py-24">
     <h1 class="text-2xl text-white md:text-3xl lg:text-4xl">Projects</h1>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-8 lg:grid-cols-3">

@@ -1,9 +1,12 @@
 ---
-import { FormattedDate } from 'src/components/react'
+import { SectionContainer } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
 import { useGetPostsQuery, useGetTagsQuery } from 'src/clients/sanity'
-import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
+import { SITE_DESCRIPTION, SITE_TITLE_PREFIX } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
+
+const BLOG_PAGE_TITLE = `${SITE_TITLE_PREFIX} My Blog`
+const BLOG_PAGE_DESCRIPTION = SITE_DESCRIPTION
 
 export async function getTags() {
   return await useGetTagsQuery(true)
@@ -13,50 +16,42 @@ export async function getPosts() {
   return await useGetPostsQuery(true)
 }
 
-const tags = await getTags()
-
 const posts = await getPosts()
 ---
 
-<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <section class="flex flex-col">
-    <h1>Blog</h1>
-    <div class="flex flex-col">
-      <div>
-        <input type="text" placeholder="Search blog" />
-      </div>
-      <div>
-        <ul class="flex">
-          {
-            tags.map(({ slug, title }) => (
-              <li class="p-2">
-                <a href={slug}>#{title}</a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </div>
-  </section>
-  <section class="xxl:grid-cols-4 grid grid-flow-row grid-cols-1 gap-4 py-24 md:grid-cols-2 md:gap-8 xl:grid-cols-3">
+<Layout title={BLOG_PAGE_TITLE} description={BLOG_PAGE_DESCRIPTION}>
+  <SectionContainer className="my-24" containerClass="flex flex-col gap-20">
+    <h1 class="text-4xl font-medium uppercase text-gray md:text-5xl lg:text-6xl">Articles and news</h1>
+    <input class="max-w-sm" type="text" placeholder="Search blog" />
+
     {
-      posts.map(({ featuredImage, title, pubDate, slug, estimatedReadingTime }) => (
-        <div class="flex flex-col">
-          <div class="relative h-[208px] overflow-hidden rounded-md">
-            {featuredImage && <FeaturedImage class="max-h-52" width={360} height={240} asset={featuredImage.asset.url} alt={title} />}
+      posts.map(({ featuredImage, title, slug, description }) => (
+        <div class="flex w-full flex-col gap-12 md:flex-row">
+          <div class="w-full md:w-1/2 lg:w-2/5">
+            {featuredImage && <FeaturedImage class="aspect-square" asset={featuredImage.asset.url} alt={title} />}
           </div>
-          <div class="mt-6 flex flex-col text-primary md:flex-row">
-            <div class="flex flex-col md:flex-row">
-              <FormattedDate date={pubDate} />
-              <span class="px-2">•</span>
-              <h4>Reading time: {estimatedReadingTime} min</h4>
-            </div>
+
+          <div class="flex w-full flex-col justify-center gap-4 md:w-1/2 lg:w-3/5">
+            <h2 class="max-w-sm text-xl text-gray  md:text-2xl lg:text-3xl">{title}</h2>
+            <p class="max-w-sm text-lg font-light lowercase text-gray md:text-xl lg:text-2xl">{description}</p>
+
+            <a
+              class="group flex max-w-fit items-center gap-2 border-b border-gray py-1 pt-4 text-lg font-medium uppercase text-gray hover:border-secondary hover:text-secondary group-hover:text-secondary md:text-xl lg:text-2xl"
+              target="_blank"
+              rel="noopener noreferrer"
+              href={slug}
+            >
+              Read more
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 19" fill="none">
+                <path
+                  class="fill-gray group-hover:fill-secondary"
+                  d="M19.8827 3.1227C19.9504 2.29705 19.336 1.57279 18.5104 1.50503L5.05564 0.400729C4.22999 0.332964 3.50573 0.947352 3.43796 1.773C3.3702 2.59865 3.98459 3.32291 4.81024 3.39068L16.77 4.37227L15.7884 16.3321C15.7207 17.1577 16.335 17.882 17.1607 17.9497C17.9864 18.0175 18.7106 17.4031 18.7784 16.5775L19.8827 3.1227ZM1.97034 18.8939L19.358 4.14387L17.4174 1.85613L0.0296561 16.6061L1.97034 18.8939Z"
+                />
+              </svg>
+            </a>
           </div>
-          <h3 class="font-nunito py-8 text-3xl font-semibold text-white lg:text-4xl">
-            <a href={slug}>{title}</a>
-          </h3>
         </div>
       ))
     }
-  </section>
+  </SectionContainer>
 </Layout>
