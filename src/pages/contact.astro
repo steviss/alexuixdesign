@@ -1,8 +1,12 @@
 ---
+import { SITE_TITLE_PREFIX, SITE_DESCRIPTION } from 'src/config'
 import Layout from 'src/layouts/Layout.astro'
+
+const CONTACT_PAGE_TITLE = `${SITE_TITLE_PREFIX} Contact`
+const CONTACT_PAGE_DESCRIPTION = SITE_DESCRIPTION
 ---
 
-<Layout headerVariant footerVariant title="Contact" description="Lorem ipsum dolor sit amet">
+<Layout headerVariant footerVariant title={CONTACT_PAGE_TITLE} description={CONTACT_PAGE_DESCRIPTION}>
   <section class="w-full bg-secondary">
     <div class="container mx-auto flex h-full min-h-screen items-center px-5 md:px-10 lg:px-12">
       <h1 class="pb-4 text-4xl font-bold uppercase text-lightGray md:text-5xl lg:text-[117px]">let’s work <br /> together</h1>

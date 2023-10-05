@@ -2,6 +2,7 @@
 import Layout from 'src/layouts/Layout.astro'
 import { ProjectSection, SectionContainer } from 'src/components/react'
 import { useGetProjectsQuery } from 'src/clients/sanity'
+import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config'
 
 export async function getProjects() {
   return await useGetProjectsQuery(true)
@@ -10,7 +11,7 @@ export async function getProjects() {
 const projects = await getProjects()
 ---
 
-<Layout headerVariant title="Home Page" description="Lorem ipsum dolor sit amet">
+<Layout headerVariant title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <SectionContainer className="bg-secondary pb-28" containerClass="border-b border-black">
     <p class="max-w-screen-lg text-5xl font-bold uppercase text-lightGray md:text-7xl lg:text-[115px] lg:leading-[115px]">
       Turning ideas into digital dreams

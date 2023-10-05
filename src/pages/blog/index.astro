@@ -2,8 +2,11 @@
 import { SectionContainer } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
 import { useGetPostsQuery, useGetTagsQuery } from 'src/clients/sanity'
-import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config/consts'
+import { SITE_DESCRIPTION, SITE_TITLE_PREFIX } from 'src/config/consts'
 import Layout from 'src/layouts/Layout.astro'
+
+const BLOG_PAGE_TITLE = `${SITE_TITLE_PREFIX} My Blog`
+const BLOG_PAGE_DESCRIPTION = SITE_DESCRIPTION
 
 export async function getTags() {
   return await useGetTagsQuery(true)
@@ -17,7 +20,7 @@ const posts = await getPosts()
 console.log(posts)
 ---
 
-<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<Layout title={BLOG_PAGE_TITLE} description={BLOG_PAGE_DESCRIPTION}>
   <SectionContainer className="my-24" containerClass="flex flex-col gap-20">
     <h1 class="text-4xl font-medium uppercase text-gray md:text-5xl lg:text-6xl">Articles and news</h1>
     <input class="max-w-sm" type="text" placeholder="Search blog" />
