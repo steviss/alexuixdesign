@@ -34,7 +34,7 @@ const { title, description, upDate, featuredImage, roles, projectWebsite } = Ast
             </svg>
           </a>
 
-          <div class="hidden items-start gap-20 md:flex">
+          <div class="flex flex-col items-start gap-20 md:flex-row">
             {
               upDate && (
                 <div class="flex flex-col gap-4 text-xl text-white md:text-2xl lg:text-3xl">
@@ -46,7 +46,7 @@ const { title, description, upDate, featuredImage, roles, projectWebsite } = Ast
               )
             }
             {
-              roles?.length > 0 && (
+              roles && roles.length > 0 && (
                 <div class="flex flex-col gap-4 text-xl text-white md:text-2xl lg:text-3xl">
                   <p class="font-medium uppercase">Roles</p>
                   <ul class="font-light">

@@ -8,7 +8,7 @@ const convertSanityPostToPost: ConvertSanityPostToPostFunction = (items, options
   return items.map(({ slug, tags, ...post }) => ({
     ...post,
     slug: addSlugPrefix(slug, prefix),
-    tags: tags.map((tag) => ({ ...tag, slug: addSlugPrefix(slug, DEFAULT_PREFIX_TAG) })),
+    tags: tags?.map((tag) => ({ ...tag, slug: addSlugPrefix(slug, DEFAULT_PREFIX_TAG) })),
   }))
 }
 
