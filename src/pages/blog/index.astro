@@ -17,7 +17,6 @@ export async function getPosts() {
 }
 
 const posts = await getPosts()
-console.log(posts)
 ---
 
 <Layout title={BLOG_PAGE_TITLE} description={BLOG_PAGE_DESCRIPTION}>
@@ -29,9 +28,7 @@ console.log(posts)
       posts.map(({ featuredImage, title, slug, description }) => (
         <div class="flex w-full flex-col gap-12 md:flex-row">
           <div class="w-full md:w-1/2 lg:w-2/5">
-            {featuredImage && (
-              <FeaturedImage class="aspect-square h-full max-h-[420px] w-full max-w-[550px]" asset={featuredImage.asset.url} alt={title} />
-            )}
+            {featuredImage && <FeaturedImage class="aspect-square h-auto w-full" asset={featuredImage.asset.url} alt={title} />}
           </div>
 
           <div class="flex w-full flex-col justify-center gap-4 md:w-1/2 lg:w-3/5">

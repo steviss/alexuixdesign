@@ -3,13 +3,16 @@ import Layout from './Layout.astro'
 import { FormattedDate } from 'src/components/react'
 import type { ProjectType } from 'src/clients/sanity'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
+import { SITE_DESCRIPTION, SITE_TITLE_PREFIX } from 'src/config'
 
 type Props = Pick<ProjectType, 'title' | 'description' | 'pubDate' | 'upDate' | 'featuredImage' | 'roles' | 'projectWebsite'>
 
 const { title, description, upDate, featuredImage, roles, projectWebsite } = Astro.props
+const PROJECT_PAGE_TITLE = `${SITE_TITLE_PREFIX} Project - ${title}`
+const PROJECT_PAGE_DESCRIPTION = SITE_DESCRIPTION
 ---
 
-<Layout title={title} description={description}>
+<Layout title={PROJECT_PAGE_TITLE} description={PROJECT_PAGE_DESCRIPTION}>
   <main class="my-12">
     <div class="container mx-auto">
       <div class="flex flex-col px-5 md:px-10 lg:px-12">
