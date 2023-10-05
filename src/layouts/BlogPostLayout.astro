@@ -3,17 +3,16 @@ import Layout from './Layout.astro'
 import type { PostType } from 'src/clients/sanity'
 import { FormattedDate, SectionContainer } from 'src/components/react'
 import FeaturedImage from 'src/components/sanity/FeaturedImage.astro'
-import { SITE_DESCRIPTION, SITE_TITLE_PREFIX } from 'src/config'
+import { SITE_TITLE_PREFIX } from 'src/config'
 
 type Props = Pick<PostType, 'title' | 'description' | 'pubDate' | 'upDate' | 'featuredImage' | 'tags'>
 
 const { title, description, featuredImage, tags, pubDate } = Astro.props
+
 const BLOG_POST_PAGE_TITLE = `${SITE_TITLE_PREFIX} ${title}`
-const BLOG_POST_PAGE_DESCRIPTION = SITE_DESCRIPTION
-console.log(Astro.props)
 ---
 
-<Layout title={BLOG_POST_PAGE_TITLE} description={BLOG_POST_PAGE_DESCRIPTION}>
+<Layout title={BLOG_POST_PAGE_TITLE} description={description}>
   <SectionContainer className="my-24">
     <div class="mb-12 flex flex-col gap-12 md:mb-20 lg:mb-28">
       <h1 class="text-3xl font-medium text-white md:text-4xl lg:text-5xl">{title}</h1>

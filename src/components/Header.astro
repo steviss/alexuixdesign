@@ -18,7 +18,7 @@ const { variant } = Astro.props
     )}
   >
     <Logo variant={variant} />
-    <MenuButton client:only />
+    <MenuButton variant={variant} client:only />
     <ul class="hidden list-none flex-row md:flex">
       <Navigation variant={variant} />
     </ul>

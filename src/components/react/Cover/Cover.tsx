@@ -23,7 +23,7 @@ const Cover: FC = () => {
           initial="close"
           exit="close"
           variants={COVER_ANIMATION}
-          className="bg-bg-primary fixed inset-0 z-20 hidden cursor-pointer"
+          className="fixed inset-0 z-20 hidden cursor-pointer bg-primary"
           onClick={handleToggleMenuState}
         >
           <IconContainer className="group absolute right-0 top-0 hidden p-12 md:block">

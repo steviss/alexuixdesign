@@ -24,8 +24,8 @@ const { title, description, errorPage, headerVariant, footerVariant } = Astro.pr
       ) : (
         <>
           <Cover client:load />
-          <MobileMenu client:load>
-            <Navigation />
+          <MobileMenu variant={headerVariant} client:load>
+            <Navigation variant={headerVariant} />
           </MobileMenu>
 
           <div class="flex flex-col">

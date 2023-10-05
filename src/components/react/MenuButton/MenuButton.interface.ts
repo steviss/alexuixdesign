@@ -1,3 +1,5 @@
 import type { HTMLAttributes } from 'react'
 
-export type MenuButtonProps = Partial<HTMLAttributes<HTMLButtonElement>>
+import type { StyleVariantType } from 'src/types'
+
+export type MenuButtonProps = Partial<HTMLAttributes<HTMLButtonElement>> & StyleVariantType

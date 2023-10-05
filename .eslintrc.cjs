@@ -32,7 +32,7 @@ const config = {
     },
   },
   rules: {
-    'no-console': 1,
+    'no-console': 'error',
     'testing-library/no-debugging-utils': 'warn',
     'testing-library/no-dom-import': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: 'req|res|next|val' }],
