@@ -8,7 +8,7 @@ const SectionContainer: FC<SectionContainerProps> = ({ children, className, vari
     <section {...props} className={classNames('w-full', className)}>
       <div
         className={classNames(
-          'container mx-auto flex min-h-screen w-full flex-col',
+          'container mx-auto flex w-full flex-col md:min-h-screen md:py-0',
           { 'justify-center px-5 md:px-10 lg:px-12': variant !== 'project' },
           containerClass,
         )}

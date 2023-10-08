@@ -43,7 +43,7 @@ const { title, body, description, roles, pubDate, upDate, featuredImage, previou
   <div class="mt-24 flex w-full items-center justify-between text-lg font-light text-white md:text-xl lg:text-2xl">
     {
       previousProjectSlug ? (
-        <a class="group flex items-center gap-4 uppercase hover:text-secondary" href={previousProjectSlug}>
+        <a class="group flex items-center gap-4 self-end uppercase hover:text-secondary" href={previousProjectSlug}>
           <svg class="rotate-180" xmlns="http://www.w3.org/2000/svg" width="36" height="24" viewBox="0 0 41 24" fill="none">
             <path
               class="fill-gray group-hover:fill-secondary"
@@ -53,7 +53,7 @@ const { title, body, description, roles, pubDate, upDate, featuredImage, previou
           <span>Previous Project</span>
         </a>
       ) : (
-        <span>This is the first project</span>
+        <p> </p>
       )
     }
     {
@@ -68,7 +68,7 @@ const { title, body, description, roles, pubDate, upDate, featuredImage, previou
           </svg>
         </a>
       ) : (
-        <span>This is the last project</span>
+        <p> </p>
       )
     }
   </div>

@@ -12,28 +12,18 @@ const projects = await getProjects()
 ---
 
 <Layout headerVariant title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <SectionContainer className="bg-secondary pb-28" containerClass="border-b border-black">
+  <SectionContainer className="bg-secondary pb-28" containerClass="border-b py-24 border-black">
     <p class="max-w-screen-lg text-5xl font-bold uppercase text-lightGray md:text-7xl lg:text-[115px] lg:leading-[115px]">
       Turning ideas into digital dreams
     </p>
   </SectionContainer>
-  <SectionContainer className="bg-primary" containerClass="relative">
+  <SectionContainer className="bg-primary" containerClass="py-24">
     <p class="max-w-screen-xl pr-20 text-4xl text-gray md:text-6xl lg:text-[80px] lg:leading-[100px]">
       Hi, I&apos;am Alex, <span
         class="underline decoration-secondary underline-offset-[6px] md:underline-offset-[12px] lg:underline-offset-[20px]"
         >UI/UX Designer</span
       >. <br /> Let&apos;s bring freshnes and fun to your project!
     </p>
-    <div class="absolute bottom-20 right-0 hidden w-full flex-col items-end bg-primary px-5 md:flex md:px-10 lg:px-12">
-      <div class="flex items-center gap-4">
-        <p class="font-normal uppercase text-white">Work</p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="23" height="39" viewBox="0 0 23 39" fill="none">
-          <path
-            d="M10.8811 38.0605C11.4669 38.6463 12.4167 38.6463 13.0025 38.0605L22.5484 28.5146C23.1342 27.9288 23.1342 26.9791 22.5484 26.3933C21.9626 25.8075 21.0129 25.8075 20.4271 26.3933L11.9418 34.8785L3.45655 26.3932C2.87076 25.8074 1.92102 25.8074 1.33523 26.3932C0.74944 26.979 0.749437 27.9287 1.33522 28.5145L10.8811 38.0605ZM10.4419 -0.000157927L10.4418 36.9998L13.4418 36.9998L13.4419 -0.000149618L10.4419 -0.000157927Z"
-            fill="white"></path>
-        </svg>
-      </div>
-    </div>
   </SectionContainer>
 
   {projects.map((project) => <ProjectSection client:only {...project} />)}

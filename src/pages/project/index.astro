@@ -21,7 +21,7 @@ const projects = await getProjects()
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
       {
         projects.map(({ featuredImage, title, pubDate, slug, estimatedReadingTime }) => (
-          <div class="flex flex-col opacity-80 hover:opacity-100">
+          <div class="flex flex-col md:opacity-80 md:transition-all md:duration-500 md:hover:scale-110 md:hover:opacity-100">
             <a href={slug}>
               <div class="relative overflow-hidden rounded-md">
                 {featuredImage && <FeaturedImage class="max-h-52" width={360} height={240} asset={featuredImage} alt={title} />}
