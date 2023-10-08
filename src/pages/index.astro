@@ -11,11 +11,12 @@ export async function getProjects() {
 const projects = await getProjects()
 ---
 
-<Layout headerVariant title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <SectionContainer className="bg-secondary pb-28" containerClass="border-b py-24 border-black">
-    <p class="max-w-screen-lg text-5xl font-bold uppercase text-lightGray md:text-7xl lg:text-[115px] lg:leading-[115px]">
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <SectionContainer className="pb-28" containerClass="border-b py-24 border-white">
+    <p class="max-w-screen-lg text-5xl font-bold uppercase text-white md:text-7xl lg:text-[115px] lg:leading-[115px]">
       Turning ideas into digital dreams
     </p>
+    <!-- <AnimatedText text="Turning ideas into digital dreams" /> -->
   </SectionContainer>
   <SectionContainer className="bg-primary" containerClass="py-24">
     <p class="max-w-screen-xl pr-20 text-4xl text-gray md:text-6xl lg:text-[80px] lg:leading-[100px]">

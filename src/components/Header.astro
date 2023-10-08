@@ -1,26 +1,15 @@
 ---
-import classNames from 'classnames'
 import Logo from './Logo.astro'
 import Navigation from './Navigation.astro'
 import { MenuButton } from 'src/components/react'
-import type { StyleVariantType } from 'src/types'
-
-export type Props = StyleVariantType
-
-const { variant } = Astro.props
 ---
 
-<header class={classNames('w-full', `${variant ? 'bg-secondary' : 'bg-primary'}`)}>
-  <div
-    class={classNames(
-      'container mx-auto flex items-center justify-between border-b px-5 py-8 md:px-10 md:py-0 lg:px-12',
-      `${variant ? 'border-black' : 'border-white'} `,
-    )}
-  >
-    <Logo variant={variant} />
-    <MenuButton variant={variant} client:only />
+<header class="w-full bg-primary">
+  <div class="container mx-auto flex items-center justify-between border-b border-white px-5 py-8 md:px-10 md:py-0 lg:px-12">
+    <Logo />
+    <MenuButton client:only />
     <ul class="hidden list-none flex-row md:flex">
-      <Navigation variant={variant} />
+      <Navigation />
     </ul>
   </div>
 </header>
