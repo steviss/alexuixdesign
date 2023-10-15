@@ -19,10 +19,7 @@ const MenuButton: FC<MenuButtonProps> = ({ className, ...props }) => {
   return (
     <button {...props} className={classNames('flex md:hidden', className)} onClick={handleToggleMenuState}>
       <IconContainer className="group px-2">
-        <FontAwesomeIcon
-          icon={menuIcon}
-          className="h-7 w-7 cursor-pointer text-primary transition-all duration-300 ease-in-out group-hover:text-secondary"
-        />
+        <FontAwesomeIcon icon={menuIcon} className="h-7 w-7 cursor-pointer text-white transition-all duration-300 ease-in-out" />
       </IconContainer>
     </button>
   )

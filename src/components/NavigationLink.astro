@@ -1,23 +1,16 @@
 ---
-import type { NavigationLinkType, StyleVariantType } from 'src/types'
+import type { NavigationLinkType } from 'src/types'
 import Link from './Link.astro'
 
 import type { HTMLAttributes } from 'astro/types'
-import classNames from 'classnames'
-type Props = HTMLAttributes<'a'> & NavigationLinkType & StyleVariantType
 
-const { href, label, variant } = Astro.props
+type Props = HTMLAttributes<'a'> & NavigationLinkType
+
+const { href, label } = Astro.props
 ---
 
 <li>
-  <Link
-    class={classNames(
-      'group text-lg font-bold uppercase tracking-wide md:text-xl lg:text-2xl',
-      `${variant ? 'hover:text-opacity-80' : 'hover:text-secondary'}`,
-      `${variant ? 'text-darkGray' : 'text-white'}`,
-    )}
-    href={href}
-  >
+  <Link class="group text-lg font-bold uppercase tracking-wide text-white hover:text-secondary md:text-xl lg:text-2xl" href={href}>
     {label}
   </Link>
 </li>

@@ -14,5 +14,5 @@ const webpUrl = useGetImageUrl(asset).format('webp').url()
 
 <picture>
   <source srcset={webpUrl} type="image/webp" />
-  <img {...props} src={url} class={classNames('block h-full w-full object-cover', className)} />
+  <img {...props} src={url} class={classNames('block h-auto w-full object-cover', className)} />
 </picture>

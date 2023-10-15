@@ -8,11 +8,11 @@ export type SanityProjectType = BaseSanityDocument & {
   subtitle: string
   projectWebsite?: string
   projectImage?: SanityImageWithAssetStub
-  roles: {
+  roles?: {
     title: string
   }[]
 }
 
 export type ProjectType = Omit<SanityProjectType, 'roles'> & {
-  roles: string[]
+  roles?: string[]
 }

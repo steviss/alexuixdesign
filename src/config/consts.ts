@@ -2,12 +2,13 @@
 // You can import this data from anywhere in your site by using the `import` keyword.
 import type { NavigationLinkType } from 'src/types'
 
-export const SITE_TITLE = 'Aleksandra Lazarević - alexuix - UI UX Developer'
-export const SITE_DESCRIPTION = 'UI UX Developer'
+export const SITE_TITLE = 'Alex. - Aleksandra Lazarević - UI UX Developer'
+export const SITE_TITLE_PREFIX = 'Alex. -'
+export const SITE_DESCRIPTION = 'Aleksandra Lazarević - alexuix - UI UX Developer'
 export const SITE_OWNER = 'Aleksandra Lazarević'
 export const NAVIGATION_LINKS: NavigationLinkType[] = [
   { label: 'About', href: '/about' },
-  { label: 'Work', href: '/project' },
+  { label: 'Work', href: '/#work' },
   { label: 'Blog', href: '/blog' },
 ]
 export const CONTACT_EMAIL_ADDRESS = 'aleksandra@alexuix.design'
