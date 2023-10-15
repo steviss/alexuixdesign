@@ -7,10 +7,10 @@ import type { ProjectSectionProps } from './ProjectSection.interface'
 const ProjectSection: FC<ProjectSectionProps> = ({ projectImage, title, slug, subtitle, roles }) => {
   const handleClick = () => (window.location.href = slug)
   return (
-    <SectionContainer variant="project" className="my-12">
+    <SectionContainer variant="project" className="py-12">
       <div
         onClick={() => handleClick()}
-        className="flex cursor-pointer flex-col justify-end gap-2 px-5 opacity-80 hover:opacity-100 md:relative md:gap-0 md:px-10 lg:px-12"
+        className="flex cursor-pointer flex-col justify-end gap-2 px-5 md:relative md:gap-0 md:px-10 md:opacity-80 md:transition-all md:duration-500 md:hover:scale-110 md:hover:opacity-100 lg:px-12"
       >
         <div className="h-full w-full opacity-50">
           <img src={projectImage?.asset.url} className="block h-auto w-full object-cover" />

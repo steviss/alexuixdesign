@@ -11,7 +11,7 @@ import { isMenuOpen } from 'src/stores'
 
 import type { MenuButtonProps } from './MenuButton.interface'
 
-const MenuButton: FC<MenuButtonProps> = ({ className, variant, ...props }) => {
+const MenuButton: FC<MenuButtonProps> = ({ className, ...props }) => {
   useScrollbarWidth()
   const menuState = useStore(isMenuOpen)
   const handleToggleMenuState = () => isMenuOpen.set(!menuState)
@@ -19,13 +19,7 @@ const MenuButton: FC<MenuButtonProps> = ({ className, variant, ...props }) => {
   return (
     <button {...props} className={classNames('flex md:hidden', className)} onClick={handleToggleMenuState}>
       <IconContainer className="group px-2">
-        <FontAwesomeIcon
-          icon={menuIcon}
-          className={classNames(
-            'h-7 w-7 cursor-pointer transition-all duration-300 ease-in-out',
-            `${variant ? 'text-primary' : 'text-white'}`,
-          )}
-        />
+        <FontAwesomeIcon icon={menuIcon} className="h-7 w-7 cursor-pointer text-white transition-all duration-300 ease-in-out" />
       </IconContainer>
     </button>
   )
