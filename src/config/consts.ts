@@ -8,7 +8,7 @@ export const SITE_DESCRIPTION = 'Aleksandra Lazarević - alexuix - UI UX Develop
 export const SITE_OWNER = 'Aleksandra Lazarević'
 export const NAVIGATION_LINKS: NavigationLinkType[] = [
   { label: 'About', href: '/about' },
-  { label: 'Work', href: '/project' },
+  { label: 'Work', href: '/#work' },
   { label: 'Blog', href: '/blog' },
 ]
 export const CONTACT_EMAIL_ADDRESS = 'aleksandra@alexuix.design'
