@@ -3,13 +3,13 @@ import { NAVIGATION_LINKS } from 'src/config'
 import NavigationLink from './NavigationLink.astro'
 ---
 
-<section class="flex flex-col items-center gap-4 py-4 md:flex-row md:py-8">
-  <div class="flex items-center">
+<nav class="flex flex-col items-center gap-4 py-4 md:flex-row md:py-8">
+  <ul class="flex flex-col items-center md:flex-row">
     {NAVIGATION_LINKS.map((link) => <NavigationLink {...link} />)}
-  </div>
+  </ul>
   <a
     href="/contact"
     class="rounded-full border border-black bg-secondary px-6 py-3 text-lg font-bold uppercase tracking-wide text-black hover:bg-black hover:text-secondary md:text-xl lg:text-2xl"
     >Say Hello</a
   >
-</section>
+</nav>

@@ -8,7 +8,7 @@ const convertSanityProjectToProject: ConvertSanityProjectToProjectFunction = (it
   return items.map(({ roles, slug, ...project }) => ({
     ...project,
     slug: addSlugPrefix(slug, prefix),
-    roles: roles.map(({ title }) => title),
+    roles: roles?.map(({ title }) => title),
   }))
 }
 

@@ -7,7 +7,7 @@ export type ConvertSanityPostToPostFunction = ConvertSanityDocument<SanityPostTy
 export type PostTagType = Pick<TagType, 'title' | 'slug'>
 
 export type SanityPostType = BaseSanityDocument & {
-  tags: PostTagType[]
+  tags?: PostTagType[]
 }
 
 export type PostType = SanityPostType

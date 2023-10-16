@@ -1,29 +1,21 @@
 ---
-import classNames from 'classnames'
-type Props = { styling?: boolean }
-const { styling } = Astro.props
+import FooterLink from 'src/components/FooterLink.astro'
+import { CONTACT_EMAIL_ADDRESS, FOOTER_LINKS } from 'src/config'
 ---
 
-<footer class={classNames('w-full', `${styling ? 'bg-secondary' : 'bg-primary'}`)}>
+<footer class="w-full bg-primary">
   <div
-    class={classNames(
-      'container mx-auto flex w-full flex-col items-center justify-between gap-8 border-t px-5 py-14 md:flex-row md:gap-0 md:px-10 lg:px-12',
-      `${styling ? 'text-black' : 'text-white'} `,
-    )}
+    class="container mx-auto flex w-full flex-col items-center justify-between gap-8 border-t border-white px-5 py-14 text-white md:flex-row md:gap-0 md:px-10 lg:px-12"
   >
-    <a class="text-lg font-bold leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7" href="mailto:aleksandra@alexuix.design"
-      >aleksandra@alexuix.design</a
+    <a
+      class="text-lg font-bold leading-7 tracking-wide hover:text-secondary md:text-xl lg:text-2xl lg:leading-7"
+      href=`mailto:${CONTACT_EMAIL_ADDRESS}`
+      rel="noopener noreferrer">{CONTACT_EMAIL_ADDRESS}</a
     >
-    <ul class="flex items-center gap-2 md:gap-8 lg:gap-28">
-      <li>
-        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Dribble</a>
-      </li>
-      <li>
-        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">Behance</a>
-      </li>
-      <li>
-        <a href="/" class="text-lg font-bold uppercase leading-7 tracking-wide md:text-xl lg:text-2xl lg:leading-7">LinkedIn</a>
-      </li>
+    <ul
+      class="flex items-center gap-2 text-lg font-bold uppercase leading-7 tracking-wide md:gap-8 md:text-xl lg:gap-28 lg:text-2xl lg:leading-7"
+    >
+      {FOOTER_LINKS.map((link) => <FooterLink {...link} />)}
     </ul>
   </div>
 </footer>

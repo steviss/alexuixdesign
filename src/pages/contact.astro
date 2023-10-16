@@ -1,11 +1,14 @@
 ---
+import { SectionContainer } from 'src/components/react'
+import { SITE_TITLE_PREFIX, SITE_DESCRIPTION } from 'src/config'
 import Layout from 'src/layouts/Layout.astro'
+
+const CONTACT_PAGE_TITLE = `${SITE_TITLE_PREFIX} Contact`
+const CONTACT_PAGE_DESCRIPTION = SITE_DESCRIPTION
 ---
 
-<Layout headerStyle footerStyle title="Contact" description="Lorem ipsum dolor sit amet">
-  <section class="w-full bg-secondary">
-    <div class="container mx-auto flex h-full min-h-screen items-center px-5 md:px-10 lg:px-12">
-      <h1 class="pb-4 text-4xl font-bold uppercase text-lightGray md:text-5xl lg:text-[117px]">let’s work <br /> together</h1>
-    </div>
-  </section>
+<Layout title={CONTACT_PAGE_TITLE} description={CONTACT_PAGE_DESCRIPTION}>
+  <SectionContainer containerClass="h-[65vh]">
+    <h1 class="text-4xl font-bold uppercase text-white md:text-5xl lg:text-[117px]">let’s work <br /> together</h1>
+  </SectionContainer>
 </Layout>
