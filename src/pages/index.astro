@@ -1,9 +1,8 @@
 ---
 import Layout from 'src/layouts/Layout.astro'
-import { ProjectSection, SectionContainer } from 'src/components/react'
+import { ProjectSection, SectionContainer, AnimatedText, AnimatedSection } from 'src/components/react'
 import { useGetProjectsQuery } from 'src/clients/sanity'
 import { SITE_DESCRIPTION, SITE_TITLE } from 'src/config'
-import { AnimatedText } from 'src/components/react/AnimatedText'
 
 export async function getProjects() {
   return await useGetProjectsQuery(true)
@@ -17,9 +16,7 @@ const projects = await getProjects()
     <AnimatedText client:only text="Turning ideas into digital dreams" />
   </SectionContainer>
   <SectionContainer className="bg-primary" containerClass="py-24">
-    <p class="max-w-screen-xl pr-20 text-4xl font-medium text-gray md:text-6xl lg:text-[80px] lg:leading-[100px]">
-      Hi, I&apos;am Alex, <span class="text-secondary">UI/UX Designer</span>. <br /> Let&apos;s bring freshnes and fun to your project!
-    </p>
+    <AnimatedSection client:only />
   </SectionContainer>
   <SectionContainer disableHeight>
     <div class="flex items-center justify-end gap-3 pb-12" id="work">

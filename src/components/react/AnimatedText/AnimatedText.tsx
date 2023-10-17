@@ -42,7 +42,7 @@ const AnimatedText: FC<AnimatedTextProps> = ({ text }) => {
       animate="visible"
     >
       {words.map((word, index) => (
-        <motion.span className="mr-0" variants={child} key={index}>
+        <motion.span variants={child} key={index}>
           {word}
         </motion.span>
       ))}
