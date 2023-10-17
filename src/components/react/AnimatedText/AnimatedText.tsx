@@ -1,11 +1,6 @@
 import { motion } from 'framer-motion'
-import type { FC } from 'react'
 
-import type { AnimatedTextProps } from 'src/components/react/AnimatedText/AnimatedText.interface'
-
-const AnimatedText: FC<AnimatedTextProps> = ({ text }) => {
-  const words = text.split(' ')
-
+const AnimatedText = () => {
   const container = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
@@ -36,16 +31,16 @@ const AnimatedText: FC<AnimatedTextProps> = ({ text }) => {
   }
   return (
     <motion.p
-      className="flex max-w-screen-lg flex-wrap gap-4 text-5xl font-medium uppercase text-white md:text-7xl lg:text-[115px] lg:leading-[115px]"
+      className="max-w-screen-lg text-5xl font-bold uppercase text-white md:text-7xl lg:text-[115px] lg:leading-[115px]"
       variants={container}
       initial="hidden"
       animate="visible"
     >
-      {words.map((word, index) => (
-        <motion.span variants={child} key={index}>
-          {word}
-        </motion.span>
-      ))}
+      <motion.span variants={child}>Turning ideas</motion.span>
+      <br />
+      <motion.span variants={child}>Into digital</motion.span>
+      <br />
+      <motion.span variants={child}>Dreams</motion.span>
     </motion.p>
   )
 }

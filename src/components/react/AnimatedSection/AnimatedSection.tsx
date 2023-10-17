@@ -5,7 +5,7 @@ const AnimatedSection = () => {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.3, delayChildren: 0.2 * i },
+      transition: { staggerChildren: 0.25, delayChildren: 0.2 * i },
     }),
   }
 
@@ -31,19 +31,19 @@ const AnimatedSection = () => {
   }
   return (
     <motion.p
-      className="max-w-screen-xl pr-20 text-4xl font-medium text-gray md:text-6xl lg:text-[80px] lg:leading-[100px]"
+      className="max-w-screen-xl text-4xl font-medium text-gray md:pr-20 md:text-6xl lg:text-[80px] lg:leading-[100px]"
       variants={container}
       initial="hidden"
       whileInView="visible"
     >
-      <motion.span variants={child}>Hi, I&apos;am Alex, </motion.span>
-      <motion.span variants={child} className="text-secondary">
-        UI/UX Designer<span className="text-white">.</span>
+      <motion.span variants={child}>
+        Hi, I&apos;am Alex,
+        <span className="text-secondary"> UI/UX Designer </span>
       </motion.span>
-      <br />
-      <motion.span variants={child}>Let&apos;s bring </motion.span>
-      <motion.span variants={child}>freshnes and fun </motion.span>
-      <motion.span variants={child}>to your project! </motion.span>
+      <br className="hidden md:flex" />
+      <motion.span variants={child}>Let&apos;s bring freshnes and fun to</motion.span>
+      <br className="hidden md:flex" />
+      <motion.span variants={child}>your project! </motion.span>
     </motion.p>
   )
 }
