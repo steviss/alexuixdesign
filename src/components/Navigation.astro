@@ -1,5 +1,5 @@
 ---
-import { NAVIGATION_LINKS } from 'src/config'
+import { CONTACT_EMAIL_ADDRESS, NAVIGATION_LINKS } from 'src/config'
 import NavigationLink from './NavigationLink.astro'
 ---
 
@@ -8,7 +8,7 @@ import NavigationLink from './NavigationLink.astro'
     {NAVIGATION_LINKS.map((link) => <NavigationLink {...link} />)}
   </div>
   <a
-    href="/contact"
+    href=`mailto:${CONTACT_EMAIL_ADDRESS}`
     class="rounded-full border border-black bg-secondary px-6 py-3 text-lg font-bold uppercase tracking-wide text-black hover:bg-black hover:text-secondary md:text-xl lg:text-2xl"
     >Say Hello</a
   >

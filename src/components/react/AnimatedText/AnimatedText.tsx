@@ -10,7 +10,7 @@ const AnimatedText: FC<AnimatedTextProps> = ({ text }) => {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
       opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.04 * i },
+      transition: { staggerChildren: 0.25, delayChildren: 0.2 * i },
     }),
   }
 
