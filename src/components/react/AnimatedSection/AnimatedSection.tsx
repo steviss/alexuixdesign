@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 
-const AnimatedText = () => {
+const AnimatedSection = () => {
   const container = {
     hidden: { opacity: 0 },
     visible: (i = 1) => ({
@@ -31,18 +31,21 @@ const AnimatedText = () => {
   }
   return (
     <motion.p
-      className="max-w-screen-lg text-5xl font-bold uppercase text-white md:text-7xl lg:text-[115px] lg:leading-[115px]"
+      className="max-w-screen-xl text-4xl font-medium text-gray md:pr-20 md:text-6xl lg:text-[80px] lg:leading-[100px]"
       variants={container}
       initial="hidden"
-      animate="visible"
+      whileInView="visible"
     >
-      <motion.span variants={child}>Turning ideas</motion.span>
-      <br />
-      <motion.span variants={child}>Into digital</motion.span>
-      <br />
-      <motion.span variants={child}>Dreams</motion.span>
+      <motion.span variants={child}>
+        Hi, I&apos;am Alex,
+        <span className="text-secondary"> UI/UX Designer </span>
+      </motion.span>
+      <br className="hidden md:flex" />
+      <motion.span variants={child}>Let&apos;s bring freshnes and fun to</motion.span>
+      <br className="hidden md:flex" />
+      <motion.span variants={child}>your project! </motion.span>
     </motion.p>
   )
 }
 
-export default AnimatedText
+export default AnimatedSection

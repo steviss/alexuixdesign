@@ -26,8 +26,8 @@ jobs:
         with:
           context-message: 'Deploying Sanity'
           context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.SANITY_DEPLOY_URL }}
 
       - uses: actions/setup-node@v3

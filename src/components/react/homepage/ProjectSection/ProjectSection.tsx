@@ -10,14 +10,14 @@ const ProjectSection: FC<ProjectSectionProps> = ({ projectImage, title, slug, su
     <SectionContainer variant="project" className="py-12">
       <div
         onClick={() => handleClick()}
-        className="flex cursor-pointer flex-col justify-end gap-2 px-5 md:relative md:gap-0 md:px-10 md:opacity-80 md:transition-all md:duration-500 md:hover:scale-110 md:hover:opacity-100 lg:px-12"
+        className="flex cursor-pointer flex-col justify-end gap-2 px-5 md:relative md:gap-0 md:px-10 md:opacity-80 md:transition-all md:duration-500 md:hover:scale-[1.02] md:hover:opacity-100 lg:px-12"
       >
         <div className="h-full w-full opacity-50">
           <img src={projectImage?.asset.url} className="block h-auto w-full object-cover" />
         </div>
         <div className="bottom-0 left-0 z-10 flex h-full w-full flex-col items-start justify-end gap-2 px-0 text-white md:absolute md:gap-8 md:px-16 md:pb-10 lg:px-20">
-          <h3 className="text-2xl font-bold md:text-3xl lg:text-4xl ">
-            <a>{title}</a>
+          <h3 className="text-2xl font-bold md:text-3xl lg:text-4xl">
+            <a href={slug}>{title}</a>
           </h3>
           <h4 className="max-w-sm text-lg font-medium md:text-xl lg:text-2xl">{subtitle}</h4>
           <div className="flex flex-row gap-4 ">

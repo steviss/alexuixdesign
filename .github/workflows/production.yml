@@ -24,8 +24,8 @@ jobs:
         id: slack-initial
         uses: ./.github/actions/slack/notification-initial
         with:
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Running: Test'
 
@@ -64,8 +64,8 @@ jobs:
         uses: ./.github/actions/slack/notification-update
         with:
           initial-message: ${{ steps.slack-initial.outputs.ts }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Preparing: Build Astro'
 
@@ -74,8 +74,8 @@ jobs:
         uses: ./.github/actions/slack/notification-failed
         with:
           initial-message: ${{ steps.slack-initial.outputs.ts }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Failed: Test'
 
@@ -93,8 +93,8 @@ jobs:
         uses: ./.github/actions/slack/notification-update
         with:
           initial-message: ${{ needs.test.outputs.slack-message-id }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Running: Build Astro'
 
@@ -153,8 +153,8 @@ jobs:
         uses: ./.github/actions/slack/notification-update
         with:
           initial-message: ${{ needs.test.outputs.slack-message-id }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Preparing: Deploy To Hosting'
 
@@ -163,8 +163,8 @@ jobs:
         uses: ./.github/actions/slack/notification-failed
         with:
           initial-message: ${{ needs.test.outputs.slack-message-id }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Failed: Build Astro'
 
@@ -205,8 +205,8 @@ jobs:
         uses: ./.github/actions/slack/notification-success
         with:
           initial-message: ${{ needs.test.outputs.slack-message-id }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Success: Deploy to hosting'
 
@@ -215,7 +215,7 @@ jobs:
         uses: ./.github/actions/slack/notification-failed
         with:
           initial-message: ${{ needs.test.outputs.slack-message-id }}
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN}}
-          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID}}
+          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
           deploy-url: ${{ vars.DEPLOY_URL }}
           context-status: 'Failed: Deploy to hosting'
