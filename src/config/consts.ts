@@ -11,7 +11,7 @@ export const NAVIGATION_LINKS: NavigationLinkType[] = [
   { label: 'Work', href: '/#work' },
   { label: 'Blog', href: '/blog' },
 ]
-export const CONTACT_EMAIL_ADDRESS = 'aleksandra@alexuix.design'
+export const CONTACT_EMAIL_ADDRESS = 'hello@alexuix.design'
 export const FOOTER_LINKS = [
   { label: 'Dribble', href: 'https://dribbble.com/aleksandralazarevic' },
   { label: 'Behance', href: 'https://www.behance.net/alexuix' },
