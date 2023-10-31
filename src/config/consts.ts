@@ -9,7 +9,6 @@ export const SITE_OWNER = 'Aleksandra Lazarević'
 export const NAVIGATION_LINKS: NavigationLinkType[] = [
   { label: 'About', href: '/about' },
   { label: 'Work', href: '/#work' },
-  { label: 'Blog', href: '/blog' },
 ]
 export const CONTACT_EMAIL_ADDRESS = 'hello@alexuix.design'
 export const FOOTER_LINKS = [

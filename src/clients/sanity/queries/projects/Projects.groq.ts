@@ -11,7 +11,7 @@ export const sanityProjectFragment = `
 `
 
 export const sanityProjectsGroqQuery = `
-*[_type == 'project']
+*[_type == 'project'] | order(_createdAt desc)
 {
   ${sanityProjectFragment}
 } 
