@@ -1,16 +1,19 @@
-name: Deploy Sanity Enviroment
+name: Deploy Development Enviroment
 
 on:
   workflow_dispatch:
 
 env:
-  DEPLOY_URL: ${{ vars.DEPLOY_URL_SANITY }}
-  DEPLOY_PATH: ${{ vars.DEPLOY_PATH_SANITY }}
+  DEPLOY_URL: ${{ vars.DEPLOY_URL_DEV }}
+  DEPLOY_PATH: ${{ vars.DEPLOY_PATH_DEV }}
+  ASTRO_DISABLE_INDEXING: ${{ vars.ASTRO_DISABLE_INDEXING }}
+  ASTRO_GTAG_ID: ${{ vars.ASTRO_GTAG_ID_DEV }}
+  ASTRO_GTM_ID: ${{ vars.ASTRO_GTM_ID_DEV }}
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-  SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+  FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
   SANITY_STUDIO_PROJECT_ID: ${{ secrets.SANITY_STUDIO_PROJECT_ID }}
-  SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET }}
+  SANITY_STUDIO_DATASET: ${{ secrets.SANITY_STUDIO_DATASET_DEV }}
   DEPLOY_SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
   DEPLOY_SSH_USERNAME: ${{ secrets.DEPLOY_SSH_USERNAME }}
   DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
@@ -22,16 +25,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build Sanity Studio
+  test:
+    name: Test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./sanity
-    
+
     outputs:
       slack-message-id: ${{ steps.slack-initial.outputs.ts }}
-      
+
     steps:
       - name: 🔀 Checkout
         uses: actions/checkout@v4.1.1
@@ -43,46 +43,31 @@ jobs:
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
-          context-status: 'Running: Build Sanity Studio'
-          context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
+          context-status: 'Running: Test'
 
       - uses: actions/setup-node@v3
         with:
           node-version-file: 'package.json'
 
-      - name: Install Yarn
+      - name: 🐱‍🏍 Install Yarn
         uses: weareliondev/weareliondev-devops/.github/actions/yarn/install@main
         with:
-          cwd: './sanity'
+          cwd: '.'
           enable-corepack: false
           cache-node-modules: true
           cache-install-state: true
+          fontawesome: true
+          fontawesome-npm-token: ${{ env.FONTAWESOME_NPM_AUTH_TOKEN }}
 
-      - name: ⚙️ Build
-        shell: bash
-        env:
-          SANITY_STUDIO_PROJECT_ID: ${{ env.SANITY_STUDIO_PROJECT_ID }}
-          SANITY_STUDIO_DATASET: ${{ env.SANITY_STUDIO_DATASET }}
-          SANITY_AUTH_TOKEN: ${{ env.SANITY_AUTH_TOKEN }}
-        run: |
-          yarn build
-
-      - name: ⚙️ Copy .htaccess to dist
+      - name: 🦋 Prettier Check
         shell: bash
         run: |
-          mv ../deployment/sanity/.htaccess dist/.htaccess
+          yarn format:ci
 
-      - name: 📥 Tar Build
+      - name: 📚 ESLint Check
         shell: bash
         run: |
-          tar -cvzf dist.tar.gz dist
-
-      - name: 📦 Store Build
-        uses: actions/upload-artifact@v3.1.3
-        with:
-          name: sanity-deployment-build
-          path: sanity/dist.tar.gz
-          retention-days: 1
+          yarn lint
 
       - name: 💬 Update Slack Message
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/update@main
@@ -91,8 +76,7 @@ jobs:
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
-          context-status: 'Preparing: Deploy To Hosting'
-          context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
+          context-status: 'Preparing: Build Astro'
 
       - name: 💬 Failure Slack Message
         if: failure()
@@ -102,14 +86,101 @@ jobs:
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
-          context-status: 'Failed: Build Sanity Studio'
-          context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
+          context-status: 'Failed: Test'
+
+  build:
+    name: Build Astro
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: 🔀 Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: 💬 Update Slack Message
+        uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/update@main
+        with:
+          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          deploy-url: ${{ env.DEPLOY_URL }}
+          context-status: 'Running: Build Astro'
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: 'package.json'
+
+      - name: Install Yarn
+        uses: weareliondev/weareliondev-devops/.github/actions/yarn/install@main
+        with:
+          cwd: '.'
+          enable-corepack: false
+          cache-node-modules: true
+          cache-install-state: true
+          fontawesome: true
+          fontawesome-npm-token: ${{ env.FONTAWESOME_NPM_AUTH_TOKEN }}
+          
+      - name: 🗃️ Create .env file for frontend
+        uses: SpicyPizza/create-envfile@v2.0.2
+        with:
+          envkey_SANITY_STUDIO_PROJECT_ID: ${{ env.SANITY_STUDIO_PROJECT_ID }}
+          envkey_SANITY_STUDIO_DATASET: ${{ env.SANITY_STUDIO_DATASET }}
+          envkey_ASTRO_WEBSITE_URL: ${{ env.DEPLOY_URL }}
+          envkey_ASTRO_DISABLE_INDEXING: ${{ env.ASTRO_DISABLE_INDEXING }}
+          envkey_ASTRO_GTAG_ID: ${{ env.ASTRO_GTAG_ID }}
+          envkey_ASTRO_GTM_ID: ${{ env.ASTRO_GTM_ID }}
+          file_name: .env
+
+      - name: 🗳️ Run Env Variables Check
+        shell: bash
+        run: |
+          yarn env:check
+
+      - name: ⚙️ Build
+        shell: bash
+        run: |
+          yarn build
+
+      - name: ⚙️ Copy .htaccess file
+        shell: bash
+        run: |
+          mv deployment/apache/.htaccess .htaccess
+
+      - name: 📥 Tar Build
+        shell: bash
+        run: |
+          tar -cvzf dist.tar.gz dist .env .htaccess
+
+      - name: 📦 Store Build
+        uses: actions/upload-artifact@v3.1.3
+        with:
+          name: dev-deployment-build
+          path: dist.tar.gz
+          retention-days: 1
+
+      - name: 💬 Update Slack Message
+        uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/update@main
+        with:
+          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          deploy-url: ${{ env.DEPLOY_URL }}
+          context-status: 'Preparing: Deploy To Hosting'
+
+      - name: 💬 Failure Slack Message
+        if: failure()
+        uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/failed@main
+        with:
+          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
+          slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
+          deploy-url: ${{ env.DEPLOY_URL }}
+          context-status: 'Failed: Build Astro'
 
   deploy:
     name: Deploy to hosting
     runs-on: ubuntu-latest
-    needs: build
-        
+    needs: [test, build]
     steps:
       - name: 🔀 Checkout
         uses: actions/checkout@v3
@@ -117,7 +188,7 @@ jobs:
       - name: ♻️ Restore Build from previous job
         uses: actions/download-artifact@v3.0.2
         with:
-          name: sanity-deployment-build
+          name: dev-deployment-build
           path: dist.tar.gz
 
       - name: 📤 Untar Build
@@ -135,26 +206,24 @@ jobs:
           key: ${{ env.DEPLOY_SSH_KEY }}
           passphrase: ${{ env.DEPLOY_SSH_PASSPHRASE }}
           port: ${{ env.DEPLOY_SSH_PORT }}
-          source: 'dist/**,.htaccess'
+          source: 'dist/**,.env,.htaccess'
           deploy-path: ${{ env.DEPLOY_PATH }}
 
       - name: 💬 Update Slack Message
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/success@main
         with:
-          initial-message: ${{ needs.build.outputs.slack-message-id }}
+          initial-message: ${{ needs.test.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
           context-status: 'Success: Deploy to hosting'
-          context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'
 
       - name: 💬 Failure Slack Message
         if: failure()
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/failed@main
         with:
-          initial-message: ${{ needs.build.outputs.slack-message-id }}
+          initial-message: ${{ needs.test.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
           context-status: 'Failed: Deploy to hosting'
-          context-icon-url: 'https://assets.wearelion.dev/sanity-icon-slack.png'

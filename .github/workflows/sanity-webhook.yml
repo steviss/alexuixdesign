@@ -1,7 +1,8 @@
-name: Deploy Production Enviroment
+name: Redeploy Production on Sanity Change
 
 on:
-  workflow_dispatch:
+  repository_dispatch:
+    types: [sanity-update]
 
 env:
   DEPLOY_URL: ${{ vars.DEPLOY_URL }}
@@ -25,8 +26,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
-    name: Test
+  debounce:
+    name: Workflow Debounce
     runs-on: ubuntu-latest
 
     outputs:
@@ -43,7 +44,32 @@ jobs:
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
-          context-status: 'Running: Test'
+          context-status: 'Waiting: Changes in Sanity Detected (10mins)'
+
+      - name: ⏰ Debounce 10 minutes
+        uses: zachary95/github-actions-debounce@main
+        with:
+          wait: 600
+
+      - name: Delete Slack Message
+        if: cancelled()
+        run: |
+          curl -X POST https://slack.com/api/chat.delete \
+          -H 'Authorization: Bearer ${{ env.SLACK_BOT_TOKEN }}' \
+          -H 'Content-type: application/json' \
+          -d '{
+            "channel": "${{ env.SLACK_CHANNEL_ID }}",
+            "ts": "${{ steps.slack-initial.outputs.ts }}"
+          }'
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: debounce
+
+    steps:
+      - name: 🔀 Checkout
+        uses: actions/checkout@v4.1.1
 
       - uses: actions/setup-node@v3
         with:
@@ -72,7 +98,7 @@ jobs:
       - name: 💬 Update Slack Message
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/update@main
         with:
-          initial-message: ${{ steps.slack-initial.outputs.ts }}
+          initial-message: ${{ needs.debounce.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
@@ -82,7 +108,7 @@ jobs:
         if: failure()
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/failed@main
         with:
-          initial-message: ${{ steps.slack-initial.outputs.ts }}
+          initial-message: ${{ needs.debounce.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
@@ -91,7 +117,7 @@ jobs:
   build:
     name: Build Astro
     runs-on: ubuntu-latest
-    needs: test
+    needs: [debounce, test]
 
     steps:
       - name: 🔀 Checkout
@@ -100,7 +126,7 @@ jobs:
       - name: 💬 Update Slack Message
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/update@main
         with:
-          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          initial-message: ${{ needs.debounce.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
@@ -161,7 +187,7 @@ jobs:
       - name: 💬 Update Slack Message
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/update@main
         with:
-          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          initial-message: ${{ needs.debounce.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
@@ -171,7 +197,7 @@ jobs:
         if: failure()
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/failed@main
         with:
-          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          initial-message: ${{ needs.debounce.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
@@ -180,7 +206,7 @@ jobs:
   deploy:
     name: Deploy to hosting
     runs-on: ubuntu-latest
-    needs: [test, build]
+    needs: [debounce, test, build]
     steps:
       - name: 🔀 Checkout
         uses: actions/checkout@v3
@@ -212,7 +238,7 @@ jobs:
       - name: 💬 Update Slack Message
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/success@main
         with:
-          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          initial-message: ${{ needs.debounce.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
@@ -222,7 +248,7 @@ jobs:
         if: failure()
         uses: weareliondev/weareliondev-devops/.github/actions/slack/notifications/deploy/failed@main
         with:
-          initial-message: ${{ needs.test.outputs.slack-message-id }}
+          initial-message: ${{ needs.debounce.outputs.slack-message-id }}
           slack-bot-token: ${{ env.SLACK_BOT_TOKEN }}
           slack-channel-id: ${{ env.SLACK_CHANNEL_ID }}
           deploy-url: ${{ env.DEPLOY_URL }}
